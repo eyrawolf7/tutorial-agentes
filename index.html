@@ -30,7 +30,7 @@ html,body{margin:0;height:100%;overflow:hidden;background:#000;display:grid;plac
 /* zonas */
 #stage{position:absolute;left:40px;top:78px;width:640px;height:706px}
 #panel{position:absolute;left:730px;top:96px;width:830px;height:684px;overflow:hidden}
-#pin{--fz:1;font-size:calc(22px*var(--fz))}
+#pin{--fz:1;font-size:calc(24px*var(--fz))}
 #cap{position:absolute;left:40px;top:800px;width:1520px;height:74px;display:flex;align-items:center;gap:18px;padding:0 22px;background:var(--card);border:1px solid var(--line);border-radius:14px}
 #capWho{flex:none;padding:6px 12px;border-radius:8px;font:800 15px/1.2 var(--sans);letter-spacing:.08em;text-transform:uppercase}
 #capTxt{font:500 24px/1.3 var(--sans);color:var(--txt)}
@@ -80,6 +80,22 @@ p{margin:0 0 .75em}
 .q .opt span{flex:none;width:1.5em;height:1.5em;display:grid;place-items:center;border-radius:.35em;background:var(--card);font-size:.75em;font-weight:800}
 .q .opt.ok{background:var(--turq);border-color:var(--turq);color:var(--dark)}.q .opt.ok span{background:rgba(0,0,0,.15)}
 .q .fb{margin:.7em 0 0;font-size:.95em;line-height:1.45;font-weight:500;color:var(--txt)}
+.big{font-size:1.45em;line-height:1.35;font-weight:600;color:#fff;margin:.2em 0 .9em}
+.big b{color:var(--turq)}
+.note b{color:var(--c)}
+.pcs{display:grid;grid-template-columns:repeat(3,1fr);gap:.4em;margin:.2em 0 1em}
+.pcs span{padding:.45em .6em;border:1px solid var(--line);border-radius:.45em;font-size:.72em;font-weight:700;color:var(--mute);text-align:center}
+.pcs span.done{color:var(--txt);border-color:var(--c)}
+.pcs span.on{background:var(--c);border-color:var(--c);color:var(--dark)}
+.pcard{padding:1em 1.2em;background:var(--card2);border:1px solid var(--line);border-left:6px solid var(--c);border-radius:.8em}
+.pcard .pn{font-size:.7em;font-weight:700;letter-spacing:.14em;color:var(--mute)}
+.pcard h3{margin:.1em 0 .3em;font-size:2.2em;font-weight:800;letter-spacing:-.02em;color:var(--c)}
+.pcard .pd{font-size:1.15em;line-height:1.4;font-weight:600;color:#fff}
+.pcard .pw{font-size:.9em;color:var(--lav)}.pcard .pw b{color:var(--c)}
+.pcard .ex{margin:0}
+.close{margin-top:1.6em}
+.close p{font-size:2.4em;line-height:1.15;font-weight:800;letter-spacing:-.02em;color:#fff;margin:0 0 .6em}
+.close span{color:var(--c)}
 /* escena */
 .st{opacity:0;transition:opacity .55s}.st.on{opacity:1}
 .pl{animation:pl .45s ease-in-out 2;transform-box:fill-box;transform-origin:center}
@@ -125,32 +141,32 @@ $('stage').innerHTML=`
 <defs><marker id="ah" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8z" fill="${K.ink}"/></marker></defs>
 <g class="st" data-ch="1">${T(271,12,'SISTEMAS DEL CLIENTE',{fs:8.5,ls:.12,c:K.mute})}
 ${SYS.map(([id,n,x])=>`<g id="sy-${id}">${R(x,20,58,32,{s:K.mcp,r:7})}${T(x+29,40,n,{fs:10.5})}</g>`).join('')}</g>
-<g class="st" data-r="1-3"><path d="M238 124 L186 56" fill="none" stroke="${K.perm}" stroke-width="2" stroke-dasharray="4 4"/>${T(216,70,'sin acceso',{a:'start',fs:9.5,c:K.perm})}</g>
+<g class="st" data-r="1-2"><path d="M238 124 L186 56" fill="none" stroke="${K.perm}" stroke-width="2" stroke-dasharray="4 4"/>${T(216,70,'sin acceso',{a:'start',fs:9.5,c:K.perm})}</g>
 <g class="st" data-ch="2">${R(8,76,384,260,{f:K.hz,r:16,dash:'6 5'})}${T(20,95,'HARNESS',{a:'start',fs:11,ls:.14})}${T(382,95,'Claude Code · Copilot · Cursor',{a:'end',fs:9,c:K.mute,w:600})}</g>
 <g class="st" data-r="1-1"><path d="M56 46 Q170 60 228 132" class="ln"/></g>
 <g class="st" data-ch="2"><path d="M48 55 L118 103" class="ln"/><path d="M144 150 H224" class="ln"/></g>
-<g class="st" data-ch="4"><path d="M262 188 V256" class="ln"/><path id="l-sys" d="M156 293 H150 V53" class="ln"/></g>
+<g class="st" data-ch="3"><path d="M262 188 V256" class="ln"/><path id="l-sys" d="M156 293 H150 V53" class="ln"/></g>
 <g class="st" data-ch="2">${R(20,104,124,222,{r:9})}${T(30,119,'CONTEXTO',{a:'start',fs:9.5,ls:.12})}${T(134,119,'0 %',{a:'end',fs:9.5,id:'ctxpct',c:K.mute})}
 <rect x="28" y="123" width="108" height="3" rx="1.5" fill="${K.hz}"/><rect id="ctxmeter" x="28" y="123" width="0" height="3" rx="1.5" fill="${K.ink}"/><g id="ctxblocks"></g></g>
-<g class="st" data-ch="4">${R(156,256,228,64,{r:9})}${T(166,271,'EJECUTOR DE HERRAMIENTAS',{a:'start',fs:8.5,ls:.12,c:K.mute})}
+<g class="st" data-ch="3">${R(156,256,228,64,{r:9})}${T(166,271,'EJECUTOR DE HERRAMIENTAS',{a:'start',fs:8.5,ls:.12,c:K.mute})}
 ${chip('sql','SQL',164,44)}${chip('py','Python',212,56)}${chip('files','Archivos',272,62)}</g>
-<g class="st" data-ch="12">${chip('mcp','MCP',338,40,K.mcp)}</g>
-<g class="st" data-r="5-5">
+<g class="st" data-ch="6" data-b="4">${chip('mcp','MCP',338,40,K.mcp)}</g>
+<g class="st" data-r="3-3">
 <path class="la" d="M346 120 Q380 176 356 229"/><path class="la" d="M318 250 Q262 270 216 247"/><path class="la" d="M176 226 Q170 112 282 108"/>
 ${pill('lp0',318,110,'DECIDE')}${pill('lp1',348,240,'EJECUTA')}${pill('lp2',184,236,'OBSERVA')}</g>
-<g class="st" data-ch="11">${[124,184].map((cy,i)=>`<circle id="sr${i}" class="ring" cx="344" cy="${cy}" r="20" fill="none" stroke="${K.sub}" stroke-width="2" stroke-dasharray="3 5"/>
+<g class="st" data-ch="6" data-b="3">${[124,184].map((cy,i)=>`<circle id="sr${i}" class="ring" cx="344" cy="${cy}" r="20" fill="none" stroke="${K.sub}" stroke-width="2" stroke-dasharray="3 5"/>
 <circle cx="344" cy="${cy}" r="14" fill="${K.sub}"/>${T(344,cy+3.5,'sub',{fs:9.5,c:K.dark})}
 ${R(366,cy-18,18,36,{r:4})}<rect id="sb${i}" x="368" y="${cy+16}" width="14" height="0" rx="2" fill="${K.sub}"/>`).join('')}${T(350,219,'contexto propio',{fs:8,c:K.mute,w:600})}</g>
-<g class="st" data-ch="6" id="g-gate"><rect id="gateR" x="216" y="219" width="92" height="22" rx="11" fill="${K.card}" stroke="${K.perm}" stroke-width="2"/>${T(262,234,'PERMISOS',{fs:9.5,c:K.perm,ls:.12,id:'gateT'})}</g>
+<g class="st" data-ch="4" id="g-gate"><rect id="gateR" x="216" y="219" width="92" height="22" rx="11" fill="${K.card}" stroke="${K.perm}" stroke-width="2"/>${T(262,234,'PERMISOS',{fs:9.5,c:K.perm,ls:.12,id:'gateT'})}</g>
 <g class="st on">
 <circle id="mring" class="ring" cx="262" cy="150" r="46" fill="none" stroke="${K.ink}" stroke-width="2.5" stroke-dasharray="3 7"/>
 <circle cx="262" cy="150" r="41" fill="none" stroke="${K.model}" stroke-opacity=".35" stroke-width="4"/><circle id="mcirc" cx="262" cy="150" r="36" fill="${K.model}"/>
 ${T(262,156,'LLM',{fs:17,c:'#fff',ls:.06})}${T(262,204,'MODELO',{fs:9.5,ls:.14})}</g>
 <g class="st on"><circle cx="34" cy="38" r="20" fill="${K.card}" stroke="${K.ink}" stroke-width="2"/><circle cx="34" cy="32" r="6.5" fill="${K.ink}"/><path d="M23 50 Q34 36 45 50Z" fill="${K.ink}"/>
 ${T(62,36,'TÚ',{a:'start',fs:11,ls:.12})}${T(62,50,'consultor/a',{a:'start',fs:9,c:K.mute,w:600})}</g>
-<g class="st" data-ch="7">${R(8,344,384,98,{f:K.tray,r:16})}${T(20,360,'BELT',{a:'start',fs:11,ls:.14,c:K.instr})}${T(382,360,'kpi-analysis-belt',{a:'end',fs:9.5,c:K.mute,w:600})}
+<g class="st" data-ch="5">${R(8,344,384,98,{f:K.tray,r:16})}${T(20,360,'BELT',{a:'start',fs:11,ls:.14,c:K.instr})}${T(382,360,'kpi-analysis-belt',{a:'end',fs:9.5,c:K.mute,w:600})}
 ${SLOTS.map((s,i)=>{const p=sXY(i);return `<g id="ph${i}">${R(p.x,p.y,120,32,{f:'none',s:K.mute,dash:'4 3',r:7})}${T(p.x+60,p.y+20,s[1],{fs:10.5,c:K.mute,w:600})}</g>`}).join('')}</g>
-${SLOTS.map((s,i)=>{const p=sXY(i);return `<g class="st" data-ch="${s[4]}" id="s-${s[0]}">${R(p.x,p.y,120,32,{r:7})}<rect x="${p.x}" y="${p.y}" width="6" height="32" rx="3" fill="${s[3]}"/>
+${SLOTS.map((s,i)=>{const p=sXY(i);return `<g class="st" data-ch="6" data-b="${i}" id="s-${s[0]}">${R(p.x,p.y,120,32,{r:7})}<rect x="${p.x}" y="${p.y}" width="6" height="32" rx="3" fill="${s[3]}"/>
 ${T(p.x+15,p.y+14,s[1],{a:'start',fs:11})}${T(p.x+15,p.y+26,s[2],{a:'start',fs:8.5,c:K.mute,w:600})}</g>`}).join('')}
 <g id="deny" style="display:none"><circle r="13" fill="${K.perm}" stroke="${K.dark}" stroke-width="2"/><path d="M-5 -5l10 10M5 -5l-10 10" stroke="#fff" stroke-width="3" stroke-linecap="round"/></g>
 <g id="packets"></g>`;
@@ -210,254 +226,111 @@ function ctxRender(){
 function ctxClear(){CTX.list=[];$('ctxblocks').innerHTML='';ctxRender()}
 function ctxDel(k){CTX.list=CTX.list.filter(b=>{if(b.k===k){b.el.remove();return false}return true});ctxRender()}
 const ctxPulse=k=>{if(FAST)return;const b=CTX.list.find(b=>b.k===k);if(b)b.el.firstChild.animate([{strokeWidth:1.5},{strokeWidth:5},{strokeWidth:1.5}],{duration:700})};
-const BASE={sys:['Sistema',K.sys,16],tools:['Herramientas',K.tool,12,1],instr:['Instrucciones',K.instr,22],skidx:['Índice de skills',K.skill,11,1],mcpt:['Herram. MCP',K.mcp,12,1]};
+const BASE={q:['Tu pregunta',K.ink,18],sys:['Sistema',K.sys,16],tools:['Herramientas',K.tool,12,1],instr:['Instrucciones',K.instr,22],skidx:['Índice de skills',K.skill,11,1],mcpt:['Herram. MCP',K.mcp,12,1]};
 function base(...ks){ctxClear();ks.forEach(k=>{const [l,c,h,s]=BASE[k];ctxPush(k,l,c,h,!!s)})}
 async function add(k,l,c,h=16,soft=false){ctxPush(k,l,c,h,soft);await sleep(380)}
 async function send(ms=900){await fly('ctx','m','contexto',K.card,650);await think(ms)}
 
 /* ================= DIAPOSITIVAS ================= */
-const ex=(l,t,c='')=>`<div class="ex ${c}"><span class="l">${l}</span>${t}</div>`;
-const who=(a,b)=>`<p class="who"><span>La activa: <b>${a}</b></span><span>Se carga: <b>${b}</b></span></p>`;
-const P1='Parte 1 · El motor',P2='Parte 2 · Las piezas de un belt',P3='Parte 3 · Un caso real',P4='Parte 4 · Para llevarte';
-const QZ=[
- {t:'Todos los análisis deben usar la definición de «cliente activo» del cliente.',o:['Instrucciones','Skill','Hook','Comando'],a:0,st:'s-instr',w:'Lo que hay que saber siempre va en las instrucciones.'},
- {t:'Cada lunes el equipo prepara el mismo informe de KPIs.',o:['Subagente','Comando','MCP','Instrucciones'],a:1,st:'s-cmd',w:'Un encargo repetido que lanza una persona: un comando.'},
- {t:'Pase lo que pase, nunca debe salir el email de un cliente en un resultado.',o:['Instrucciones','Hook','Skill','Subagente'],a:1,st:'s-hook',w:'Una instrucción se puede saltar; un hook se ejecuta siempre. Para garantías, hooks.'},
- {t:'Tenemos un método de calidad de datos, con scripts, que solo aplica en algunas tareas.',o:['Instrucciones','Skill','Hook','MCP'],a:1,st:'s-skill',w:'Un saber hacer que se carga solo cuando toca: una skill.'}];
-function qShow(i,rev){const q=QZ[i];$('quiz').innerHTML=`<div class="q"><span class="n">Pregunta ${i+1} de ${QZ.length}</span><p class="t">${q.t}</p>${q.o.map((o,k)=>`<div class="opt${rev&&k===q.a?' ok':''}"><span>${'ABCD'[k]}</span>${o}</div>`).join('')}<p class="fb" style="visibility:${rev?'visible':'hidden'}">${q.w}</p></div>`;
-  if(rev){pulse(q.st);say('belt',`Respuesta: ${q.o[q.a]}.`)}else say('belt','¿Qué pieza usarías? Pensadlo antes de ver la respuesta.')}
+const ex=(l,t)=>`<div class="ex"><span class="l">${l}</span>${t}</div>`;
+const P1='Parte 1 · El motor',P2='Parte 2 · El belt',P3='Parte 3 · Un caso real',P4='Para llevarte';
+const PIECES=[
+ {k:'instr',c:K.instr,t:'Instrucciones',d:'Lo que el agente debe saber siempre: el cliente, sus definiciones, sus reglas.',w:'Nadie: siempre están',ex:['CLAUDE.md','Conversión = pedidos / sesiones.\nEn informes, solo tablas mart_.']},
+ {k:'cmd',c:K.cmd,t:'Comandos',d:'Encargos bien escritos, guardados con un nombre. Se lanzan con una barra.',w:'Tú',ex:['Escribes','/informe-kpi conversión septiembre']},
+ {k:'skill',c:K.skill,t:'Skills',d:'Recetas expertas: pasos, plantillas y scripts. El modelo las abre solo cuando la tarea encaja.',w:'El modelo',ex:['skill causa-raiz','1. ¿Cuándo empieza?  2. Descompón.\n3. Cruza con eventos. 4. Valida.']},
+ {k:'sub',c:K.sub,t:'Subagentes',d:'Especialistas con su propia ventana de contexto. Trabajan en paralelo y devuelven solo un resumen.',w:'El modelo delega',ex:['agente revisor-sql','Revisa SQL y convenciones dbt.\nSolo lectura.']},
+ {k:'mcp',c:K.mcp,t:'MCP',d:'Enchufes estándar a los sistemas del cliente: Snowflake, Power BI, Jira… Sin integraciones a medida.',w:'El modelo lo pide',ex:['El modelo llama a','snowflake.query("conversión diaria")']},
+ {k:'hook',c:K.hook,t:'Hooks',d:'Controles automáticos que el harness ejecuta cuando pasa algo. No dependen del modelo: se cumplen siempre.',w:'Un evento',ex:['Antes de ejecutar una SQL','Si pide datos personales → se bloquea.']}];
+function pieceShow(i){const p=PIECES[i];
+  $('pcs').innerHTML=PIECES.map((q,j)=>`<span class="${j<i?'done':j===i?'on':''}" style="--c:${q.c}">${q.t}</span>`).join('');
+  $('pcard').style.setProperty('--c',p.c);
+  $('pcard').innerHTML=`<div class="pn">${i+1} / 6</div><h3>${p.t}</h3><p class="pd">${p.d}</p><p class="pw">La activa: <b>${p.w}</b></p>${ex(p.ex[0],p.ex[1])}`}
 
 const S=[
-/* 0 portada */
-{part:'',col:K.instr,cover:true,html:`<p class="kick" style="--c:${K.instr}"><i></i>SDG · Guía para managers</p>
+/* 0 */{part:'',cover:true,html:`<p class="kick" style="--c:${K.instr}"><i></i>SDG · Guía para managers</p>
  <h1>Anatomía de un <em>belt</em></h1>
- <p class="lead">Cómo funciona por dentro un agente de IA como Claude Code o GitHub Copilot, y qué piezas componen un belt: el paquete con el que le enseñamos a trabajar con el método de SDG.</p>
- <ol class="list"><li>El motor: modelo + harness</li><li>Las piezas de un belt</li><li>Un caso real de data &amp; analytics</li><li>Chuleta y test</li></ol>`,
- beats:[async()=>{say('modelo','Este es el modelo. Por ahora solo sabe leer texto y escribir texto.');pulse('mcirc')}]},
+ <p class="lead">Qué hay dentro de un agente de IA como Claude Code o GitHub Copilot, y cómo un belt le enseña a trabajar con el método de SDG.</p>
+ <ol class="list"><li>El motor: modelo + harness</li><li>El belt: seis piezas</li><li>Un caso real, de principio a fin</li></ol>`,
+ beats:[async()=>{say('modelo','Este es el modelo. Empecemos por él.');pulse('mcirc')}]},
 
-/* 1 */{part:P1,n:'1.1 · LLM',col:K.model,t:'El modelo: entra texto, sale texto',
- lead:'Un modelo de lenguaje (Claude, GPT, Gemini…) recibe un texto y escribe la continuación más probable. Sabe muchísimo en general, pero no recuerda, no ve vuestros datos y no ejecuta nada.',
- body:ex('Le preguntas','¿Por qué ha caído la conversión online de Retail Norte en septiembre?')+ex('Responde','<span class="bad">«Puede deberse a la estacionalidad, a cambios de precio o a la experiencia de usuario…»</span>')+
- `<p class="note">No se equivoca: es que no tiene de dónde sacar la causa real. Los datos están ahí, pero no llega a ellos.</p>`,
+/* 1 */{part:P1,n:'El modelo',col:K.model,t:'El modelo: entra texto, sale texto',
+ lead:'Sabe muchísimo en general, pero no ve vuestros datos, no recuerda y no puede ejecutar nada.',
+ body:ex('Le preguntas','¿Por qué ha caído la conversión online de Retail Norte en septiembre?')+ex('Responde','<span class="bad">«Puede deberse a la estacionalidad, a los precios…»</span>')+`<p class="note">No se equivoca: es que no tiene de dónde sacar la causa real.</p>`,
  beats:[
-  async()=>{say('tu','«¿Por qué ha caído la conversión online de Retail Norte en septiembre?»');await fly('u','m','¿Por qué cae la conversión?',K.card,1000)},
-  async()=>{await think(1100);say('modelo','«Puede deberse a la estacionalidad, a los precios…». Genérico: no ve vuestros datos.');await fly('m','u','respuesta genérica',K.sys,1000)}]},
+  async()=>{say('tu','«¿Por qué ha caído la conversión en septiembre?»');await fly('u','m','¿Por qué cae la conversión?',K.card,1200)},
+  async()=>{await think(1000);say('modelo','Una respuesta genérica: no tiene acceso a vuestros datos.');await fly('m','u','respuesta genérica',K.sys,1200)}]},
 
-/* 2 */{part:P1,n:'1.2 · Harness',col:K.sys,t:'El harness: el programa que lo envuelve',
- lead:'Claude Code, GitHub Copilot o Cursor no son «el modelo»: son el programa que lo envuelve, el harness. El modelo es el motor; el harness, el resto del coche.',
- body:`<ol class="list"><li class="rv">Monta el contexto que recibe el modelo</li><li class="rv">Llama al modelo</li><li class="rv">Ejecuta lo que el modelo pide</li><li class="rv">Aplica las reglas: qué se puede y qué no</li></ol>
- <p class="note">Por eso dos herramientas con el mismo modelo rinden distinto: lo que cambia es el harness.</p>`,
+/* 2 */{part:P1,n:'El harness',col:K.sys,t:'El harness: el programa que envuelve al modelo',
+ lead:'Claude Code o GitHub Copilot no son el modelo: son el programa que lo envuelve. Le prepara el contexto, ejecuta lo que pide y pone los límites.',
+ body:`<p class="big">El modelo solo ve lo que el harness le pone en su <b>ventana de contexto</b>. Si algo no está ahí, para él no existe.</p>`,
  beats:[
-  async()=>{rv(1);say('harness','Tu mensaje ya no va directo al modelo: lo recibe el harness y monta el contexto.');await fly('u','ctx','tu pregunta',K.card,900);await add('sys','Sistema',K.sys,16);await add('q','Tu pregunta',K.ink,16)},
-  async()=>{rv(2);say('harness','Le envía todo el contexto al modelo.');await send(1100)},
-  async()=>{rv(4);say('modelo','Responde, aún genérico: le faltan herramientas y reglas. Es lo siguiente.');await fly('m','u','respuesta',K.sys,1000)}]},
+  async()=>{say('harness','Tu pregunta ya no va directa al modelo: el harness la mete en la ventana de contexto.');await fly('u','ctx','tu pregunta',K.card,1100);await add('sys','Sistema',K.sys,18);await add('q','Tu pregunta',K.ink,18)},
+  async()=>{say('harness','Y envía la ventana entera al modelo. Todavía no tiene manos: seguirá sin ver los datos.');await send(1000)}]},
 
-/* 3 */{part:P1,n:'1.3 · Context window',col:K.ink,t:'La ventana de contexto',
- lead:'El modelo no ve tu pantalla ni tus archivos: solo lo que el harness le pone en la ventana de contexto en cada llamada. Es un único texto, apilado por partes.',
- body:ex('Lo que recibe el modelo, en realidad',`[sistema]    Eres un asistente de datos…
-[historial]  …mensajes anteriores…
-[tú]         ¿Por qué cae la conversión?`)+
- `<p class="note">Si no está en la ventana, para el modelo no existe. Y tiene límite: cuanto más se llena, más caro, más lento y peor atiende a lo importante.</p>`,
+/* 3 */{part:P1,n:'El agente',col:K.instr,t:'Herramientas + bucle = agente',
+ lead:'El modelo no ejecuta nada: pide una herramienta, el harness la ejecuta y le devuelve el resultado.',
+ body:`<ol class="list"><li class="rv">Decide: «necesito la conversión diaria»</li><li class="rv">El harness ejecuta la SQL en Snowflake</li><li class="rv">Observa el resultado… y vuelta a empezar</li></ol>
+ <p class="note">Cuando este bucle se repite solo hasta terminar, tenemos un <b>agente</b>.</p>`,
  beats:[
-  async()=>{say('harness','Primero, las instrucciones base del propio harness.');await add('sys','Sistema',K.sys,18)},
-  async()=>{say('harness','Después, la conversación hasta ahora.');await add('hist','Historial',K.ink,40)},
-  async()=>{say('harness','Y tu pregunta. Esa pila es TODO lo que el modelo verá.');await add('q','Tu pregunta',K.ink,16);await send(900)},
-  async()=>{say('harness','Si alguien pega un documento enorme, la ventana se llena…');await add('doc','Documento de 80 págs.',K.sys,120)},
-  async()=>{say('harness','…y lo importante queda enterrado. Menos, pero relevante, funciona mejor.');ctxDel('doc')}]},
+  async()=>{base('sys','tools','q');rv(1);loopHi(0);say('modelo','Decide: «Necesito datos». Pide la herramienta run_sql.');await fly('m','sql','run_sql(…)',K.tool,1200);pulse('c-sql')},
+  async()=>{rv(2);loopHi(1);say('harness','El harness la ejecuta de verdad en Snowflake y pega el resultado en el contexto.');await fly('sql','snow','SELECT …',K.tool,1000);await fly('snow','ctx','resultado',K.tool,1100);await add('r','Resultado SQL',K.tool,22)},
+  async()=>{rv(3);loopHi(2);say('modelo','Tras unas vueltas más, responde con datos: cae un 18 % desde el 9-sep, solo en iOS.');await think(900);loopHi(-1);await fly('m','u','causa encontrada',K.instr,1200)}]},
 
-/* 4 */{part:P1,n:'1.4 · Tools',col:K.tool,t:'Las herramientas',
- lead:'El harness le ofrece herramientas: ejecutar SQL, correr Python, leer archivos. El modelo no ejecuta nada: escribe una petición, el harness la ejecuta de verdad y pega el resultado en el contexto.',
- body:`<div class="two">${ex('El modelo escribe',`run_sql(
-  "select semana,
-     pedidos/sesiones conv
-   from mart_web
-   group by 1")`)}${ex('El harness devuelve',`semana 36 → 3,1 %
-semana 37 → 2,5 %
-semana 38 → 2,5 %`)}</div><p class="note" style="margin-top:.9em">El modelo decide; el harness hace.</p>`,
+/* 4 */{part:P1,n:'Los límites',col:K.perm,t:'Permisos: autonomía con barandillas',
+ lead:'Antes de ejecutar nada, el harness comprueba las reglas que tú has fijado.',
+ body:`<div class="rules"><div class="rv"><span>Consultar datos</span><b style="--c:${K.instr}">libre</b></div><div class="rv"><span>Escribir en producción</span><b style="--c:${K.cmd}">te pide OK</b></div><div class="rv"><span>Borrar tablas</span><b style="--c:${K.perm}">prohibido</b></div></div>`,
  beats:[
-  async()=>{base('sys','tools');await add('q','Tu pregunta',K.ink,16);say('harness','Ahora el contexto incluye la lista de herramientas disponibles.');ctxPulse('tools');await send(900)},
-  async()=>{say('modelo','«Necesito datos: run_sql con la conversión por semana». Solo escribe la petición.');await fly('m','sql','run_sql(…)',K.tool,900);pulse('c-sql')},
-  async()=>{say('harness','El harness la ejecuta de verdad en Snowflake y pega el resultado en el contexto.');await fly('sql','snow','SELECT …',K.tool,900);pulse('sy-snow');await fly('snow','ctx','3 filas',K.tool,1000);await add('r1','Resultado SQL',K.tool,22)},
-  async()=>{await send(900);say('modelo','«La conversión baja de 3,1 % a 2,5 % desde la semana 37». Ahora con datos reales.');await fly('m','u','cae desde la sem. 37',K.card,1000)}]},
+  async()=>{base('sys','tools');rv(1);say('perm','Consultar datos: permitido, sin preguntar.');await fly('m','gate','SELECT',K.tool,1000);await gate(K.instr);await fly('gate','sql','SELECT',K.tool,800)},
+  async()=>{rv(2);say('perm','Escribir en producción: el harness te pide confirmación.');await fly('m','gate','escribir',K.tool,900);await gate(K.cmd,400);await fly('gate','u','¿Lo permites?',K.perm,1000);await fly('u','gate','Sí',K.card,800);await gate(K.instr,400)},
+  async()=>{rv(3);say('perm','Borrar: prohibido. Ni pregunta.');await fly('m','gate','DROP TABLE',K.tool,1000);await gate(K.perm,300);await mark('gate',1500)}]},
 
-/* 5 */{part:P1,n:'1.5 · Agentic loop',col:K.instr,t:'El bucle: eso es un agente',
- lead:'Un agente es el modelo trabajando en bucle: decide el siguiente paso, el harness lo ejecuta, el resultado entra en el contexto y vuelta a empezar. Nadie le dicta los pasos.',
- body:`<div class="rules">
- <div class="rv"><span>1 · ¿Cuándo empieza la caída?</span><b style="--c:${K.instr}">el 9-sep</b></div>
- <div class="rv"><span>2 · ¿Afecta a todos los dispositivos?</span><b style="--c:${K.instr}">solo iOS</b></div>
- <div class="rv"><span>3 · ¿Qué cambió en la app?</span><b style="--c:${K.instr}">release 4.2</b></div></div>
- <p class="note">Fíjate en la ventana: crece en cada vuelta. Un buen agente pide solo lo que necesita.</p>`,
- beats:(()=>{const round=async(n,t1,chipK,lab,res,resH,t2)=>{
-    loopHi(0);say('modelo',t1);await send(700);loopHi(1);await fly('m',chipK,lab,K.tool,800);pulse('c-'+chipK);
-    if(chipK==='sql'){await fly('sql','snow','SELECT…',K.tool,700);await fly('snow','ctx',res,K.tool,850)}else await fly(chipK,'ctx',res,K.tool,850);
-    loopHi(2);await add(res,res,K.tool,resH);rv(n);say('harness',t2)};
-  return [
-   async()=>{base('sys','tools');await add('q','Tu pregunta',K.ink,16);await round(1,'Vuelta 1 · Decide: ¿cuándo empieza la caída?','sql','conv. diaria','Serie diaria',20,'Observa: la caída arranca el 9 de septiembre.')},
-   async()=>round(2,'Vuelta 2 · Decide: ¿cae igual en todos los dispositivos?','sql','por dispositivo','Por dispositivo',20,'Observa: solo cae en la app de iOS.'),
-   async()=>round(3,'Vuelta 3 · Decide: ¿qué pasó el 9 en la app?','files','leer changelog','Changelog',28,'Observa: el 8-sep salió la release 4.2, con un checkout nuevo.'),
-   async()=>{loopHi(0);say('modelo','Ya tengo la causa. Respondo y termino el bucle.');await send(700);loopHi(-1);await fly('m','u','causa: release 4.2',K.card,1000)}]})()},
+/* 5 */{part:P2,n:'El belt',col:K.instr,t:'¿Qué es un belt?',
+ lead:'Un harness recién instalado es genérico: no sabe cómo trabaja SDG. Un belt le carga nuestro método para un dominio.',
+ body:`<p class="big">Seis tipos de pieza, <b>una carpeta</b>, se instala con un comando y todo el equipo trabaja igual.</p><p class="note">En la jerga técnica es un <b>plugin</b>. Claude Code y GitHub Copilot tienen las mismas piezas, con nombres parecidos.</p>`,
+ beats:[async()=>{base('sys','tools');say('belt','El belt se enchufa al harness. Vamos a llenarlo pieza a pieza.');for(let i=0;i<6;i++)pulse('ph'+i)}]},
 
-/* 6 */{part:P1,n:'1.6 · Permissions',col:K.perm,t:'Los permisos',
- lead:'El harness también pone los límites. Antes de ejecutar nada comprueba las reglas: qué puede hacer solo, qué necesita tu confirmación y qué está prohibido.',
- body:`<div class="rules">
- <div class="rv"><span>Consultar (SELECT)</span><b style="--c:${K.instr}">libre</b></div>
- <div class="rv"><span>Escribir en producción</span><b style="--c:${K.cmd}">te pregunta</b></div>
- <div class="rv"><span>Borrar tablas (DROP)</span><b style="--c:${K.perm}">prohibido</b></div></div>
- <p class="note">Autonomía con barandillas: empezar estricto y aflojar con la experiencia.</p>`,
+/* 6 */{part:P2,n:'Las piezas',col:K.instr,t:'Las seis piezas de un belt',lead:'',
+ body:`<div id="pcs" class="pcs"></div><div id="pcard" class="pcard"></div>`,
  beats:[
-  async()=>{base('sys','tools');rv(1);say('modelo','Quiero consultar la tabla de pedidos.');await fly('m','gate','SELECT',K.tool,700);await gate(K.instr);say('perm','Leer: permitido, sin preguntar.');await fly('gate','sql','SELECT',K.tool,700)},
-  async()=>{rv(2);say('modelo','Quiero guardar el resultado en una tabla de producción.');await fly('m','gate','CREATE TABLE',K.tool,700);await gate(K.cmd,500);say('perm','Escribir en producción: el harness te pide confirmación.');await fly('gate','u','¿Lo permites?',K.perm,900)},
-  async()=>{say('tu','Lo revisas y aceptas.');await fly('u','gate','Sí',K.card,800);await gate(K.instr,400);await fly('gate','sql','CREATE TABLE',K.tool,700)},
-  async()=>{rv(3);say('modelo','Y ahora borro la tabla antigua.');await fly('m','gate','DROP TABLE',K.tool,700);await gate(K.perm,300);say('perm','Borrar: prohibido. Ni pregunta. El modelo recibe un «no» y busca otra vía.');await mark('gate',1400);await add('deny','Denegado',K.perm,14)}]},
+  async()=>{base('sys','tools');pieceShow(0);say('harness','Las instrucciones entran en el contexto al empezar cada conversación.');await fly('instr','ctx','CLAUDE.md',K.instr,1200);await add('instr','Instrucciones',K.instr,24)},
+  async()=>{pieceShow(1);say('tu','Escribes /informe-kpi y el harness lo cambia por el encargo completo.');await fly('u','cmd','/informe-kpi',K.cmd,1000);await fly('cmd','ctx','encargo completo',K.cmd,1000);await add('cmd','Encargo /informe-kpi',K.cmd,26)},
+  async()=>{pieceShow(2);say('modelo','«Es un análisis de causa raíz»: abre la skill y entra la receta completa.');await fly('skill','ctx','receta causa-raíz',K.skill,1200);await add('skill','Skill causa-raíz',K.skill,34)},
+  async()=>{pieceShow(3);say('sub','Dos subagentes trabajan en paralelo, cada uno con su contexto, y devuelven solo un resumen.');await both(fly('m','s1','por dispositivo',K.sub,900),fly('m','s2','por canal',K.sub,1000));await subsWork(.85,.75,1300);await both(fly('s1','ctx','resumen',K.sub,900),fly('s2','ctx','resumen',K.sub,1000));await add('rs','2 resúmenes',K.sub,14)},
+  async()=>{pieceShow(4);live(true);say('modelo','Pide datos a Snowflake a través del conector MCP.');await fly('m','mcpc','snowflake.query',K.mcp,1000);await fly('mcpc','snow','consulta',K.mcp,900);pulse('sy-snow')},
+  async()=>{pieceShow(5);say('hook','Intenta sacar emails de clientes: el hook lo bloquea antes de ejecutarse.');await fly('m','sql','SELECT email…',K.tool,1000);await fly('hook','sql','control PII',K.hook,900);await mark('sql',1500)}]},
 
-/* 7 */{part:P2,n:'2.0 · Plugin',col:K.instr,t:'¿Qué es un belt?',
- lead:'Un harness recién instalado es genérico: no sabe cómo trabaja SDG. Un belt —técnicamente, un plugin— le añade las piezas de un dominio concreto. Se instala una vez y todo el equipo trabaja con el mismo método.',
- body:`<table class="tbl"><tr><th>Pieza</th><th>Claude Code</th><th>GitHub Copilot</th></tr>
-<tr><td><i style="--c:${K.instr}"></i>Instrucciones</td><td><code>CLAUDE.md</code></td><td><code>copilot-instructions.md</code> · <code>AGENTS.md</code></td></tr>
-<tr><td><i style="--c:${K.cmd}"></i>Comandos</td><td>slash commands</td><td>prompt files</td></tr>
-<tr><td><i style="--c:${K.skill}"></i>Skills</td><td>skills</td><td>agent skills</td></tr>
-<tr><td><i style="--c:${K.sub}"></i>Subagentes</td><td>subagents</td><td>custom agents</td></tr>
-<tr><td><i style="--c:${K.mcp}"></i>MCP</td><td>servidores MCP</td><td>servidores MCP</td></tr>
-<tr><td><i style="--c:${K.hook}"></i>Hooks</td><td>hooks</td><td>hooks</td></tr></table>
-<p class="note">Los nombres cambian según la herramienta; las piezas son las mismas. La clave para distinguirlas: quién activa cada una.</p>`,
+/* 7 */{part:P2,n:'Un belt real',col:K.instr,t:'Así es un belt de SDG',
+ lead:'powerbi-semantic-model-belt convierte un requisito de negocio en un modelo semántico de Power BI validado.',
+ body:ex('powerbi-semantic-model-belt/',`├─ CLAUDE.md    instrucciones del método
+├─ commands/    pbi-semantic-model-orchestrator
+├─ skills/      pbi-semantic-model-builder
+├─ agents/      pbi-model-creator
+└─ .mcp.json    belt-console`)+`<p class="note">El saber hacer de SDG deja de estar en la cabeza de tres personas y pasa a ser una herramienta de todo el equipo.</p>`,
+ beats:[async()=>{base('sys','tools','instr','skidx','mcpt');say('belt','Cada pieza en su carpeta. Se instala con /plugin install y se actualiza para todos.');for(const s of SLOTS)pulse('s-'+s[0])}]},
+
+/* 8 */{part:P3,n:'Caso práctico',col:K.cmd,t:'Retail Norte: ¿por qué cae la conversión?',
+ lead:'Una consultora lanza un comando. Mira qué pieza entra en cada paso.',
+ body:`<ol class="tl">${[['Comando',K.cmd],['Skill',K.skill],['Datos por MCP',K.mcp],['Subagentes',K.sub],['Tu OK y entrega',K.perm]].map(([t,c])=>`<li style="--c:${c}"><i></i>${t}</li>`).join('')}</ol>
+ <div class="rv">${ex('Resultado','Conversión −18 % desde el 9-sep, solo en la app de iOS.\nCausa: el checkout nuevo de la release 4.2.\nRecomendación: revertir el paso 3.')}</div>`,
  beats:[
-  async()=>{base('sys','tools');say('belt','El harness ya funciona. Ahora le añadimos un belt con el saber hacer de SDG.')},
-  async()=>{const D=['lo que debe saber siempre','encargos guardados que lanzas tú','recetas expertas que el modelo abre si las necesita','especialistas con su propio contexto','enchufes a los sistemas del cliente','controles automáticos que no se saltan'];
-   for(let i=0;i<6;i++){pulse('ph'+i);say('belt',`${SLOTS[i][1]}: ${D[i]}.`);await sleep(1400)}
-   say('belt','Seis piezas. Vamos una a una.')}]},
+  async()=>{base('sys','tools','instr','skidx','mcpt');tl(0);say('tu','/informe-kpi conversión septiembre. Las instrucciones del cliente ya están cargadas.');await fly('u','cmd','/informe-kpi',K.cmd,900);await fly('cmd','ctx','encargo',K.cmd,900);await add('cmd','Encargo /informe-kpi',K.cmd,22)},
+  async()=>{tl(1);say('modelo','Es un análisis de causa raíz: abro la skill con el método.');await fly('skill','ctx','receta',K.skill,1100);await add('skill','Skill causa-raíz',K.skill,28)},
+  async()=>{tl(2);live(true);say('modelo','Pido la conversión diaria a Snowflake por MCP.');await fly('m','mcpc','snowflake.query',K.mcp,900);await fly('mcpc','snow','consulta',K.mcp,800);await fly('snow','ctx','serie diaria',K.mcp,900);await add('r1','Serie diaria',K.mcp,16)},
+  async()=>{tl(3);say('sub','Dos subagentes lo analizan por dispositivo y por canal, en paralelo.');await both(fly('m','s1','dispositivo',K.sub,800),fly('m','s2','canal',K.sub,900));await subsWork(.85,.7,1200);await both(fly('s1','ctx','iOS −31 %',K.sub,900),fly('s2','ctx','canal: igual',K.sub,1000));await add('rs','2 resúmenes',K.sub,14)},
+  async()=>{tl(4);rv(1);say('perm','Publicar en el Power BI del cliente pide tu OK. Lo das y el informe queda entregado.');await fly('m','gate','publicar',K.mcp,800);await gate(K.cmd,300);await fly('gate','u','¿Publico?',K.perm,900);await fly('u','gate','OK',K.card,700);await gate(K.instr,300);await fly('gate','pbi','informe',K.mcp,1000);pulse('sy-pbi');live(false)}]},
 
-/* 8 */{part:P2,n:'2.1 · CLAUDE.md · AGENTS.md',col:K.instr,t:'Instrucciones: lo que debe saber siempre',
- lead:'Un archivo de texto con el contexto fijo: el cliente, sus definiciones, sus convenciones. El harness lo carga al empezar cada conversación.',
- who:who('nadie, están siempre','al empezar'),
- body:ex('CLAUDE.md · proyecto Retail Norte',`- Warehouse: Snowflake (RN_PROD), modelado con dbt.
-- Capas: stg_ → int_ → mart_. En informes, solo mart_.
-- Conversión = pedidos / sesiones (definición del cliente).
-- Nunca muestres datos personales (email, teléfono).`)+
- `<p class="note">Se paga en cada conversación: tiene que ser corto. Lo que solo aplica a veces va mejor en una skill.</p>`,
+/* 9 */{part:P4,n:'Chuleta',col:K.instr,t:'¿Qué pieza necesito?',lead:'',
+ body:`<table class="tbl"><tr><th>Pieza</th><th>Úsala cuando…</th><th>La activa</th></tr>
+${[['Instrucciones',K.instr,'debe saberse siempre','siempre están'],['Comando',K.cmd,'es un encargo repetido','tú'],['Skill',K.skill,'es un método que aplica a veces','el modelo'],['Subagente',K.sub,'hay mucho trabajo o pide foco','el modelo'],['MCP',K.mcp,'hacen falta datos de un sistema','el modelo'],['Hook',K.hook,'algo tiene que cumplirse sí o sí','un evento']].map(([a,c,b,d])=>`<tr><td><i style="--c:${c}"></i>${a}</td><td>${b}</td><td>${d}</td></tr>`).join('')}</table>
+ <p class="note">Una instrucción es una petición; un hook es una garantía.</p>`,
+ beats:[async()=>{base('sys','tools','instr','skidx','mcpt');say('belt','La clave para distinguirlas: quién activa cada pieza.');for(const s of SLOTS)pulse('s-'+s[0])}]},
+
+/* 10 */{part:P4,n:'En una frase',col:K.instr,t:'',lead:'',
+ body:`<div class="close"><p class="rv"><span style="--c:${K.model}">El modelo</span> piensa.</p><p class="rv"><span style="--c:${K.ink}">El harness</span> actúa y pone los límites.</p><p class="rv"><span style="--c:${K.instr}">El belt</span> aporta el método de SDG.</p></div>`,
  beats:[
-  async()=>{base('sys','tools');say('harness','Al empezar, el harness lee las instrucciones y las pone en el contexto.');await fly('instr','ctx','CLAUDE.md',K.instr,1000);await add('instr','Instrucciones',K.instr,26)},
-  async()=>{say('tu','«¿Cómo va la conversión este mes?»');await fly('u','ctx','¿conversión?',K.card,800);await add('q','Tu pregunta',K.ink,16);await send(900)},
-  async()=>{say('modelo','«Uso la definición del cliente y consulto mart_, no stg_». Sin que se lo digas.');await fly('m','sql','… from mart_web',K.tool,900);pulse('c-sql')}]},
-
-/* 9 */{part:P2,n:'2.2 · Slash commands · Prompt files',col:K.cmd,t:'Comandos: encargos guardados',
- lead:'Prompts bien escritos que se guardan con nombre y se lanzan con una barra: /informe-kpi. Admiten parámetros. Así todo el equipo pide lo mismo, igual de bien.',
- who:who('tú, con /nombre','cuando lo lanzas'),
- body:ex('commands/informe-kpi.md',`Analiza la variación del KPI $1 en $2.
-1. Usa la definición de las instrucciones.
-2. Aplica la skill causa-raiz.
-3. Entrega: 5 puntos, 3 gráficos y una recomendación.`)+ex('Tú escribes','/informe-kpi conversión septiembre'),
- beats:[
-  async()=>{base('sys','tools','instr');say('tu','Escribes: /informe-kpi conversión septiembre');await fly('u','cmd','/informe-kpi',K.cmd,1000);pulse('s-cmd')},
-  async()=>{say('harness','El harness sustituye el comando por el prompt completo guardado en el belt.');await fly('cmd','ctx','prompt completo',K.cmd,1000);await add('cmd','Prompt /informe-kpi',K.cmd,36)},
-  async()=>{await send(1000);say('modelo','Encargo claro: KPI, periodo, método y formato. Sin redactarlo cada vez.')}]},
-
-/* 10 */{part:P2,n:'2.3 · Skills',col:K.skill,t:'Skills: saber hacer bajo demanda',
- lead:'Una carpeta con instrucciones expertas, plantillas y scripts para un tipo de tarea. El modelo solo ve su nombre y una línea; si la tarea encaja, la abre entera.',
- who:who('el modelo, si encaja','solo al usarla'),
- body:ex('skills/causa-raiz/SKILL.md',`description: Investigar por qué ha cambiado un KPI.
-1. Localiza cuándo empieza (serie diaria).
-2. Descompón: dispositivo, canal, región.
-3. Cruza con eventos: releases, campañas.
-4. Valida con scripts/significancia.py`)+
- `<p class="note">Las instrucciones se cargan siempre; una skill, solo cuando hace falta. Puedes tener cincuenta sin llenar el contexto.</p>`,
- beats:[
-  async()=>{base('sys','tools','instr');say('harness','Del belt, el harness solo mete el índice de skills: nombre y una línea de cada una.');await fly('skill','ctx','índice',K.skill,900);await add('skidx','Índice de skills',K.skill,11,true)},
-  async()=>{await add('q','Tu pregunta',K.ink,16);await send(800);say('modelo','«Me piden por qué cambia un KPI: encaja con causa-raiz. La abro».');await fly('m','skill','abrir causa-raiz',K.skill,900);pulse('s-skill')},
-  async()=>{say('harness','Solo ahora entra la receta completa, con sus pasos y sus scripts.');await fly('skill','ctx','SKILL.md',K.skill,900);await add('skill','Skill causa-raíz',K.skill,44)},
-  async()=>{await send(700);say('modelo','Sigo el método, y para validar ejecuto el script que trae la skill.');await fly('m','py','significancia.py',K.tool,900);pulse('c-py')}]},
-
-/* 11 */{part:P2,n:'2.4 · Subagents · Custom agents',col:K.sub,t:'Subagentes: especialistas con su propia mesa',
- lead:'Agentes especializados con su propia ventana de contexto, instrucciones y herramientas. El principal les delega una tarea y recibe solo el resumen.',
- who:who('el modelo (o tú)','en su propio contexto'),
- body:ex('agents/revisor-sql.md',`description: Revisa SQL: rendimiento y convenciones dbt.
-tools: solo lectura
-Eres un revisor de SQL senior…`)+
- `<p class="note">Trabajan en paralelo y no ensucian el contexto principal. Y un revisor que solo puede leer no puede romper nada.</p>`,
- beats:[
-  async()=>{base('sys','tools','instr','skidx');await add('hist','Historial',K.ink,40);pulse('s-sub');say('modelo','Hay que revisar 40 modelos dbt. Si lo hago yo, me lleno el contexto: delego.')},
-  async()=>{await both(fly('m','s1','modelos 1-20',K.sub,900),fly('m','s2','modelos 21-40',K.sub,1000));say('sub','Cada subagente trabaja con su propia ventana, limpia, a la vez que el otro.');await subsWork(.9,.8,2000)},
-  async()=>{await both(fly('s1','ctx','3 problemas',K.sub,1000),fly('s2','ctx','1 problema',K.sub,1100));await add('r1','Resumen 1',K.sub,11);await add('r2','Resumen 2',K.sub,11);say('harness','Al principal solo le llegan dos resúmenes: su contexto apenas crece.')}]},
-
-/* 12 */{part:P2,n:'2.5 · Model Context Protocol',col:K.mcp,t:'MCP: enchufes a vuestros sistemas',
- lead:'Un estándar para conectar sistemas. Cada servidor MCP ofrece herramientas —consultar Snowflake, leer Power BI, buscar en Jira— y el harness las añade a la lista del modelo.',
- who:who('el modelo las pide','su lista, siempre'),
- body:ex('.mcp.json',`{ "snowflake": { … },
-  "powerbi":   { … },
-  "jira":      { … } }`)+
- `<p class="note">El USB-C de los agentes: el mismo conector sirve para Claude, Copilot o Cursor. Y los permisos siguen aplicando.</p>`,
- beats:[
-  async()=>{base('sys','tools','instr','skidx');say('harness','Al arrancar, el harness se conecta a los servidores MCP del belt y añade sus herramientas.');pulse('s-mcp');live(true);await fly('mcp','ctx','herramientas MCP',K.mcp,1000);await add('mcpt','Herram. MCP',K.mcp,14,true)},
-  async()=>{await send(700);say('modelo','«Llamo a jira.buscar: releases de septiembre».');await fly('m','mcpc','jira.buscar',K.mcp,900);pulse('c-mcp');await fly('mcpc','jira','consulta',K.mcp,800);pulse('sy-jira');await fly('jira','ctx','RN-482 checkout v2',K.mcp,1000);await add('rj','Resultado Jira',K.mcp,18)},
-  async()=>{say('harness','Mismo mecanismo para Power BI o cualquier sistema con servidor MCP. Sin integraciones a medida.');await fly('m','mcpc','powerbi.leer',K.mcp,800);await fly('mcpc','pbi','informe',K.mcp,800);pulse('sy-pbi')}]},
-
-/* 13 */{part:P2,n:'2.6 · Hooks',col:K.hook,t:'Hooks: garantías automáticas',
- lead:'Scripts que el harness ejecuta cuando pasa algo —antes de una consulta, al editar un archivo, al terminar— sin preguntar al modelo. Pueden revisar, corregir o bloquear.',
- who:who('un evento','automático'),
- body:`<div class="rules">
- <div><span>Al editar un .sql</span><b style="--c:${K.hook}">sqlfluff lint</b></div>
- <div><span>Antes de ejecutar una SQL</span><b style="--c:${K.hook}">bloquear datos personales</b></div>
- <div><span>Al terminar</span><b style="--c:${K.hook}">dbt test</b></div></div>
- <p class="note">Una instrucción es una petición: «no saques emails». Un hook es una garantía: no puede salir un email.</p>`,
- beats:[
-  async()=>{base('sys','tools','instr','skidx','mcpt');say('modelo','Escribo un modelo dbt nuevo: mart_conversion.sql');await fly('m','files','escribir .sql',K.tool,900);pulse('c-files');
-   say('hook','Evento «archivo editado»: el hook lanza sqlfluff. Pasa siempre, lo decida o no el modelo.');await fly('hook','files','sqlfluff lint',K.hook,1000);await fly('files','ctx','2 errores de estilo',K.hook,900);await add('h1','Hook: 2 errores',K.hook,14)},
-  async()=>{await send(700);say('modelo','Corrijo los dos errores.');await fly('m','files','corregir',K.tool,800)},
-  async()=>{say('modelo','Saco los clientes con su email para segmentar.');await fly('m','sql','SELECT email…',K.tool,900);await fly('hook','sql','control PII',K.hook,900);
-   say('hook','Otro hook detecta una columna personal y bloquea la consulta antes de ejecutarla.');await mark('sql',1300);await add('h2','Hook: PII bloqueada',K.hook,14)}]},
-
-/* 14 */{part:P2,n:'2.7 · Plugin',col:K.instr,t:'Un belt real de SDG',
- lead:'Todo viaja en una carpeta versionada. Se instala con un comando y se actualiza para todo el equipo a la vez.',
- body:ex('powerbi-semantic-model-belt/',`├─ CLAUDE.md     contexto y reglas del método
-├─ commands/     pbi-semantic-model-orchestrator
-│                utils-reset-environment
-├─ skills/       pbi-semantic-model-builder
-├─ agents/       pbi-model-creator
-└─ .mcp.json     belt-console`)+ex('Instalación','/plugin install powerbi-semantic-model-belt')+
- `<p class="note">Convierte un requisito de negocio en un modelo semántico de Power BI validado. Lo que sabe hacer SDG deja de estar en la cabeza de tres personas y pasa a ser una herramienta de todo el equipo.</p>`,
- beats:[async()=>{base('sys','tools','instr','skidx','mcpt');say('tu','/plugin install kpi-analysis-belt');await sleep(600);for(const s of SLOTS){pulse('s-'+s[0]);await sleep(300)}
-  say('belt','Seis piezas, un belt. El mismo método para todo el equipo y todos los clientes.')}]},
-
-/* 15 */{part:P3,n:'Caso práctico',col:K.cmd,t:'Retail Norte: ¿por qué cae la conversión?',
- lead:'El cliente quiere saber por qué ha caído la conversión online en septiembre. Una consultora lanza un comando. Mira qué pieza entra en cada momento.',
- body:`<ol class="tl">${[['Comando',K.cmd],['Instrucciones',K.instr],['Skill',K.skill],['MCP · Snowflake',K.mcp],['Hook · PII',K.hook],['Subagentes',K.sub],['MCP · Jira',K.mcp],['Python',K.tool],['Permiso',K.perm],['Entrega',K.ink]].map(([t,c])=>`<li style="--c:${c}"><i></i>${t}</li>`).join('')}</ol>`+
- `<div class="rv">${ex('Resultado','Conversión −18 % desde el 9-sep, solo en la app de iOS.\nCausa: checkout nuevo de la release 4.2.\nRecomendación: revertir el paso 3 del checkout.')}</div>
- <p class="note">Tú lanzas un comando y das un OK. El belt pone el método; el harness, las manos y los límites; el modelo, el razonamiento.</p>`,
- beats:[
-  async()=>{base('sys','tools','skidx','mcpt');tl(0);say('tu','/informe-kpi conversión septiembre');await fly('u','cmd','/informe-kpi',K.cmd,800);await fly('cmd','ctx','prompt',K.cmd,800);await add('cmd','Prompt /informe-kpi',K.cmd,26)},
-  async()=>{tl(1);say('harness','Carga las instrucciones de Retail Norte: definición de conversión y capas de dbt.');await fly('instr','ctx','CLAUDE.md',K.instr,800);await add('instr','Instrucciones',K.instr,18);await send(700)},
-  async()=>{tl(2);say('modelo','Es un análisis de causa raíz: abro la skill.');await fly('m','skill','causa-raiz',K.skill,800);await fly('skill','ctx','SKILL.md',K.skill,800);await add('skill','Skill causa-raíz',K.skill,30)},
-  async()=>{tl(3);live(true);say('modelo','Pido la serie diaria de conversión a Snowflake.');await fly('m','mcpc','snowflake.query',K.mcp,800);await fly('mcpc','snow','consulta',K.mcp,700);await fly('snow','ctx','serie diaria',K.mcp,800);await add('r1','Serie diaria',K.mcp,14)},
-  async()=>{tl(4);say('modelo','Pido el detalle con el email de cada cliente…');await fly('m','mcpc','… email …',K.mcp,800);await fly('hook','mcpc','control PII',K.hook,800);
-   say('hook','Bloqueado: datos personales. El modelo lo rehace agregado, sin emails.');await mark('mcpc',1100);await add('h','Hook: PII',K.hook,11)},
-  async()=>{tl(5);say('modelo','Reparto: un subagente analiza por dispositivo y otro por canal.');await both(fly('m','s1','dispositivo',K.sub,800),fly('m','s2','canal',K.sub,900));await subsWork(.85,.7,1500);
-   await both(fly('s1','ctx','iOS −31 %',K.sub,900),fly('s2','ctx','canal: igual',K.sub,1000));await add('s1','Resumen 1',K.sub,10);await add('s2','Resumen 2',K.sub,10)},
-  async()=>{tl(6);say('modelo','¿Qué se publicó en la app el 8 de septiembre? Busco en Jira.');await fly('m','mcpc','jira.buscar',K.mcp,800);await fly('mcpc','jira','consulta',K.mcp,700);await fly('jira','ctx','release 4.2',K.mcp,800);await add('rj','Release 4.2',K.mcp,12)},
-  async()=>{tl(7);say('modelo','Genero los tres gráficos del informe con Python.');await fly('m','py','graficos.py',K.tool,800);pulse('c-py');await add('g','Gráficos',K.tool,10)},
-  async()=>{tl(8);say('perm','Publicar en el Power BI del cliente requiere tu OK.');await fly('m','gate','publicar',K.mcp,700);await gate(K.cmd,400);await fly('gate','u','¿Publico?',K.perm,800);await sleep(300);await fly('u','gate','OK',K.card,700);await gate(K.instr,300);
-   await fly('gate','mcpc','publicar',K.mcp,600);await fly('mcpc','pbi','informe',K.mcp,700);pulse('sy-pbi');live(false)},
-  async()=>{tl(9);rv(1);say('modelo','Hecho: −18 % desde el 9-sep, solo en iOS, por el checkout de la release 4.2.');await fly('m','u','informe publicado',K.card,1000)}]},
-
-/* 16 */{part:P4,n:'Resumen',col:K.instr,t:'La chuleta',
- lead:'La pregunta que ordena todo: ¿quién activa cada pieza?',
- body:`<table class="tbl"><tr><th>Pieza</th><th>La activa</th><th>Ejemplo</th></tr>
-<tr><td><i style="--c:${K.instr}"></i>Instrucciones</td><td>Nadie: siempre están</td><td>Definición de KPIs del cliente</td></tr>
-<tr><td><i style="--c:${K.cmd}"></i>Comando</td><td>Tú, con /nombre</td><td>/informe-kpi</td></tr>
-<tr><td><i style="--c:${K.skill}"></i>Skill</td><td>El modelo, si encaja</td><td>Análisis de causa raíz</td></tr>
-<tr><td><i style="--c:${K.sub}"></i>Subagente</td><td>El modelo delega</td><td>revisor-sql</td></tr>
-<tr><td><i style="--c:${K.mcp}"></i>MCP</td><td>El modelo lo pide</td><td>Snowflake, Power BI, Jira</td></tr>
-<tr><td><i style="--c:${K.hook}"></i>Hook</td><td>Un evento</td><td>Bloquear datos personales</td></tr>
-<tr><td><i style="--c:${K.perm}"></i>Permisos</td><td>El harness</td><td>Publicar pide tu OK</td></tr></table>`,
- beats:[async()=>{base('sys','tools','instr','skidx','mcpt');say('harness','Todas las piezas acaban en la ventana de contexto o alrededor de ella.');for(const s of SLOTS){pulse('s-'+s[0]);await sleep(250)}}]},
-
-/* 17 */{part:P4,n:'Resumen',col:K.instr,t:'¿Qué pieza necesito?',
- lead:'Antes de pedir «un agente», hazte estas seis preguntas.',
- body:`<ul class="dec">${[['¿Tiene que saberlo siempre?','Instrucciones',K.instr],['¿Es un encargo que lanzáis a menudo?','Comando',K.cmd],['¿Es un método que solo aplica a veces?','Skill',K.skill],['¿Es mucho trabajo o pide foco?','Subagente',K.sub],['¿Necesita datos de un sistema?','MCP',K.mcp],['¿Tiene que cumplirse sí o sí?','Hook',K.hook]].map(([q,a,c])=>`<li class="rv">${q}<b style="--c:${c}">${a}</b></li>`).join('')}</ul>
- <p class="note rv">Para empezar: buenas instrucciones, un par de comandos y un conector. Convertid en skill lo que repitáis y aflojad los permisos con la experiencia.</p>`,
- beats:(()=>{const Q=['¿Tiene que saberlo siempre? Instrucciones.','¿Lo lanzáis a menudo? Un comando.','¿Solo aplica a veces? Una skill.','¿Mucho trabajo o pide foco? Un subagente.','¿Necesita datos de un sistema? MCP.','¿Tiene que cumplirse sí o sí? Un hook.'];
-  return Q.map((q,i)=>async()=>{if(i===0)base('sys','tools','instr','skidx','mcpt');rv(i===5?7:i+1);pulse('s-'+SLOTS[i][0]);say('belt',q)})})()},
-
-/* 18 */{part:P4,n:'Test',col:K.tool,t:'¿Qué pieza usarías?',lead:'',body:`<div id="quiz"></div>`,
- beats:QZ.flatMap((q,i)=>[async()=>{if(i===0)base('sys','tools','instr','skidx','mcpt');qShow(i,false);fit()},async()=>{qShow(i,true)}])}
+  async()=>{base('sys','tools','instr','skidx','mcpt');rv(1);say('modelo','El modelo razona y escribe.');pulse('mcirc');await think(1200)},
+  async()=>{rv(2);say('harness','El harness le da contexto, manos y barandillas.');pulse('g-gate')},
+  async()=>{rv(3);say('belt','Y el belt hace que trabaje como SDG, igual para todo el equipo.');for(const s of SLOTS)pulse('s-'+s[0])}]}
 ];
 
 /* ================= NAVEGACIÓN ================= */
@@ -467,13 +340,15 @@ function setView(h,now){if(Math.abs(h-vh)<.1)return;const my=++vtok;if(now){vh=h
 function fit(){const p=$('panel'),i=$('pin');let z=1;i.style.setProperty('--fz',z);while(i.scrollHeight>p.clientHeight+1&&z>.6){z-=.03;i.style.setProperty('--fz',z)}}
 function renderSlide(s){
   const c=S[s];
-  $('pin').innerHTML=c.cover?c.html:`<p class="kick" style="--c:${c.col}"><i></i>${c.n}</p><h2>${c.t}</h2>${c.lead?`<p class="lead">${c.lead}</p>`:''}${c.who?c.who.replace('class="who"',`class="who" style="--c:${c.col}"`):''}<div style="--c:${c.col}">${c.body||''}</div>`;
+  $('pin').innerHTML=c.cover?c.html:`<p class="kick" style="--c:${c.col}"><i></i>${c.n}</p>${c.t?`<h2>${c.t}</h2>`:''}${c.lead?`<p class="lead">${c.lead}</p>`:''}<div style="--c:${c.col}">${c.body||''}</div>`;
   $('part').textContent=c.part;$('cnt').textContent=String(s+1).padStart(2,'0')+' / '+S.length;
   $('bar').style.width=((s+1)/S.length*100)+'%';
+}
+function visScene(s,b){
   document.querySelectorAll('#stage .st').forEach(e=>{let on=true;
-    if(e.dataset.r){const [a,b]=e.dataset.r.split('-').map(Number);on=s>=a&&s<=b}else if(e.dataset.ch)on=s>=+e.dataset.ch;
+    if(e.dataset.r){const [a,z]=e.dataset.r.split('-').map(Number);on=s>=a&&s<=z}
+    else if(e.dataset.ch){const ch=+e.dataset.ch;on=s>ch||(s===ch&&b>=(+e.dataset.b||0))}
     e.classList.toggle('on',on)});
-  fit();
 }
 function resetScene(){
   $('packets').innerHTML='';ctxClear();['mring','sr0','sr1'].forEach(id=>$(id).classList.remove('on'));
@@ -485,14 +360,14 @@ async function goTo(s,b,animate=true){
   tok++;const my=tok;
   if(s!==si)renderSlide(s);
   si=s;bi=b;
-  resetScene();tl(-1);rv(0);
-  setView(s>=7?448:346,!animate);
+  resetScene();tl(-1);rv(0);visScene(s,b);
+  setView(s>=5?448:346,!animate);
   $('beats').innerHTML=S[s].beats.length>1?S[s].beats.map((_,k)=>`<i class="${k<=b?'on':''}"></i>`).join(''):'';
   history.replaceState(null,'',`#${s+1}.${b+1}`);
   try{
     FAST=true;for(let k=0;k<b;k++)await S[s].beats[k]();
-    if(!animate){await S[s].beats[b]();return}
-    FAST=false;await sleep(250);await S[s].beats[b]();
+    if(!animate){await S[s].beats[b]();fit();return}
+    FAST=false;await sleep(200);const run=S[s].beats[b]();fit();await run;
   }catch(e){if(e!=='x')console.error(e)}finally{if(my===tok)FAST=false}
 }
 const next=()=>{if(bi<S[si].beats.length-1)goTo(si,bi+1);else if(si<S.length-1)goTo(si+1,0)};
@@ -507,8 +382,7 @@ addEventListener('keydown',e=>{
 });
 $('deck').addEventListener('click',e=>{if(e.target.closest('#nav'))return;next()});
 $('bPrev').onclick=e=>{e.stopPropagation();prev()};$('bNext').onclick=e=>{e.stopPropagation();next()};
-function scale(){document.documentElement.style.setProperty('--k',Math.min(innerWidth/1600,innerHeight/900));
-}
+function scale(){document.documentElement.style.setProperty('--k',Math.min(innerWidth/1600,innerHeight/900))}
 addEventListener('resize',scale);scale();
 const m=location.hash.match(/^#(\d+)(?:\.(\d+))?/);
 document.fonts.ready.then(()=>fit());
