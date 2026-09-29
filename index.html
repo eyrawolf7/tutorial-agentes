@@ -3,85 +3,88 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#1c1b19">
-<title>Anatomía de un agente de IA · Guía para managers</title>
+<meta name="theme-color" content="#000000">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<title>Anatomía de un belt · Guía para managers</title>
 <style>
-:root{--paper:#f4f1ea;--ink:#1c1b19;--card:#fffdf7;--mute:#77726a;--hz:#ebe6db;
---sys:#8a857b;--tool:#2d5ec2;--perm:#c32f3c;--instr:#2f8f6b;--cmd:#e0a526;--skill:#e0692a;--sub:#cf4b77;--mcp:#1b8a98;--hook:#6a4cc4;
---serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
---sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
---mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+:root{--bg:#1E1B31;--bg2:#17152A;--card:#28253F;--card2:#221F38;--line:#3A3658;--txt:#F4F6FF;--lav:#D1D8ED;--mute:#9A9CB8;--turq:#00E6D9;--blue:#3366FF;--dark:#1E1B31;
+--sys:#8C8FB0;--tool:#D1D8ED;--perm:#FF4D56;--instr:#00E6D9;--cmd:#F7C948;--skill:#8B8DF7;--sub:#FF7AB6;--mcp:#4FA3FF;--hook:#FF9F43;
+--sans:"Figtree","Sofia Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.55 var(--sans)}
-header{position:sticky;top:0;z-index:20;height:42px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 16px;background:var(--ink);color:var(--paper);font:700 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase}
+body{margin:0;background:var(--bg);color:var(--lav);font:17px/1.6 var(--sans)}
+header{position:sticky;top:0;z-index:20;height:46px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 18px;background:#000;color:#fff;font:600 14px/1 var(--sans)}
 header span:first-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#bar{position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--cmd)}
-#stagecol{position:sticky;top:42px;z-index:10;background:var(--paper);border-bottom:2px solid var(--ink);padding:6px 8px 8px}
+header b{color:var(--turq);font-weight:700}
+#cnt{color:var(--mute);font-variant-numeric:tabular-nums}
+#bar{position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--turq)}
+#stagecol{position:sticky;top:46px;z-index:10;background:var(--bg);border-bottom:1px solid var(--line);padding:6px 8px 10px}
 #stage{display:block;width:100%;height:auto;max-height:44vh;max-height:44dvh;margin:0 auto}
-#cap{display:flex;gap:10px;align-items:flex-start;margin-top:6px;padding:8px 10px;min-height:64px;background:var(--card);border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink)}
-#capWho{flex:none;margin-top:1px;padding:3px 7px;font:700 10.5px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--ink)}
-#capTxt{font:500 16px/1.32 var(--serif)}
+#cap{display:flex;gap:10px;align-items:flex-start;margin-top:6px;padding:9px 11px;min-height:64px;background:var(--card);border:1px solid var(--line);border-radius:12px}
+#capWho{flex:none;margin-top:1px;padding:3px 8px;border-radius:6px;font:700 11px/1.3 var(--sans);letter-spacing:.06em;text-transform:uppercase}
+#capTxt{font:500 16px/1.38 var(--sans);color:var(--txt)}
 main{min-width:0}
-.part{padding:34px 20px 0}
-.part span{display:inline-block;padding:4px 9px;background:var(--ink);color:var(--paper);font:700 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase}
-.part b{display:block;margin-top:10px;font:800 26px/1.1 var(--serif);border-bottom:2px solid var(--ink);padding-bottom:14px}
-.ch{padding:26px 20px 40px;min-height:66vh;min-height:66dvh;opacity:.35;transition:opacity .4s}
+.part{padding:38px 20px 0}
+.part span{display:inline-block;padding:4px 10px;border-radius:6px;background:var(--turq);color:var(--dark);font:700 12px/1.2 var(--sans);letter-spacing:.1em;text-transform:uppercase}
+.part b{display:block;margin-top:12px;font:700 28px/1.12 var(--sans);color:#fff;letter-spacing:-.02em;border-bottom:1px solid var(--line);padding-bottom:16px}
+.ch{padding:26px 20px 40px;min-height:66vh;min-height:66dvh;opacity:.3;transition:opacity .4s}
 .ch.act{opacity:1}.ch.free{min-height:0}
-.kick{display:flex;align-items:center;gap:9px;margin:0 0 8px;font:700 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase}
-.kick i{width:13px;height:13px;background:var(--c);border:2px solid var(--ink);flex:none}
-h1,h2{font-family:var(--serif);font-weight:800;letter-spacing:-.01em;margin:0 0 14px}
-h1{font-size:40px;line-height:1.04}
-h1 em{font-style:normal;background:linear-gradient(transparent 60%,var(--cmd) 60% 92%,transparent 92%)}
-h2{font-size:29px;line-height:1.12}
+.kick{display:flex;align-items:center;gap:9px;margin:0 0 10px;font:700 12px/1.2 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.kick i{width:10px;height:10px;border-radius:3px;background:var(--c);flex:none}
+h1,h2{font-family:var(--sans);font-weight:700;letter-spacing:-.025em;margin:0 0 14px;color:#fff}
+h1{font-size:42px;line-height:1.05}
+h1 em{font-style:normal;color:var(--turq)}
+h2{font-size:30px;line-height:1.12}
 p{margin:0 0 14px}
-.lead{font-size:17.5px}
-.who{display:flex;flex-wrap:wrap;gap:6px 14px;margin:0 0 14px;font:600 13px/1.3 var(--mono)}
-.who span{padding:4px 8px;border:2px solid var(--ink);background:var(--card)}
-.who b{color:var(--c);filter:brightness(.85)}
-.note{padding:10px 14px;border-left:7px solid var(--c);background:rgba(255,253,247,.8);font:italic 500 17px/1.42 var(--serif)}
-.ex{margin:0 0 16px;padding:11px 13px;background:var(--card);border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink);font:12.5px/1.55 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere}
-.ex .l{display:block;margin-bottom:4px;font:700 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
-.ex .k{color:var(--c);font-weight:700;filter:brightness(.8)}
+.lead{font-size:17.5px;color:var(--lav)}
+.who{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;font:500 14px/1.3 var(--sans)}
+.who span{padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card2)}
+.who b{color:var(--c)}
+.note{padding:12px 16px;border-left:4px solid var(--c);border-radius:0 12px 12px 0;background:var(--card2);font:500 16.5px/1.45 var(--sans);color:var(--txt)}
+.ex{margin:0 0 16px;padding:12px 14px;background:var(--bg2);border:1px solid var(--line);border-radius:12px;font:12.5px/1.6 var(--mono);color:var(--lav);white-space:pre-wrap;overflow-wrap:anywhere}
+.ex .l{display:block;margin-bottom:5px;font:700 11px/1.2 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--turq)}
+.ex .k{color:var(--c);font-weight:700}
 .ex .bad{color:var(--perm)}
-.ex + .ex{margin-top:-4px}
-.btn{font:700 13px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:11px 15px;min-height:44px;background:var(--card);color:var(--ink);border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink);cursor:pointer}
-.btn:active{transform:translate(3px,3px);box-shadow:none}
-.road{list-style:none;padding:0;margin:18px 0;counter-reset:r}
-.road li{counter-increment:r;display:flex;gap:12px;align-items:center;padding:10px 0;border-top:2px solid var(--ink);font:600 17px/1.3 var(--serif)}
-.road li:last-child{border-bottom:2px solid var(--ink)}
-.road li:before{content:counter(r);flex:none;width:26px;height:26px;display:grid;place-items:center;background:var(--ink);color:var(--paper);font:700 13px/1 var(--mono)}
-.hint{font:700 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;animation:nudge 1.6s ease-in-out infinite}
+.btn{display:inline-flex;align-items:center;gap:8px;font:700 15px/1 var(--sans);padding:12px 18px;min-height:46px;background:var(--turq);color:var(--dark);border:0;border-radius:12px;cursor:pointer}
+.btn:after{content:"›";font-size:22px;line-height:0;margin-top:-2px}
+.btn:active{transform:scale(.97)}
+.road{list-style:none;padding:0;margin:20px 0;counter-reset:r}
+.road li{counter-increment:r;display:flex;gap:14px;align-items:center;padding:11px 0;border-top:1px solid var(--line);font:600 17px/1.3 var(--sans);color:var(--txt)}
+.road li:last-child{border-bottom:1px solid var(--line)}
+.road li:before{content:counter(r);flex:none;width:28px;height:28px;display:grid;place-items:center;border-radius:8px;background:var(--turq);color:var(--dark);font:700 14px/1 var(--sans)}
+.hint{font:700 13px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--turq);animation:nudge 1.6s ease-in-out infinite}
 @keyframes nudge{50%{transform:translateY(5px)}}
-.tbl{width:100%;border-collapse:collapse;margin:0 0 16px;font-size:14px;line-height:1.35;background:var(--card);border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
-.tbl th{text-align:left;padding:8px;background:var(--ink);color:var(--paper);font:700 10.5px/1.2 var(--mono);letter-spacing:.1em;text-transform:uppercase}
-.tbl td{padding:8px;border-top:1.5px solid var(--ink);vertical-align:top}
-.tbl td:first-child{font-weight:700;white-space:nowrap}
-.tbl i{display:inline-block;width:10px;height:10px;margin-right:6px;background:var(--c);border:1.5px solid var(--ink)}
+.tbl{width:100%;border-collapse:separate;border-spacing:0;margin:0 0 16px;font-size:14px;line-height:1.4;background:var(--card2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.tbl th{text-align:left;padding:9px 8px;background:var(--bg2);color:var(--turq);font:700 11px/1.2 var(--sans);letter-spacing:.08em;text-transform:uppercase}
+.tbl td{padding:9px 8px;border-top:1px solid var(--line);vertical-align:top}
+.tbl td:first-child{font-weight:700;white-space:nowrap;color:var(--txt)}
+.tbl i{display:inline-block;width:9px;height:9px;margin-right:7px;border-radius:3px;background:var(--c)}
 .tbl code{font:12px var(--mono);overflow-wrap:anywhere}
 .tl{list-style:none;margin:0 0 16px;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.tl li{display:flex;gap:7px;align-items:center;padding:6px 8px;border:2px solid var(--ink);background:rgba(255,253,247,.5);font:600 12px/1.2 var(--mono);opacity:.4;transition:.25s}
-.tl li i{flex:none;width:11px;height:11px;background:var(--c);border:2px solid var(--ink)}
-.tl li.on{opacity:1;background:var(--card);box-shadow:2px 2px 0 var(--ink)}
+.tl li{display:flex;gap:8px;align-items:center;padding:7px 9px;border:1px solid var(--line);border-radius:8px;font:600 13px/1.2 var(--sans);opacity:.4;transition:.25s}
+.tl li i{flex:none;width:9px;height:9px;border-radius:3px;background:var(--c)}
+.tl li.on{opacity:1;background:var(--card);border-color:var(--c);color:var(--txt)}
 .dec{list-style:none;margin:0 0 16px;padding:0}
-.dec li{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-top:2px solid var(--ink);font:500 16.5px/1.3 var(--serif)}
-.dec li:last-child{border-bottom:2px solid var(--ink)}
-.dec b{flex:none;font:700 12px/1.6 var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--c);filter:brightness(.8)}
-.q{margin:0 0 16px;padding:14px;background:var(--card);border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
-.q .n{font:700 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
-.q p.t{margin:6px 0 12px;font:600 19px/1.3 var(--serif)}
-.q .opt{display:block;width:100%;text-align:left;margin:0 0 8px;font:600 15px/1.3 var(--sans);text-transform:none;letter-spacing:0}
-.q .opt.ok{background:var(--instr);color:#fff}.q .opt.ko{background:var(--perm);color:#fff}
-.q .fb{margin:10px 0 0;font:italic 500 16.5px/1.4 var(--serif)}
-.foot{padding:10px 20px 60px;font:12px/1.5 var(--mono);color:var(--mute)}
+.dec li{display:flex;justify-content:space-between;gap:10px;padding:11px 0;border-top:1px solid var(--line);font:500 16px/1.35 var(--sans);color:var(--txt)}
+.dec li:last-child{border-bottom:1px solid var(--line)}
+.dec b{flex:none;font:700 13px/1.5 var(--sans);text-transform:uppercase;letter-spacing:.05em;color:var(--c)}
+.q{margin:0 0 16px;padding:16px;background:var(--card);border:1px solid var(--line);border-radius:12px}
+.q .n{font:700 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--turq)}
+.q p.t{margin:8px 0 14px;font:600 19px/1.35 var(--sans);color:#fff}
+.q .opt{display:flex;width:100%;text-align:left;margin:0 0 8px;background:var(--card2);color:var(--txt);border:1px solid var(--line);font-weight:600}
+.q .opt:after{content:none}
+.q .opt.ok{background:var(--turq);color:var(--dark);border-color:var(--turq)}.q .opt.ko{background:var(--perm);color:#fff;border-color:var(--perm)}
+.q .fb{margin:12px 0 0;font:500 16px/1.45 var(--sans);color:var(--txt)}
+.foot{padding:10px 20px 60px;font:13px/1.5 var(--sans);color:var(--mute)}
 /* escena */
 .st{opacity:0;transition:opacity .55s}
 .st.on{opacity:1}
 .pl{animation:pl .45s ease-in-out 2;transform-box:fill-box;transform-origin:center}
 @keyframes pl{50%{transform:scale(1.08)}}
-.ln{fill:none;stroke:var(--ink);stroke-width:1.6;stroke-dasharray:3 4;opacity:.55}
+.ln{fill:none;stroke:var(--lav);stroke-width:1.5;stroke-dasharray:3 4;opacity:.4}
 .ln.live{stroke:var(--mcp);stroke-width:2.4;opacity:1;animation:dash .6s linear infinite}
 @keyframes dash{to{stroke-dashoffset:-14}}
-.la{fill:none;stroke:var(--ink);stroke-width:2;marker-end:url(#ah)}
+.la{fill:none;stroke:var(--lav);stroke-width:2;marker-end:url(#ah)}
 .ring{opacity:0;transition:opacity .2s;transform-box:fill-box;transform-origin:center}
 .ring.on{opacity:1;animation:spin 2.2s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -89,12 +92,12 @@ p{margin:0 0 14px}
 /* ancho: escena a la izquierda */
 @media (min-width:820px),(orientation:landscape) and (min-width:600px){
   .wrap{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(360px,.75fr)}
-  #stagecol{top:42px;height:calc(100vh - 42px);height:calc(100dvh - 42px);display:flex;flex-direction:column;justify-content:center;padding:14px 18px;border-bottom:0;border-right:2px solid var(--ink)}
+  #stagecol{top:46px;height:calc(100vh - 46px);height:calc(100dvh - 46px);display:flex;flex-direction:column;justify-content:center;padding:14px 20px;border-bottom:0;border-right:1px solid var(--line)}
   #stage{max-height:calc(100dvh - 160px)}
-  .ch{padding:40px 32px 50px;min-height:80vh;min-height:80dvh}.ch.free{min-height:0}
-  .part{padding:44px 32px 0}
+  .ch{padding:40px 34px 50px;min-height:80vh;min-height:80dvh}.ch.free{min-height:0}
+  .part{padding:48px 34px 0}
 }
-@media (min-width:820px){h1{font-size:46px}h2{font-size:33px}.ex{font-size:13px}}
+@media (min-width:820px){h1{font-size:50px}h2{font-size:34px}.ex{font-size:13px}}
 @media (orientation:landscape) and (max-height:520px){
   #stage{max-height:calc(100dvh - 128px)}#cap{min-height:52px;padding:5px 8px}#capTxt{font-size:14.5px}
   .ch{padding:22px 20px}h1{font-size:30px}h2{font-size:24px}.lead{font-size:15.5px}
@@ -102,32 +105,32 @@ p{margin:0 0 14px}
 </style>
 </head>
 <body>
-<header><span>Anatomía de un agente de IA</span><span id="cnt"></span><i id="bar"></i></header>
+<header><span><b>SDG</b> · Anatomía de un belt</span><span id="cnt"></span><i id="bar"></i></header>
 <div class="wrap">
   <div id="stagecol">
-    <svg id="stage" viewBox="0 0 400 346" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagrama animado de un modelo de IA dentro de un harness, con sus herramientas y las piezas de un plugin"></svg>
+    <svg id="stage" viewBox="0 0 400 346" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagrama animado de un modelo de IA dentro de un harness, con sus herramientas y las piezas de un belt"></svg>
     <div id="cap"><span id="capWho"></span><span id="capTxt"></span></div>
   </div>
   <main id="chs"></main>
 </div>
 
 <script>
-const K={ink:'#1c1b19',paper:'#f4f1ea',card:'#fffdf7',hz:'#ebe6db',tray:'#e6dfd0',mute:'#8a857b',
- sys:'#8a857b',tool:'#2d5ec2',perm:'#c32f3c',instr:'#2f8f6b',cmd:'#e0a526',skill:'#e0692a',sub:'#cf4b77',mcp:'#1b8a98',hook:'#6a4cc4'};
+const K={ink:'#E8EBFA',dark:'#1E1B31',paper:'#1E1B31',card:'#2B2846',hz:'#23203A',tray:'#211E37',edge:'#4A4670',mute:'#8C8FB0',model:'#3366FF',
+ sys:'#8C8FB0',tool:'#D1D8ED',perm:'#FF4D56',instr:'#00E6D9',cmd:'#F7C948',skill:'#8B8DF7',sub:'#FF7AB6',mcp:'#4FA3FF',hook:'#FF9F43'};
 const NS='http://www.w3.org/2000/svg',$=id=>document.getElementById(id);
 
 /* ================= ESCENA ================= */
-const R=(x,y,w,h,o={})=>{const {f=K.card,s=K.ink,sw=2,r=6,sh=true,dash='',id=''}=o;
+const R=(x,y,w,h,o={})=>{const {f=K.card,s=K.edge,sw=1.5,r=8,sh=false,dash='',id=''}=o;
  return (sh?`<rect x="${x+3}" y="${y+3}" width="${w}" height="${h}" rx="${r}" fill="${K.ink}"/>`:'')+
  `<rect${id?` id="${id}"`:''} x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="${f}" stroke="${s}" stroke-width="${sw}"${dash?` stroke-dasharray="${dash}"`:''}/>`};
-const T=(x,y,t,o={})=>{const {fs=11,w=700,c=K.ink,a='middle',f='mono',ls=0,id=''}=o;
+const T=(x,y,t,o={})=>{const {fs=11,w=700,c=K.ink,a='middle',f='sans',ls=0,id=''}=o;
  return `<text${id?` id="${id}"`:''} x="${x}" y="${y}" text-anchor="${a}" style="font:${w} ${fs}px var(--${f});fill:${c};letter-spacing:${ls}em">${t}</text>`};
 const chip=(id,t,x,w,c=K.tool)=>`<g id="c-${id}">${R(x,280,w,26,{s:c,r:4,sh:false})}${T(x+w/2,297,t,{fs:10,f:'sans'})}</g>`;
 const SYS=[['snow','Snowflake',150],['dbt','dbt',212],['pbi','Power BI',274],['jira','Jira',336]];
 const SLOTS=[['instr','Instrucciones','siempre activas',K.instr,8],['cmd','Comandos','los lanzas tú',K.cmd,9],['skill','Skills','las elige el modelo',K.skill,10],
  ['sub','Subagentes','delega el modelo',K.sub,11],['mcp','MCP','conecta sistemas',K.mcp,12],['hook','Hooks','saltan solos',K.hook,13]];
 const sXY=i=>({x:16+(i%3)*124,y:368+Math.floor(i/3)*36});
-const pill=(id,x,y,t)=>`<g id="${id}"><rect x="${x-33}" y="${y-9}" width="66" height="18" rx="9" fill="${K.card}" stroke="${K.ink}" stroke-width="2"/>${T(x,y+3.5,t,{fs:9,ls:.1})}</g>`;
+const pill=(id,x,y,t)=>`<g id="${id}"><rect x="${x-33}" y="${y-9}" width="66" height="18" rx="9" fill="${K.card}" stroke="${K.edge}" stroke-width="1.5"/>${T(x,y+3.5,t,{fs:9,ls:.1})}</g>`;
 
 $('stage').innerHTML=`
 <defs><marker id="ah" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8z" fill="${K.ink}"/></marker></defs>
@@ -136,7 +139,7 @@ $('stage').innerHTML=`
 ${SYS.map(([id,n,x])=>`<g id="sy-${id}">${R(x,20,58,32,{s:K.mcp,r:5})}${T(x+29,40,n,{fs:10,f:'sans'})}</g>`).join('')}</g>
 <g class="st" data-r="1-3"><path d="M238 124 L186 56" fill="none" stroke="${K.perm}" stroke-width="2" stroke-dasharray="4 4"/>${T(216,70,'sin acceso',{a:'start',fs:9,c:K.perm})}</g>
 
-<g class="st" data-ch="2">${R(8,76,384,260,{f:K.hz,sh:false,r:14,dash:'7 5'})}${T(20,95,'HARNESS',{a:'start',fs:11,ls:.14})}${T(382,95,'Claude Code · Copilot · Cursor',{a:'end',fs:8.5,c:K.mute,w:600})}</g>
+<g class="st" data-ch="2">${R(8,76,384,260,{f:K.hz,r:16,dash:'6 5',s:K.edge})}${T(20,95,'HARNESS',{a:'start',fs:11,ls:.14})}${T(382,95,'Claude Code · Copilot · Cursor',{a:'end',fs:8.5,c:K.mute,w:600})}</g>
 <g class="st" data-r="1-1"><path d="M56 46 Q170 60 228 132" class="ln"/></g>
 <g class="st" data-ch="2"><path d="M48 55 L118 103" class="ln"/><path id="l-cm" d="M144 150 H224" class="ln"/></g>
 <g class="st" data-ch="4"><path d="M262 188 V256" class="ln"/><path id="l-sys" d="M156 293 H150 V53" class="ln"/></g>
@@ -153,21 +156,21 @@ ${chip('sql','SQL',164,44)}${chip('py','Python',212,56)}${chip('files','Archivos
 ${pill('lp0',318,110,'DECIDE')}${pill('lp1',348,240,'EJECUTA')}${pill('lp2',184,236,'OBSERVA')}</g>
 
 <g class="st" data-ch="11">${[124,184].map((cy,i)=>`<circle id="sr${i}" class="ring" cx="344" cy="${cy}" r="20" fill="none" stroke="${K.sub}" stroke-width="2" stroke-dasharray="3 5"/>
-<circle cx="346" cy="${cy+2}" r="14" fill="${K.ink}"/><circle cx="344" cy="${cy}" r="14" fill="${K.sub}" stroke="${K.ink}" stroke-width="2"/>${T(344,cy+3.5,'sub',{fs:9,c:'#fff'})}
+<circle cx="344" cy="${cy}" r="14" fill="${K.sub}"/>${T(344,cy+3.5,'sub',{fs:9.5,c:K.dark})}
 ${R(366,cy-18,18,36,{r:3,sh:false})}<rect id="sb${i}" x="368" y="${cy+16}" width="14" height="0" fill="${K.sub}"/>`).join('')}${T(350,219,'contexto propio',{fs:7.5,c:K.mute,w:600})}</g>
 
-<g class="st" data-ch="6" id="g-gate"><rect x="219" y="222" width="92" height="22" rx="11" fill="${K.ink}"/><rect id="gateR" x="216" y="219" width="92" height="22" rx="11" fill="${K.card}" stroke="${K.perm}" stroke-width="2"/>${T(262,234,'PERMISOS',{fs:9,c:K.perm,ls:.12,id:'gateT'})}</g>
+<g class="st" data-ch="6" id="g-gate"><rect id="gateR" x="216" y="219" width="92" height="22" rx="11" fill="${K.card}" stroke="${K.perm}" stroke-width="2"/>${T(262,234,'PERMISOS',{fs:9,c:K.perm,ls:.12,id:'gateT'})}</g>
 
 <g class="st on">
 <circle id="mring" class="ring" cx="262" cy="150" r="45" fill="none" stroke="${K.ink}" stroke-width="2.5" stroke-dasharray="3 7"/>
-<circle cx="265" cy="153" r="36" fill="${K.ink}" opacity=".3"/><circle id="mcirc" cx="262" cy="150" r="36" fill="${K.ink}"/>
-${T(262,156,'LLM',{fs:16,c:K.paper,ls:.08})}${T(262,204,'MODELO',{fs:9,ls:.14})}</g>
+<circle cx="262" cy="150" r="41" fill="none" stroke="${K.model}" stroke-opacity=".35" stroke-width="4"/><circle id="mcirc" cx="262" cy="150" r="36" fill="${K.model}"/>
+${T(262,156,'LLM',{fs:17,c:'#fff',ls:.06})}${T(262,204,'MODELO',{fs:9,ls:.14})}</g>
 <g class="st on"><circle cx="34" cy="38" r="20" fill="${K.card}" stroke="${K.ink}" stroke-width="2"/><circle cx="34" cy="32" r="6.5" fill="${K.ink}"/><path d="M23 50 Q34 36 45 50Z" fill="${K.ink}"/>
 ${T(62,36,'TÚ',{a:'start',fs:11,ls:.12})}${T(62,49,'consultor/a',{a:'start',fs:8.5,c:K.mute,w:600})}</g>
 
-<g class="st" data-ch="7">${R(8,344,384,98,{f:K.tray,r:12,sh:false})}${T(20,360,'PLUGIN',{a:'start',fs:10.5,ls:.14})}${T(382,360,'kit-analytics',{a:'end',fs:9,c:K.mute})}
+<g class="st" data-ch="7">${R(8,344,384,98,{f:K.tray,r:16})}${T(20,360,'BELT',{a:'start',fs:11,ls:.14,c:K.instr})}${T(382,360,'kpi-analysis-belt',{a:'end',fs:9.5,c:K.mute,w:600})}
 ${SLOTS.map((s,i)=>{const p=sXY(i);return `<g id="ph${i}">${R(p.x,p.y,120,32,{f:'none',s:K.mute,dash:'4 3',sh:false,r:5,sw:1.5})}${T(p.x+60,p.y+20,s[1],{fs:10,c:K.mute,f:'sans',w:600})}</g>`}).join('')}</g>
-${SLOTS.map((s,i)=>{const p=sXY(i);return `<g class="st" data-ch="${s[4]}" id="s-${s[0]}">${R(p.x,p.y,120,32,{r:5})}<rect x="${p.x}" y="${p.y}" width="8" height="32" rx="2" fill="${s[3]}" stroke="${K.ink}" stroke-width="2"/>
+${SLOTS.map((s,i)=>{const p=sXY(i);return `<g class="st" data-ch="${s[4]}" id="s-${s[0]}">${R(p.x,p.y,120,32,{r:5})}<rect x="${p.x}" y="${p.y}" width="6" height="32" rx="3" fill="${s[3]}"/>
 ${T(p.x+16,p.y+14,s[1],{a:'start',fs:10.5,f:'sans'})}${T(p.x+16,p.y+26,s[2],{a:'start',fs:8,c:K.mute,w:600})}</g>`}).join('')}
 
 <g id="deny" style="display:none"><circle r="13" fill="${K.perm}" stroke="${K.ink}" stroke-width="2"/><path d="M-5 -5l10 10M5 -5l-10 10" stroke="#fff" stroke-width="3" stroke-linecap="round"/></g>
@@ -184,9 +187,9 @@ const sleep=ms=>{const t=tok;return new Promise((r,j)=>setTimeout(()=>t===tok?r(
 const ease=p=>p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
 function fly(a,b,label,col,ms=900){
   a=P[a]||a;b=P[b]||b;
-  const my=tok,g=document.createElementNS(NS,'g'),w=label.length*6+24,h=20,dark=col===K.cmd||col===K.card;
-  g.innerHTML=`<rect x="${-w/2+2.5}" y="${-h/2+2.5}" width="${w}" height="${h}" rx="3" fill="${K.ink}"/><rect x="${-w/2}" y="${-h/2}" width="${w}" height="${h}" rx="3" fill="${col}" stroke="${K.ink}" stroke-width="1.8"/>`+
-   `<text y="3.8" text-anchor="middle" style="font:700 10.5px var(--sans);fill:${dark?K.ink:'#fff'}">${label}</text>`;
+  const my=tok,g=document.createElementNS(NS,'g'),w=label.length*6+24,h=20,lt=col===K.card;
+  g.innerHTML=`<rect x="${-w/2}" y="${-h/2}" width="${w}" height="${h}" rx="7" fill="${col}"${lt?` stroke="${K.ink}" stroke-width="1.2"`:''}/>`+
+   `<text y="3.8" text-anchor="middle" style="font:700 10.5px var(--sans);fill:${lt?K.ink:K.dark}">${label}</text>`;
   g.setAttribute('transform',`translate(${a.x},${a.y})`);$('packets').appendChild(g);
   return new Promise((res,rej)=>{const t0=performance.now();(function f(t){
     if(my!==tok){g.remove();return rej('x')}
@@ -198,10 +201,10 @@ const both=(...ps)=>Promise.all(ps);
 function pulse(id){const e=$(id);if(!e)return;e.classList.remove('pl');void e.getBBox();e.classList.add('pl');setTimeout(()=>e.classList.remove('pl'),1000)}
 async function think(ms=900,id='mring'){$(id).classList.add('on');await sleep(ms);$(id).classList.remove('on')}
 async function mark(id,p,ms=1200){const e=$(id),q=P[p]||p;e.setAttribute('transform',`translate(${q.x},${q.y})`);e.style.display='';await sleep(ms);e.style.display='none'}
-async function gate(col,ms=700){$('gateR').setAttribute('fill',col);$('gateT').style.fill='#fff';pulse('g-gate');await sleep(ms);$('gateR').setAttribute('fill',K.card);$('gateT').style.fill=K.perm}
-const WHO={tu:['Tú',K.ink],harness:['Harness','#55504a'],modelo:['Modelo',K.ink],sub:['Subagente',K.sub],hook:['Hook',K.hook],perm:['Permisos',K.perm],plugin:['Plugin',K.skill]};
-function say(w,t){const c=WHO[w];$('capWho').textContent=c[0];$('capWho').style.background=c[1];$('capTxt').textContent=t}
-const loopHi=i=>[0,1,2].forEach(j=>$('lp'+j).firstElementChild.setAttribute('fill',j===i?K.cmd:K.card));
+async function gate(col,ms=700){$('gateR').setAttribute('fill',col);$('gateT').style.fill=K.dark;pulse('g-gate');await sleep(ms);$('gateR').setAttribute('fill',K.card);$('gateT').style.fill=K.perm}
+const WHO={tu:['Tú','#D1D8ED',K.dark],harness:['Harness','#54546A','#fff'],modelo:['Modelo',K.model,'#fff'],sub:['Subagente',K.sub,K.dark],hook:['Hook',K.hook,K.dark],perm:['Permisos',K.perm,'#fff'],plugin:['Belt',K.instr,K.dark]};
+function say(w,t){const c=WHO[w];$('capWho').textContent=c[0];$('capWho').style.background=c[1];$('capWho').style.color=c[2];$('capTxt').textContent=t}
+const loopHi=i=>[0,1,2].forEach(j=>{const g=$('lp'+j);g.firstElementChild.setAttribute('fill',j===i?K.instr:K.card);g.lastElementChild.style.fill=j===i?K.dark:K.ink});
 const tl=n=>document.querySelectorAll('.tl li').forEach((li,i)=>li.classList.toggle('on',n>=0&&i<=n));
 const live=on=>$('l-sys').classList.toggle('live',on);
 function subFill(i,to,ms=1400){const r=$('sb'+i),cy=i?184:124,my=tok,from=+r.getAttribute('height'),t0=performance.now();
@@ -212,7 +215,7 @@ function subFill(i,to,ms=1400){const r=$('sb'+i),cy=i?184:124,my=tok,from=+r.get
 const CTX={list:[],top:130,bot:318,x:28,w:108};
 function ctxPush(k,label,c,h=16,soft=false,anim=false){
   const g=document.createElementNS(NS,'g');g.setAttribute('class','cb');
-  const txt=soft||c===K.cmd?K.ink:'#fff';
+  const txt=soft?K.ink:K.dark;
   g.innerHTML=`<rect width="${CTX.w}" height="${h}" rx="3" fill="${c}" fill-opacity="${soft?.2:1}" stroke="${c}" stroke-width="1.5"/><text x="${CTX.w/2}" y="${h/2+3.2}" text-anchor="middle" style="font:700 9px var(--sans);fill:${txt}">${label}</text>`;
   $('ctxblocks').appendChild(g);const b={k,h,el:g,rect:g.firstChild,txt:g.lastChild};CTX.list.push(b);
   ctxRender();if(anim)g.animate([{opacity:0},{opacity:1}],{duration:380});return b;
@@ -235,10 +238,10 @@ async function send(ms=900){await fly('ctx','m','contexto',K.card,650);await thi
 const ex=(l,t)=>`<div class="ex"><span class="l">${l}</span>${t}</div>`;
 const who=(a,b)=>`<p class="who"><span>La activa: <b>${a}</b></span><span>Se carga: <b>${b}</b></span></p>`;
 const CH=[
-/* 0 */{hero:true,col:K.cmd,html:`<p class="kick"><i></i>Guía para managers · 12 min</p>
- <h1>Anatomía de un <em>agente de IA</em></h1>
- <p class="lead">Qué hay de verdad dentro de Claude Code, GitHub Copilot y compañía, y qué piezas puede traer un plugin. Con un caso de lo nuestro: datos y analítica.</p>
- <ol class="road"><li>El motor: modelo + harness</li><li>Las piezas de un plugin</li><li>Un caso real, de principio a fin</li><li>Chuleta y test</li></ol>
+/* 0 */{hero:true,col:K.cmd,html:`<p class="kick"><i></i>SDG · Guía para managers · 12 min</p>
+ <h1>Anatomía de un <em>belt</em></h1>
+ <p class="lead">Cómo funciona por dentro un agente de IA como Claude Code o GitHub Copilot, y qué piezas componen un belt: el paquete con el que le enseñamos a trabajar con el método de SDG. Con un caso de lo nuestro: datos y analítica.</p>
+ <ol class="road"><li>El motor: modelo + harness</li><li>Las piezas de un belt</li><li>Un caso real, de principio a fin</li><li>Chuleta y test</li></ol>
  <p class="hint">Desliza hacia abajo ↓</p>`,
  async demo(){say('modelo','Este es el modelo. Por ahora solo sabe leer texto y escribir texto.');pulse('mcirc')}},
 
@@ -335,8 +338,8 @@ Borrar tablas (DROP)    → prohibido`)+
   say('perm','Borrar: prohibido. Ni pregunta. El modelo recibe un «no» y busca otra vía.');await mark('deny','gate',1400);await add('deny','Denegado',K.perm,14);
  }},
 
-/* 7 */{part:['Parte 2','Las piezas de un plugin'],n:'2.0',col:K.skill,t:'¿Qué es un plugin?',
- lead:'Un harness recién instalado es genérico: no sabe cómo trabaja vuestra consultora. Un plugin es un paquete que le añade las piezas de un dominio concreto. Se instala una vez y todo el equipo trabaja con el mismo saber hacer.',
+/* 7 */{part:['Parte 2','Las piezas de un belt'],n:'2.0',col:K.instr,t:'¿Qué es un belt?',
+ lead:'Un harness recién instalado es genérico: no sabe cómo trabaja SDG. Un belt es un paquete —técnicamente, un plugin— que le añade las piezas de un dominio concreto: cómo construimos un modelo semántico, cómo analizamos un KPI… Se instala una vez y todo el equipo trabaja con el mismo método.',
  body:`<table class="tbl"><tr><th>Pieza</th><th>Claude Code</th><th>GitHub Copilot</th></tr>
 <tr><td><i style="--c:${K.instr}"></i>Instrucciones</td><td><code>CLAUDE.md</code></td><td><code>copilot-instructions.md</code>, <code>AGENTS.md</code></td></tr>
 <tr><td><i style="--c:${K.cmd}"></i>Comandos</td><td>slash commands</td><td>prompt files</td></tr>
@@ -346,7 +349,7 @@ Borrar tablas (DROP)    → prohibido`)+
 <tr><td><i style="--c:${K.hook}"></i>Hooks</td><td>hooks</td><td>hooks</td></tr></table>
 <p class="note">Los nombres cambian de una herramienta a otra, pero las piezas son las mismas. Para distinguirlas, pregúntate quién activa cada una.</p>`,
  async demo(){
-  base('sys','tools');say('plugin','El harness ya funciona. Ahora le añadimos el saber hacer de la consultora.');await sleep(1200);
+  base('sys','tools');say('plugin','El harness ya funciona. Ahora le añadimos un belt con el saber hacer de SDG.');await sleep(1200);
   const D=['lo que debe saber siempre','encargos guardados que lanzas tú','recetas expertas que el modelo abre si las necesita','especialistas con su propio contexto','enchufes a los sistemas del cliente','controles automáticos que no se saltan'];
   for(let i=0;i<6;i++){pulse('ph'+i);say('plugin',`${SLOTS[i][1]}: ${D[i]}.`);await sleep(1500)}
  }},
@@ -359,7 +362,7 @@ Borrar tablas (DROP)    → prohibido`)+
 - Capas: stg_ → int_ → mart_. En informes, solo mart_.
 - Conversión = pedidos / sesiones (definición del cliente).
 - Nunca muestres datos personales (email, teléfono).`)+
- `<p class="note">Se paga en cada conversación, así que tiene que ser corto. Lo que solo aplica a veces va mejor en una skill. Suelen vivir en el repositorio de cada cliente.</p>`,
+ `<p class="note">Se paga en cada conversación, así que tiene que ser corto. Lo que solo aplica a veces va mejor en una skill. Pueden venir en el belt (las reglas del método) o en el repositorio del cliente (sus definiciones).</p>`,
  async demo(){
   base('sys','tools');say('harness','Al empezar, el harness lee las instrucciones del proyecto y las pone en el contexto.');
   await fly('instr','ctx','CLAUDE.md',K.instr,1000);await add('instr','Instrucciones',K.instr,26);
@@ -381,7 +384,7 @@ Analiza la variación del KPI $1 en $2.
    y una recomendación.`)+ex('Tú escribes','/informe-kpi conversión septiembre'),
  async demo(){
   base('sys','tools','instr');say('tu','Escribes: /informe-kpi conversión septiembre');await fly('u','cmd','/informe-kpi',K.cmd,1000);pulse('s-cmd');
-  say('harness','El harness sustituye el comando por el prompt completo guardado en el plugin.');await fly('cmd','ctx','prompt completo',K.cmd,1000);
+  say('harness','El harness sustituye el comando por el prompt completo guardado en el belt.');await fly('cmd','ctx','prompt completo',K.cmd,1000);
   await add('cmd','Prompt /informe-kpi',K.cmd,36);await send(1000);
   say('modelo','Encargo claro: KPI, periodo, método y formato de entrega. Sin tener que redactarlo cada vez.');
  }},
@@ -400,7 +403,7 @@ description: Investigar por qué ha
 4. Valida con scripts/significancia.py`)+
  `<p class="note">La diferencia con las instrucciones: aquellas se cargan siempre; una skill, solo cuando hace falta. Puedes tener cincuenta sin llenar el contexto.</p>`,
  async demo(){
-  base('sys','tools','instr');say('harness','Del plugin, el harness solo mete el índice de skills: el nombre y una línea de cada una.');
+  base('sys','tools','instr');say('harness','Del belt, el harness solo mete el índice de skills: el nombre y una línea de cada una.');
   await fly('skill','ctx','índice',K.skill,900);await add('skidx','Índice de skills',K.skill,11,true);
   await add('q','Tu pregunta',K.ink,16);await send(900);
   say('modelo','«Me piden por qué cambia un KPI: encaja con causa-raiz. La abro».');await fly('m','skill','abrir causa-raiz',K.skill,900);pulse('s-skill');
@@ -440,7 +443,7 @@ Eres un revisor de SQL senior…`)+
   "jira":      { … } }`)+
  `<p class="note">Es el USB-C de los agentes: el mismo conector sirve para Claude, Copilot o Cursor. Y los permisos siguen aplicando a todo lo que pase por él.</p>`,
  async demo(){
-  base('sys','tools','instr','skidx');say('harness','Al arrancar, el harness se conecta a los servidores MCP del plugin…');pulse('s-mcp');live(true);
+  base('sys','tools','instr','skidx');say('harness','Al arrancar, el harness se conecta a los servidores MCP del belt…');pulse('s-mcp');live(true);
   await fly('mcp','ctx','herramientas MCP',K.mcp,1000);await add('mcpt','Herram. MCP',K.mcp,14,true);
   say('harness','…y sus herramientas pasan a la lista: snowflake.query, powerbi.leer, jira.buscar…');await sleep(900);await send(800);
   say('modelo','«Llamo a jira.buscar: releases de septiembre».');await fly('m','mcpc','jira.buscar',K.mcp,900);pulse('c-mcp');
@@ -468,9 +471,9 @@ Al terminar       → dbt test`)+
   await mark('deny','sql',1300);await add('h2','Hook: PII bloqueada',K.hook,14);
  }},
 
-/* 14 */{n:'2.7',col:K.skill,t:'El plugin completo',
+/* 14 */{n:'2.7',col:K.instr,t:'El belt completo',
  lead:'Todo lo anterior viaja en una carpeta versionada. Se publica en un catálogo interno, se instala con un comando y se actualiza para todo el equipo a la vez.',
- body:ex('kit-analytics/',`├─ plugin.json   nombre y versión
+ body:ex('kpi-analysis-belt/',`├─ plugin.json   nombre y versión
 ├─ commands/     /informe-kpi
 │                /nuevo-modelo-dbt
 ├─ skills/       causa-raiz
@@ -478,19 +481,24 @@ Al terminar       → dbt test`)+
 ├─ agents/       revisor-sql
 ├─ hooks/        lint SQL, bloqueo PII
 └─ .mcp.json     Snowflake, Power BI,
-                 Jira`)+ex('Instalación','/plugin install kit-analytics')+
- `<p class="note">Así, lo que sabe hacer la consultora deja de estar en la cabeza de tres personas y se convierte en una herramienta de todo el equipo.</p>`,
+                 Jira`)+ex('Instalación','/plugin install kpi-analysis-belt')+ex('Un belt real de SDG: powerbi-semantic-model-belt',`├─ CLAUDE.md    contexto y reglas
+├─ commands/    pbi-semantic-model-orchestrator
+│               utils-reset-environment
+├─ skills/      pbi-semantic-model-builder
+├─ agents/      pbi-model-creator
+└─ .mcp.json    belt-console`)+
+ `<p class="note">Ese belt convierte un requisito de negocio en un modelo semántico de Power BI validado: diseño en estrella, aprobación, implementación vía MCP y exportación TMDL. Así, lo que sabe hacer SDG deja de estar en la cabeza de tres personas y pasa a ser una herramienta de todo el equipo.</p>`,
  async demo(){
-  base('sys','tools','instr','skidx','mcpt');say('tu','/plugin install kit-analytics');await sleep(800);
+  base('sys','tools','instr','skidx','mcpt');say('tu','/plugin install kpi-analysis-belt');await sleep(800);
   for(const s of SLOTS){pulse('s-'+s[0]);await sleep(350)}
-  say('plugin','Seis piezas, un paquete. El mismo método para todo el equipo y todos los clientes.');
+  say('plugin','Seis piezas, un belt. El mismo método para todo el equipo y todos los clientes.');
  }},
 
 /* 15 */{part:['Parte 3','Un caso real'],n:'Caso práctico',col:K.cmd,t:'Retail Norte: ¿por qué cae la conversión?',
  lead:'Lunes, 9:00. El cliente pregunta por qué ha caído la conversión online en septiembre y quiere un informe el viernes. Una consultora del equipo lanza un comando. Mira qué pieza entra en cada momento.',
  body:`<ol class="tl">${[['Comando',K.cmd],['Instrucciones',K.instr],['Skill',K.skill],['MCP · Snowflake',K.mcp],['Hook · PII',K.hook],['Subagentes',K.sub],['MCP · Jira',K.mcp],['Python',K.tool],['Permiso',K.perm],['Entrega',K.ink]].map(([t,c])=>`<li style="--c:${c}"><i></i>${t}</li>`).join('')}</ol>`+
  ex('Resultado','La conversión cae un 18 % desde el 9-sep, solo en la app de iOS. Coincide con el checkout nuevo de la release 4.2. Recomendación: revertir el paso 3 del checkout.')+
- `<p class="note">Tú lanzas un comando y das un OK. El plugin pone el método; el harness, las manos y los límites; el modelo, el razonamiento.</p>`,
+ `<p class="note">Tú lanzas un comando y das un OK. El belt pone el método; el harness, las manos y los límites; el modelo, el razonamiento.</p>`,
  async demo(){
   base('sys','tools','skidx','mcpt');
   tl(0);say('tu','/informe-kpi conversión septiembre');await fly('u','cmd','/informe-kpi',K.cmd,800);await fly('cmd','ctx','prompt',K.cmd,800);await add('cmd','Prompt /informe-kpi',K.cmd,26);
@@ -537,7 +545,7 @@ Al terminar       → dbt test`)+
 /* ---------- página ---------- */
 $('chs').innerHTML=CH.map((c,i)=>(c.part?`<div class="part"><span>${c.part[0]}</span><b>${c.part[1]}</b></div>`:'')+
  `<section class="ch${c.free?' free':''}" style="--c:${c.col}">${c.hero?c.html:
- `<p class="kick"><i></i>${c.n}${c.jarg?` · ${c.jarg}`:''}</p><h2>${c.t}</h2><p class="lead">${c.lead}</p>${c.who||''}${c.body||''}${c.free?'':`<button class="btn" data-act="replay">▶ Ver otra vez</button>`}`}</section>`).join('')+
+ `<p class="kick"><i></i>${c.n}${c.jarg?` · ${c.jarg}`:''}</p><h2>${c.t}</h2><p class="lead">${c.lead}</p>${c.who||''}${c.body||''}${c.free?'':`<button class="btn" data-act="replay">Ver otra vez</button>`}`}</section>`).join('')+
  `<div class="foot">Ejemplo didáctico: el cliente y los datos son inventados. Los nombres y el soporte de cada pieza varían entre herramientas (Claude Code, GitHub Copilot, Cursor…) y cambian a menudo; consulta la documentación de la tuya.</div>`;
 
 /* test */
