@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cómo funciona un agente de IA — piezas y ejemplo de principio a fin</title>
+<style>
+:root{--bg:#0b0e1f;--panel:#12162e;--line:#262c52;--txt:#e8ebff;--dim:#9aa3d0;
+--prompt:#ffd166;--mem:#06d6a0;--skill:#c77dff;--tool:#4cc9f0;--mcp:#ff9f1c;--agent:#ff6b9d;--hook:#ef476f;--model:#8ecae6}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--txt);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+body{display:flex;flex-direction:column;min-height:100vh}
+header{display:flex;align-items:center;gap:18px;padding:12px 22px;border-bottom:1px solid var(--line)}
+header h1{font-size:16px;margin:0;font-weight:700;letter-spacing:.2px;white-space:nowrap}
+header h1 span{color:var(--dim);font-weight:400}
+#dots{display:flex;gap:6px;flex:1;justify-content:center;flex-wrap:wrap}
+#dots button{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--line);background:transparent;color:var(--dim);font-size:11px;cursor:pointer;transition:.2s}
+#dots button.done{border-color:var(--dim);color:var(--txt)}
+#dots button.cur{background:var(--txt);color:var(--bg);border-color:var(--txt);transform:scale(1.15)}
+main{flex:1;display:grid;grid-template-columns:minmax(0,1fr) 410px;gap:0;min-height:0}
+#stageWrap{padding:10px;display:flex;align-items:center;justify-content:center;min-height:0}
+svg{width:100%;height:auto;max-height:calc(100vh - 140px)}
+aside{border-left:1px solid var(--line);background:var(--panel);padding:20px 22px;overflow:auto;display:flex;flex-direction:column;gap:12px}
+.tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 9px;border-radius:99px;color:#0b0e1f}
+aside h2{margin:6px 0 0;font-size:24px;line-height:1.15}
+.one{font-size:16px}
+.analogy{background:#1a1f40;border-left:3px solid var(--c,var(--dim));padding:9px 12px;border-radius:0 10px 10px 0;color:#cfd5ff;font-size:14px}
+.analogy b{color:var(--txt)}
+.nota{font-size:13px;color:var(--dim)}
+.box{background:#0a0d1c;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font:12.5px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap;color:#d6dbff}
+.box .l{color:var(--dim);font-family:system-ui;font-size:11px;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:2px}
+.box .bad{color:#ff8fa3}.box .good{color:#7ff0c5}
+.box table{width:100%;border-collapse:collapse;font:12.5px/1.4 system-ui;white-space:normal}
+.box td{padding:5px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+.box td:first-child{white-space:nowrap;font-weight:700}
+#trace{list-style:none;margin:0;padding:0;font-size:13px;display:flex;flex-direction:column;gap:5px}
+#trace li{animation:in .4s both;display:flex;gap:8px;align-items:flex-start}
+#trace .t{flex:none;font-size:10.5px;font-weight:700;padding:1px 7px;border-radius:99px;color:#0b0e1f;margin-top:2px}
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h3{margin:4px 0 0;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--dim)}
+footer{display:flex;justify-content:center;align-items:center;gap:12px;padding:10px;border-top:1px solid var(--line)}
+footer button{background:#1c2148;color:var(--txt);border:1px solid var(--line);border-radius:10px;padding:8px 18px;font-size:14px;cursor:pointer}
+footer button:hover{background:#262d62}
+footer button.main{background:var(--txt);color:var(--bg);font-weight:700}
+footer button:disabled{opacity:.35;cursor:default}
+footer small{color:var(--dim)}
+/* SVG */
+.el{opacity:0;transition:opacity .7s;pointer-events:none}
+.el.on{opacity:1}
+.el.hl{filter:drop-shadow(0 0 10px var(--g,#fff));animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{50%{filter:drop-shadow(0 0 18px var(--g,#fff))}}
+.flow{stroke-dasharray:6 7;animation:dash 1s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-13}}
+.thinking circle.body{animation:think .7s ease-in-out infinite alternate}
+@keyframes think{to{stroke-width:7}}
+.flash-ok rect,.flash-ok circle{stroke:#06d6a0!important}
+.flash-no rect,.flash-no circle{stroke:#ef476f!important}
+text{font-family:system-ui,-apple-system,sans-serif}
+@media(max-width:900px){main{grid-template-columns:1fr}aside{border-left:0;border-top:1px solid var(--line)}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Cómo funciona un agente de IA <span>· piezas, ejemplos y un caso de principio a fin</span></h1>
+  <div id="dots"></div>
+</header>
+<main>
+  <div id="stageWrap">
+    <svg id="stage" viewBox="0 0 1100 600" xmlns="http://www.w3.org/2000/svg">
+      <defs><filter id="soft"><feGaussianBlur stdDeviation="1"/></filter></defs>
+      <g id="scene"></g>
+      <g id="packets"></g>
+    </svg>
+  </div>
+  <aside>
+    <div><span class="tag" id="pTag"></span><h2 id="pTitle"></h2></div>
+    <div class="one" id="pOne"></div>
+    <div class="analogy" id="pAna"></div>
+    <div class="nota" id="pNota"></div>
+    <div class="box" id="pEx"></div>
+    <h3>Qué está pasando</h3>
+    <ul id="trace"></ul>
+  </aside>
+</main>
+<footer>
+  <button id="prev">← Anterior</button>
+  <button id="replay">↻ Repetir</button>
+  <button id="next" class="main">Siguiente →</button>
+  <small>(también con las flechas del teclado)</small>
+</footer>
+
+<script>
+const C={prompt:'#ffd166',mem:'#06d6a0',skill:'#c77dff',tool:'#4cc9f0',mcp:'#ff9f1c',agent:'#ff6b9d',hook:'#ef476f',model:'#8ecae6'};
+const NS='http://www.w3.org/2000/svg';
+const P={user:{x:70,y:300},model:{x:500,y:300},mem:{x:295,y:105},
+  sk0:{x:730,y:70},sk1:{x:730,y:130},sk2:{x:730,y:190},
+  t0:{x:305,y:492},t1:{x:425,y:492},t2:{x:545,y:492},mcp:{x:705,y:492},
+  e0:{x:1000,y:255},e1:{x:1000,y:325},e2:{x:1000,y:395},
+  s1:{x:700,y:300},s2:{x:700,y:380},gate:{x:500,y:424}};
+
+/* ---------- escena ---------- */
+const card=(id,step,x,y,w,h,col,t,s)=>`<g class="el" id="${id}" data-step="${step}" style="--g:${col}" transform="translate(${x},${y})">
+<rect width="${w}" height="${h}" rx="12" fill="#161b33" stroke="${col}" stroke-width="2"/>
+<text x="${w/2}" y="${s?h/2-3:h/2+5}" text-anchor="middle" fill="#e8ebff" font-size="13" font-weight="700">${t}</text>
+${s?`<text x="${w/2}" y="${h/2+13}" text-anchor="middle" fill="#9aa3d0" font-size="10.5">${s}</text>`:''}</g>`;
+const line=(id,step,d,col)=>`<path class="el flow" id="${id}" data-step="${step}" d="${d}" fill="none" stroke="${col}" stroke-width="2" opacity=".7"/>`;
+const pill=(id,x,y,t)=>`<g id="${id}" transform="translate(${x},${y})"><rect x="-36" y="-11" width="72" height="22" rx="11" fill="#161b33" stroke="${C.agent}" stroke-width="1.5"/><text text-anchor="middle" y="4" font-size="11" font-weight="700" fill="#e8ebff">${t}</text></g>`;
+
+document.getElementById('scene').innerHTML=`
+<rect class="el" id="harness" data-step="2" x="150" y="25" width="700" height="560" rx="26" fill="#0f1330" stroke="#3a4280" stroke-width="2" stroke-dasharray="10 8"/>
+<text class="el" data-step="2" x="170" y="578" fill="#7f89c9" font-size="13" font-weight="700" letter-spacing="1.5">HARNESS · el programa que envuelve al modelo</text>
+${line('l-um',1,'M126 300 L440 300',C.prompt)}
+${line('l-mem',2,'M470 255 L340 135',C.mem)}
+${line('l-sk',4,'M545 265 L630 175',C.skill)}
+${line('l-bus',3,'M500 356 L500 452 M305 452 L705 452 M305 452 L305 470 M425 452 L425 470 M545 452 L545 470 M705 452 L705 470',C.tool)}
+${line('l-ext',7,'M760 492 C840 492 850 255 915 255 M760 492 C840 492 850 325 915 325 M760 492 C840 492 850 395 915 395',C.mcp)}
+${line('l-sub',6,'M556 300 L668 300 M540 340 L672 372',C.agent)}
+
+<g class="el" id="ring" data-step="5" style="--g:${C.agent}"><circle cx="500" cy="300" r="88" fill="none" stroke="${C.agent}" stroke-width="2" stroke-dasharray="4 8"/>
+${pill('pl0',500,208,'Pensar')}${pill('pl1',578,346,'Actuar')}${pill('pl2',422,346,'Observar')}</g>
+
+${card('memory',2,200,60,190,90,C.mem,'📘 Memoria','CLAUDE.md · siempre cargada')}
+${card('sk0',4,630,45,200,50,C.skill,'🧩 informe-semanal','plantilla + pasos de ventas')}
+${card('sk1',4,630,105,200,50,C.skill,'🧩 acta-de-reunión','decisiones y tareas')}
+${card('sk2',4,630,165,200,50,C.skill,'🧩 propuesta-cliente','estructura y tono')}
+${card('t0',3,250,470,110,44,C.tool,'📂 Leer archivo')}
+${card('t1',3,370,470,110,44,C.tool,'🔎 Buscar web')}
+${card('t2',3,490,470,110,44,C.tool,'📝 Crear doc')}
+${card('mcp',7,650,470,110,44,C.mcp,'🔌 MCP')}
+${card('e0',7,915,230,170,50,C.mcp,'CRM','ventas y clientes')}
+${card('e1',7,915,300,170,50,C.mcp,'Drive','documentos')}
+${card('e2',7,915,370,170,50,C.mcp,'Correo','envío a dirección')}
+
+<g class="el" id="subs" data-step="6" style="--g:${C.agent}">
+ <g transform="translate(700,300)"><circle class="body" r="32" fill="#161b33" stroke="${C.agent}" stroke-width="3"/><text text-anchor="middle" y="9" font-size="26">🤖</text><text text-anchor="middle" y="52" font-size="11" fill="#9aa3d0">Sub · Norte</text></g>
+ <g transform="translate(700,380)"><circle class="body" r="32" fill="#161b33" stroke="${C.agent}" stroke-width="3"/><text text-anchor="middle" y="9" font-size="26">🤖</text><text text-anchor="middle" y="52" font-size="11" fill="#9aa3d0">Sub · Sur</text></g>
+</g>
+
+<g class="el" id="gate" data-step="8" style="--g:${C.hook}" transform="translate(500,424)">
+ <rect x="-52" y="-17" width="104" height="34" rx="17" fill="#161b33" stroke="${C.hook}" stroke-width="2.5"/>
+ <text text-anchor="middle" y="5" font-size="13" font-weight="700" fill="#e8ebff">🛡 Permisos</text></g>
+
+<g class="el on" id="model" data-step="0" style="--g:${C.model}" transform="translate(500,300)">
+ <circle class="body" r="56" fill="#161b33" stroke="${C.model}" stroke-width="4"/>
+ <text text-anchor="middle" y="15" font-size="46">🧠</text>
+ <text text-anchor="middle" y="82" font-size="13" font-weight="700" fill="#e8ebff">Modelo (LLM)</text></g>
+<g class="el on" id="user" data-step="0" style="--g:${C.prompt}" transform="translate(70,300)">
+ <circle r="42" fill="#161b33" stroke="${C.prompt}" stroke-width="3"/>
+ <text text-anchor="middle" y="12" font-size="36">🧑‍💼</text>
+ <text text-anchor="middle" y="66" font-size="13" font-weight="700" fill="#e8ebff">Tú (manager)</text>
+ <text id="approveTxt" text-anchor="middle" y="-56" font-size="12" font-weight="700" fill="${C.hook}"></text></g>
+`;
+
+/* ---------- utilidades de animación ---------- */
+let tok=0;
+const $=id=>document.getElementById(id);
+const sleep=ms=>{const t=tok;return new Promise((r,j)=>setTimeout(()=>t===tok?r():j('x'),ms))};
+function fly(a,b,label,color,ms=900){
+  const my=tok,g=document.createElementNS(NS,'g'),w=label.length*6.6+20;
+  g.innerHTML=`<rect x="${-w/2}" y="-12" width="${w}" height="24" rx="12" fill="${color}"/><text text-anchor="middle" y="4.5" font-size="11.5" font-weight="700" fill="#0b0e1f">${label}</text>`;
+  $('packets').appendChild(g);
+  return new Promise((res,rej)=>{const t0=performance.now();(function f(t){
+    if(my!==tok){g.remove();return rej('x')}
+    let p=Math.min(1,(t-t0)/ms);p=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
+    g.setAttribute('transform',`translate(${a.x+(b.x-a.x)*p},${a.y+(b.y-a.y)*p})`);
+    p<1?requestAnimationFrame(f):(g.remove(),res());})(t0)});
+}
+const cls=(id,c,ms)=>{const e=$(id);e.classList.add(c);return sleep(ms).then(()=>e.classList.remove(c))};
+const think=(id='model',ms=1100)=>cls(id,'thinking',ms);
+const flash=(id,c)=>{const e=$(id);e.classList.add(c);return sleep(700).then(()=>e.classList.remove(c))};
+function log(kind,tag,text){const li=document.createElement('li');
+  li.innerHTML=`<span class="t" style="background:${C[kind]}">${tag}</span><span>${text}</span>`;
+  $('trace').appendChild(li);li.scrollIntoView({block:'nearest'})}
+async function typeInto(id,text){const e=$(id);e.textContent='';for(const ch of text){e.textContent+=ch;await sleep(14)}}
+const ex=(l,t,c='')=>`<span class="l">${l}</span><span class="${c}">${t}</span>`;
+
+/* ---------- pasos ---------- */
+const steps=[
+{k:'model',col:C.model,tag:'Pieza 0',title:'El modelo: el cerebro',
+ one:'Un modelo de lenguaje recibe texto y devuelve texto. Es muy listo, pero solo eso: sin manos, sin memoria entre conversaciones y sin acceso a tus sistemas.',
+ ana:'<b>Analogía:</b> un consultor brillante encerrado en una sala sin teléfono ni ordenador. Solo puede leer la nota que le pasan por debajo de la puerta.',
+ nota:'Todo lo que viene después son piezas que se le añaden alrededor para que deje de ser “un chat” y pueda trabajar.',
+ ex:()=>ex('Entrada','«¿Cuánto vendimos ayer?»')+'\n'+ex('Salida','«No tengo acceso a tus datos de ventas.»','bad'),
+ hl:['model'],
+ async demo(){
+  log('model','Modelo','Solo sabe lo que aprendió al entrenarse + lo que le escribas.');
+  await fly(P.user,P.model,'¿Cuánto vendimos ayer?',C.prompt);
+  await think('model',1200);
+  log('model','Modelo','No puede consultar tu CRM. Solo puede contestar con texto.');
+  await fly(P.model,P.user,'No tengo tus datos',C.model);
+ }},
+{k:'prompt',col:C.prompt,tag:'Pieza 1',title:'El prompt: el encargo',
+ one:'Lo que pides en cada uso: qué quieres, para quién y cómo debe quedar. Es la única pieza que cambia cada vez.',
+ ana:'<b>Analogía:</b> el encargo que le das a un compañero nuevo. Cuanto mejor lo explicas, menos vueltas da.',
+ nota:'Receta de un buen prompt: objetivo + contexto + formato + criterio de éxito.',
+ ex:()=>`<span class="l">Prompt flojo</span><span id="bad" class="bad"></span>\n\n<span class="l">Prompt bueno</span><span id="good" class="good"></span>`,
+ hl:['user','l-um'],
+ async demo(){
+  await typeInto('bad','«Hazme un informe de ventas.»');
+  log('prompt','Prompt','Ambiguo: ¿qué semana? ¿para quién? ¿en qué formato?');
+  await sleep(500);
+  await typeInto('good','Objetivo: resumen semanal de ventas para dirección.\nContexto: distribuidora; lo leen en 2 minutos.\nFormato: 5 viñetas + 1 riesgo.\nÉxito: cifras en €, frente a la semana anterior.');
+  log('prompt','Prompt','Claro: el modelo sabe qué entregar y cuándo está terminado.');
+  await fly(P.user,P.model,'Prompt bueno',C.prompt);
+  await think('model',900);
+  await fly(P.model,P.user,'Borrador de informe',C.model);
+ }},
+{k:'mem',col:C.mem,tag:'Pieza 2',title:'Memoria: las reglas de la casa',
+ one:'Instrucciones permanentes que se cargan siempre, antes de tu petición: quién es la empresa, el tono, las reglas. Se escriben una vez (en un archivo tipo CLAUDE.md) y valen para todas las conversaciones.',
+ ana:'<b>Analogía:</b> el manual de bienvenida del empleado nuevo. No se lo repites cada mañana.',
+ nota:'Aparece el <b>harness</b> (el marco discontinuo): el programa que envuelve al modelo, le pasa el contexto, ejecuta lo que pida y aplica los permisos. Claude Code es un harness.',
+ ex:()=>ex('CLAUDE.md',`- Somos una distribuidora, ventas en €.\n- Tono ejecutivo: frases cortas, sin jerga.\n- Compara siempre con la semana anterior.\n- Nada se envía fuera sin mi aprobación.`),
+ hl:['memory','l-mem'],
+ async demo(){
+  log('mem','Memoria','El harness lee CLAUDE.md antes de cada conversación.');
+  await cls('memory','hl',600);
+  await fly(P.mem,P.model,'reglas de la casa',C.mem);
+  log('mem','Memoria','Ahora el modelo ya “conoce” la empresa sin que se lo repitas.');
+  await fly(P.user,P.model,'Resumen de ventas',C.prompt);
+  await think('model',900);
+  await fly(P.model,P.user,'Informe con tono ejecutivo, en €',C.model,1000);
+ }},
+{k:'tool',col:C.tool,tag:'Pieza 3',title:'Herramientas: las manos',
+ one:'Acciones que el modelo puede pedir: leer un archivo, buscar en la web, crear un documento. El modelo no las ejecuta: las pide, el harness las ejecuta y le devuelve el resultado.',
+ ana:'<b>Analogía:</b> el cerebro decide y las manos hacen. Sin herramientas solo habla; con ellas actúa.',
+ nota:'Cada herramienta es una función con nombre y parámetros. El modelo elige cuál usar y con qué datos.',
+ ex:()=>ex('El modelo pide','{ "herramienta": "leer_archivo",\n  "ruta": "ventas_semana.csv" }')+'\n'+ex('El harness devuelve','«Norte: 128 k€ · Sur: 94 k€ · Centro: 61 k€»'),
+ hl:['t0','t1','t2','l-bus'],
+ async demo(){
+  await think('model',900);
+  log('tool','Herramienta','El modelo pide: leer_archivo(ventas_semana.csv).');
+  await fly(P.model,P.t0,'leer_archivo',C.tool);
+  log('tool','Harness','Ejecuta la acción de verdad y recoge el resultado.');
+  await cls('t0','hl',500);
+  await fly(P.t0,P.model,'128k · 94k · 61k',C.tool);
+  log('tool','Modelo','Ya tiene datos reales. Puede seguir.');
+ }},
+{k:'skill',col:C.skill,tag:'Pieza 4',title:'Skills: las recetas',
+ one:'Recetas de trabajo empaquetadas: instrucciones, plantillas y hasta scripts. El modelo solo ve el nombre y una línea de cada skill; carga la receta completa únicamente cuando la necesita.',
+ ana:'<b>Analogía:</b> el archivo de procedimientos. No te lees todos los manuales cada mañana: coges el que toca.',
+ nota:'Diferencia con la memoria: la memoria se lee <b>siempre</b>; una skill se carga <b>bajo demanda</b>, así no se llena la cabeza del modelo.',
+ ex:()=>ex('informe-semanal / SKILL.md',`Cuándo usarla: informes de ventas para dirección.\nPasos:\n 1. Trae las ventas de la semana y la anterior.\n 2. Calcula variación por zona.\n 3. Destaca 1 riesgo y 1 oportunidad.\n 4. Usa la plantilla adjunta (5 viñetas).`),
+ hl:['sk0','sk1','sk2','l-sk'],
+ async demo(){
+  log('skill','Skills','El modelo solo ve nombres + descripción (barato en contexto).');
+  await think('model',1000);
+  log('skill','Skills','“Informe de ventas” → encaja con «informe-semanal». La abre.');
+  await cls('sk0','hl',500);
+  await fly(P.sk0,P.model,'receta completa',C.skill);
+  log('skill','Skills','Ahora sigue los pasos y la plantilla al pie de la letra.');
+  await think('model',900);
+ }},
+{k:'agent',col:C.agent,tag:'Pieza 5',title:'El agente: el bucle',
+ one:'Un agente es el modelo dentro de un bucle: piensa, actúa con una herramienta, mira el resultado y repite hasta terminar. Ya no responde una vez: trabaja hasta acabar.',
+ ana:'<b>Analogía:</b> un chatbot contesta y se calla; un agente es un empleado autónomo que se pone con la tarea, comprueba y sigue.',
+ nota:'Agente = modelo + herramientas + bucle. Lo que lo hace potente es que decide él los pasos.',
+ ex:()=>ex('Vuelta 1','Pensar: me faltan las cifras → Actuar: leer ventas → Observar: datos ok')+'\n'+ex('Vuelta 2','Pensar: falta la semana anterior → Actuar: leer histórico → Observar: ok')+'\n'+ex('Vuelta 3','Pensar: ya puedo redactar → Responder'),
+ hl:['ring'],
+ async demo(){
+  const pl=i=>$('pl'+i).firstElementChild;
+  const act=async i=>{[0,1,2].forEach(j=>pl(j).setAttribute('fill','#161b33'));pl(i).setAttribute('fill','#5a2a48');await sleep(500)};
+  log('agent','Vuelta 1','Pensar: me faltan las cifras de esta semana.');await act(0);
+  await fly(P.model,P.t0,'leer ventas',C.tool,700);await act(2);log('agent','Vuelta 1','Observar: datos recibidos.');await fly(P.t0,P.model,'datos',C.tool,700);
+  log('agent','Vuelta 2','Pensar: necesito compararlas con la semana anterior.');await act(0);
+  await fly(P.model,P.t1,'leer histórico',C.tool,700);await act(2);await fly(P.t1,P.model,'histórico',C.tool,700);
+  log('agent','Vuelta 3','Pensar: tengo todo. Redacto y termino.');await act(0);await think('model',800);
+  await fly(P.model,P.user,'Informe listo',C.model);
+  pl(0).setAttribute('fill','#161b33');
+ }},
+{k:'agent',col:C.agent,tag:'Pieza 6',title:'Subagentes: el equipo',
+ one:'Agentes ayudantes con su propia ventana de contexto limpia. El principal delega, ellos trabajan en paralelo y devuelven solo un resumen.',
+ ana:'<b>Analogía:</b> un jefe de equipo que reparte el trabajo y solo lee los resúmenes, no todos los papeles.',
+ nota:'Dos ventajas: rapidez (en paralelo) y foco (el principal no se llena de detalle que ya no necesita).',
+ ex:()=>ex('Encargo al subagente',`Analiza las ventas de la zona Norte.\nDevuelve solo: total, variación y 1 causa.`)+'\n'+ex('Respuesta','«Norte: 128 k€, +9 %. Causa: campaña de mayo.»'),
+ hl:['subs','l-sub'],
+ async demo(){
+  log('agent','Delegar','El principal reparte: Norte y Sur, a la vez.');
+  await Promise.all([fly(P.model,P.s1,'zona Norte',C.agent),fly(P.model,P.s2,'zona Sur',C.agent)]);
+  log('agent','Subagentes','Cada uno trabaja en su propio contexto limpio.');
+  await Promise.all([think('subs',1400),sleep(1400)]).catch(e=>{throw e});
+  await Promise.all([fly(P.s1,P.model,'Norte +9%',C.agent),fly(P.s2,P.model,'Sur −3%',C.agent)]);
+  log('agent','Principal','Recibe solo dos resúmenes cortos, no el trabajo completo.');
+ }},
+{k:'mcp',col:C.mcp,tag:'Pieza 7',title:'MCP: los conectores',
+ one:'Un estándar para enchufar sistemas externos (CRM, Drive, Jira, correo) sin programar cada integración a mano. Un conector, cualquier aplicación compatible.',
+ ana:'<b>Analogía:</b> el USB-C de las herramientas. Cada aplicación expone sus acciones y el agente las usa como si fueran suyas.',
+ nota:'Es lo que permite que el agente trabaje con <b>tus</b> datos y sistemas reales, con los permisos que tú le des.',
+ ex:()=>ex('Conectores configurados',`crm      → ventas, clientes\ndrive    → documentos\ncorreo   → enviar / leer`)+'\n'+ex('Llamada','crm.ventas_semana(zona="todas")'),
+ hl:['mcp','e0','e1','e2','l-ext'],
+ async demo(){
+  log('mcp','MCP','El agente pide datos al CRM a través del conector.');
+  await fly(P.model,P.mcp,'crm.ventas_semana',C.mcp);
+  await fly(P.mcp,P.e0,'consulta',C.mcp,700);
+  await cls('e0','hl',400);
+  await fly(P.e0,P.mcp,'283 k€ totales',C.mcp,700);
+  await fly(P.mcp,P.model,'datos',C.mcp);
+  log('mcp','MCP','Mismo conector, otra app: guarda el borrador en Drive.');
+  await fly(P.model,P.mcp,'drive.guardar',C.mcp);await fly(P.mcp,P.e1,'borrador.docx',C.mcp,700);
+ }},
+{k:'hook',col:C.hook,tag:'Pieza 8',title:'Permisos y hooks: las barreras',
+ one:'Reglas que el harness aplica aunque el modelo quiera otra cosa: qué puede hacer solo, qué requiere tu confirmación y qué está prohibido. Los hooks son automatismos («antes de enviar, ejecuta este control»).',
+ ana:'<b>Analogía:</b> las políticas de la empresa y las firmas de aprobación. El empleado es autónomo, pero no firma contratos solo.',
+ nota:'Un buen despliegue de agentes no es “confiar o no confiar”: es decidir qué es libre, qué se aprueba y qué se bloquea.',
+ ex:()=>ex('Reglas',`✅ leer archivos, consultar CRM   → libre\n✋ enviar correo externo         → pide OK\n⛔ borrar datos                  → prohibido`),
+ hl:['gate'],
+ async demo(){
+  log('hook','Permisos','El agente quiere enviar un correo → pasa por la barrera.');
+  await fly(P.model,P.gate,'enviar_correo',C.tool,700);
+  $('approveTxt').textContent='✋ ¿Apruebas el envío?';
+  log('hook','Permisos','Regla: los correos externos piden aprobación humana.');
+  await fly(P.gate,P.user,'¿OK?',C.hook,900);await sleep(500);
+  await fly(P.user,P.gate,'OK ✔',C.prompt,900);
+  $('approveTxt').textContent='';await flash('gate','flash-ok');
+  log('hook','Permisos','Aprobado → sigue hacia el conector de correo.');
+  await fly(P.gate,P.mcp,'enviar_correo',C.tool,800);
+  await sleep(300);
+  log('hook','Permisos','Ahora intenta borrar datos: regla “prohibido”.');
+  await fly(P.model,P.gate,'borrar_datos',C.tool,700);
+  await flash('gate','flash-no');
+  await fly(P.gate,P.model,'⛔ DENEGADO',C.hook,700);
+  log('hook','Permisos','Bloqueado sin preguntar: el modelo lo ve y busca otra vía.');
+ }},
+{k:'all',col:'#ffffff',tag:'Todo junto',title:'Ejemplo de principio a fin',
+ one:'Encargo: «Prepara el resumen semanal de ventas y envíaselo a dirección.» Mira cómo intervienen las 8 piezas, cada una con su color.',
+ ana:'<b>Fíjate:</b> tú solo escribes una frase y das un OK. El resto lo orquestan las piezas.',
+ nota:'Pulsa “↻ Repetir” para volver a verlo. Cada línea de la traza dice qué pieza actúa.',
+ ex:()=>ex('Tu petición','«Prepara el resumen semanal de ventas y envíaselo a dirección.»'),
+ hl:[],
+ async demo(){
+  await fly(P.user,P.model,'Petición',C.prompt);
+  log('prompt','Prompt','«Prepara el resumen semanal y envíaselo a dirección.»');
+  await fly(P.mem,P.model,'reglas de la casa',C.mem);
+  log('mem','Memoria','Tono ejecutivo, cifras en €, nada sale sin tu OK.');
+  await think('model',800);
+  log('skill','Skill','Reconoce el tipo de trabajo y abre «informe-semanal».');
+  await cls('sk0','hl',400);await fly(P.sk0,P.model,'receta',C.skill);
+  log('agent','Agente','Plan: 1) datos 2) analizar zonas 3) redactar 4) enviar.');
+  await think('model',700);
+  log('mcp','MCP','Pide las ventas de la semana al CRM.');
+  await fly(P.model,P.mcp,'crm.ventas_semana',C.mcp,700);await fly(P.mcp,P.e0,'consulta',C.mcp,600);
+  await fly(P.e0,P.mcp,'datos',C.mcp,600);await fly(P.mcp,P.model,'datos',C.mcp,700);
+  log('agent','Subagentes','Reparte Norte y Sur en paralelo.');
+  await Promise.all([fly(P.model,P.s1,'Norte',C.agent,700),fly(P.model,P.s2,'Sur',C.agent,700)]);
+  await Promise.all([think('subs',1000),sleep(1000)]);
+  await Promise.all([fly(P.s1,P.model,'+9 %',C.agent,700),fly(P.s2,P.model,'−3 %',C.agent,700)]);
+  log('tool','Herramienta','Redacta y crea informe.docx.');
+  await fly(P.model,P.t2,'crear_doc',C.tool,700);await fly(P.t2,P.model,'informe.docx',C.tool,700);
+  log('hook','Permisos','Enviar correo externo → pide tu aprobación.');
+  await fly(P.model,P.gate,'enviar_correo',C.tool,600);
+  $('approveTxt').textContent='✋ ¿Apruebas el envío?';
+  await fly(P.gate,P.user,'¿OK?',C.hook,800);await sleep(400);
+  await fly(P.user,P.gate,'OK ✔',C.prompt,800);
+  $('approveTxt').textContent='';await flash('gate','flash-ok');
+  log('mcp','MCP','Envía el correo a dirección.');
+  await fly(P.gate,P.mcp,'enviar',C.tool,600);await fly(P.mcp,P.e2,'informe.docx',C.mcp,600);
+  await cls('e2','hl',300);
+  log('agent','Fin','«Enviado a dirección. Norte +9 %, Sur −3 %; riesgo: stock en Sur.»');
+  await fly(P.model,P.user,'✅ Enviado',C.model,900);
+ }},
+{k:'sum',col:'#ffffff',tag:'Resumen',title:'La chuleta para managers',
+ one:'Ocho piezas, cada una responde a una pregunta distinta. Antes de pedir “un agente”, pregúntate cuál te falta.',
+ ana:'<b>Idea clave:</b> el modelo es solo una pieza. El valor está en cómo las combinas y en qué barreras pones.',
+ nota:'',
+ ex:()=>`<table>
+<tr><td style="color:${C.model}">Modelo</td><td>Piensa y escribe.</td></tr>
+<tr><td style="color:${C.prompt}">Prompt</td><td>¿Qué quiero ahora? (cambia cada vez)</td></tr>
+<tr><td style="color:${C.mem}">Memoria</td><td>¿Qué debe saber siempre? (reglas fijas)</td></tr>
+<tr><td style="color:${C.tool}">Herramientas</td><td>¿Qué puede hacer? (manos)</td></tr>
+<tr><td style="color:${C.skill}">Skills</td><td>¿Cómo se hace esta tarea bien? (receta bajo demanda)</td></tr>
+<tr><td style="color:${C.agent}">Agente</td><td>Bucle pensar-actuar-observar hasta acabar.</td></tr>
+<tr><td style="color:${C.agent}">Subagentes</td><td>¿Se puede repartir y paralelizar?</td></tr>
+<tr><td style="color:${C.mcp}">MCP</td><td>¿A qué sistemas se conecta?</td></tr>
+<tr><td style="color:${C.hook}">Permisos / hooks</td><td>¿Qué es libre, qué se aprueba, qué se prohíbe?</td></tr></table>`,
+ hl:[],
+ async demo(){
+  log('model','Consejo','Empieza pequeño: prompt + memoria + 1-2 herramientas.');
+  await sleep(700);log('skill','Consejo','Si repites una tarea, conviértela en skill.');
+  await sleep(700);log('hook','Consejo','Empieza con permisos estrictos y afloja con la experiencia.');
+ }}
+];
+
+/* ---------- navegación ---------- */
+let cur=0;
+const dots=$('dots');
+steps.forEach((s,i)=>{const b=document.createElement('button');b.textContent=i;b.title=s.title;b.onclick=()=>go(i);dots.appendChild(b)});
+function reset(){
+  tok++;$('packets').innerHTML='';$('trace').innerHTML='';$('approveTxt').textContent='';
+  document.querySelectorAll('.thinking,.flash-ok,.flash-no').forEach(e=>e.classList.remove('thinking','flash-ok','flash-no'));
+  [0,1,2].forEach(j=>{const p=$('pl'+j);p&&p.firstElementChild.setAttribute('fill','#161b33')});
+}
+async function play(){
+  const my=tok,s=steps[cur];
+  try{await sleep(400);await s.demo()}catch(e){if(e!=='x')console.error(e)}
+}
+function go(i){
+  cur=Math.max(0,Math.min(steps.length-1,i));reset();
+  const s=steps[cur],all=cur>=9;
+  document.querySelectorAll('#scene .el').forEach(e=>{
+    const on=all||+e.dataset.step<=cur||e.id==='model'||e.id==='user';
+    e.classList.toggle('on',on);
+    e.classList.remove('hl');
+  });
+  if(!all)s.hl.forEach(id=>$(id)&&$(id).classList.add('hl'));
+  $('pTag').textContent=s.tag;$('pTag').style.background=s.col;
+  $('pTitle').textContent=s.title;$('pOne').textContent=s.one;
+  $('pAna').innerHTML=s.ana;$('pAna').style.setProperty('--c',s.col);
+  $('pNota').innerHTML=s.nota;$('pEx').innerHTML=s.ex();
+  [...dots.children].forEach((b,j)=>{b.className=j===cur?'cur':j<cur?'done':''});
+  $('prev').disabled=cur===0;$('next').disabled=cur===steps.length-1;
+  play();
+}
+$('prev').onclick=()=>go(cur-1);$('next').onclick=()=>go(cur+1);$('replay').onclick=()=>go(cur);
+addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(cur+1);if(e.key==='ArrowLeft')go(cur-1);if(e.key==='r')go(cur)});
+go(0);
+</script>
+</body>
+</html>
