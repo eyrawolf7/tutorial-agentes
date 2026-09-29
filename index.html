@@ -4,81 +4,84 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#000000">
+<title>Anatomía de un belt · SDG</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<title>Anatomía de un belt · Guía para managers</title>
 <style>
 :root{--bg:#1E1B31;--bg2:#17152A;--card:#28253F;--card2:#221F38;--line:#3A3658;--txt:#F4F6FF;--lav:#D1D8ED;--mute:#9A9CB8;--turq:#00E6D9;--blue:#3366FF;--dark:#1E1B31;
 --sys:#8C8FB0;--tool:#D1D8ED;--perm:#FF4D56;--instr:#00E6D9;--cmd:#F7C948;--skill:#8B8DF7;--sub:#FF7AB6;--mcp:#4FA3FF;--hook:#FF9F43;
---sans:"Figtree","Sofia Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+--sans:"Figtree","Sofia Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;--k:1}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;background:var(--bg);color:var(--lav);font:17px/1.6 var(--sans)}
-header{position:sticky;top:0;z-index:20;height:46px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 18px;background:#000;color:#fff;font:600 14px/1 var(--sans)}
-header span:first-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-header b{color:var(--turq);font-weight:700}
-#cnt{color:var(--mute);font-variant-numeric:tabular-nums}
-#bar{position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--turq)}
-#stagecol{position:sticky;top:46px;z-index:10;background:var(--bg);border-bottom:1px solid var(--line);padding:6px 8px 10px}
-#stage{display:block;width:100%;height:auto;max-height:44vh;max-height:44dvh;margin:0 auto}
-#cap{display:flex;gap:10px;align-items:flex-start;margin-top:6px;padding:9px 11px;min-height:64px;background:var(--card);border:1px solid var(--line);border-radius:12px}
-#capWho{flex:none;margin-top:1px;padding:3px 8px;border-radius:6px;font:700 11px/1.3 var(--sans);letter-spacing:.06em;text-transform:uppercase}
-#capTxt{font:500 16px/1.38 var(--sans);color:var(--txt)}
-main{min-width:0}
-.part{padding:38px 20px 0}
-.part span{display:inline-block;padding:4px 10px;border-radius:6px;background:var(--turq);color:var(--dark);font:700 12px/1.2 var(--sans);letter-spacing:.1em;text-transform:uppercase}
-.part b{display:block;margin-top:12px;font:700 28px/1.12 var(--sans);color:#fff;letter-spacing:-.02em;border-bottom:1px solid var(--line);padding-bottom:16px}
-.ch{padding:26px 20px 40px;min-height:66vh;min-height:66dvh;opacity:.3;transition:opacity .4s}
-.ch.act{opacity:1}.ch.free{min-height:0}
-.kick{display:flex;align-items:center;gap:9px;margin:0 0 10px;font:700 12px/1.2 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
-.kick i{width:10px;height:10px;border-radius:3px;background:var(--c);flex:none}
-h1,h2{font-family:var(--sans);font-weight:700;letter-spacing:-.025em;margin:0 0 14px;color:#fff}
-h1{font-size:42px;line-height:1.05}
+html,body{margin:0;height:100%;overflow:hidden;background:#000;display:grid;place-items:center;font-family:var(--sans);-webkit-user-select:none;user-select:none}
+#deck{position:relative;flex:none;width:1600px;height:900px;zoom:var(--k);background:var(--bg);color:var(--lav);overflow:hidden;cursor:pointer}
+/* cabecera */
+#top{position:absolute;inset:0 0 auto 0;height:60px;display:flex;align-items:center;padding:0 40px;background:#000;color:#fff;font:600 19px/1 var(--sans)}
+#top .brand b{color:var(--turq);font-weight:800}
+#part{position:absolute;left:50%;transform:translateX(-50%);font:700 14px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+#right{margin-left:auto;display:flex;align-items:center;gap:18px}
+#beats{display:flex;gap:6px}
+#beats i{width:8px;height:8px;border-radius:50%;background:#3A3658}
+#beats i.on{background:var(--turq)}
+#cnt{font-variant-numeric:tabular-nums;color:var(--mute);font-weight:700}
+#nav{display:flex;gap:6px}
+#nav button{width:34px;height:34px;border-radius:9px;border:1px solid #3A3658;background:#141226;color:var(--lav);font:700 18px/1 var(--sans);cursor:pointer}
+#nav button:hover{background:var(--card)}
+#bar{position:absolute;left:0;top:60px;height:3px;background:var(--turq);transition:width .4s}
+/* zonas */
+#stage{position:absolute;left:40px;top:78px;width:640px;height:706px}
+#panel{position:absolute;left:730px;top:96px;width:830px;height:684px;overflow:hidden}
+#pin{--fz:1;font-size:calc(22px*var(--fz))}
+#cap{position:absolute;left:40px;top:800px;width:1520px;height:74px;display:flex;align-items:center;gap:18px;padding:0 22px;background:var(--card);border:1px solid var(--line);border-radius:14px}
+#capWho{flex:none;padding:6px 12px;border-radius:8px;font:800 15px/1.2 var(--sans);letter-spacing:.08em;text-transform:uppercase}
+#capTxt{font:500 24px/1.3 var(--sans);color:var(--txt)}
+/* texto de la diapositiva */
+.kick{display:flex;align-items:center;gap:.5em;margin:0 0 .7em;font-weight:700;font-size:.72em;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.kick i{width:.8em;height:.8em;border-radius:.2em;background:var(--c);flex:none}
+h1,h2{font-weight:800;letter-spacing:-.025em;margin:0 0 .45em;color:#fff}
+h1{font-size:3.1em;line-height:1.02}
 h1 em{font-style:normal;color:var(--turq)}
-h2{font-size:30px;line-height:1.12}
-p{margin:0 0 14px}
-.lead{font-size:17.5px;color:var(--lav)}
-.who{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;font:500 14px/1.3 var(--sans)}
-.who span{padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card2)}
+h2{font-size:2.15em;line-height:1.08}
+p{margin:0 0 .75em}
+.lead{font-size:1.08em;line-height:1.5;color:var(--lav)}
+.who{display:flex;flex-wrap:wrap;gap:.45em;margin:0 0 .9em;font-size:.8em;font-weight:500}
+.who span{padding:.35em .7em;border:1px solid var(--line);border-radius:.5em;background:var(--card2)}
 .who b{color:var(--c)}
-.note{padding:12px 16px;border-left:4px solid var(--c);border-radius:0 12px 12px 0;background:var(--card2);font:500 16.5px/1.45 var(--sans);color:var(--txt)}
-.ex{margin:0 0 16px;padding:12px 14px;background:var(--bg2);border:1px solid var(--line);border-radius:12px;font:12.5px/1.6 var(--mono);color:var(--lav);white-space:pre-wrap;overflow-wrap:anywhere}
-.ex .l{display:block;margin-bottom:5px;font:700 11px/1.2 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--turq)}
-.ex .k{color:var(--c);font-weight:700}
+.note{padding:.6em .9em;border-left:4px solid var(--c);border-radius:0 .6em .6em 0;background:var(--card2);font-size:.95em;line-height:1.45;font-weight:500;color:var(--txt)}
+.ex{margin:0 0 .8em;padding:.75em .95em;background:var(--bg2);border:1px solid var(--line);border-radius:.6em;font:.78em/1.55 var(--mono);color:var(--lav);white-space:pre-wrap}
+.ex .l{display:block;margin-bottom:.35em;font:700 .8em/1.2 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--turq)}
 .ex .bad{color:var(--perm)}
-.btn{display:inline-flex;align-items:center;gap:8px;font:700 15px/1 var(--sans);padding:12px 18px;min-height:46px;background:var(--turq);color:var(--dark);border:0;border-radius:12px;cursor:pointer}
-.btn:after{content:"›";font-size:22px;line-height:0;margin-top:-2px}
-.btn:active{transform:scale(.97)}
-.road{list-style:none;padding:0;margin:20px 0;counter-reset:r}
-.road li{counter-increment:r;display:flex;gap:14px;align-items:center;padding:11px 0;border-top:1px solid var(--line);font:600 17px/1.3 var(--sans);color:var(--txt)}
-.road li:last-child{border-bottom:1px solid var(--line)}
-.road li:before{content:counter(r);flex:none;width:28px;height:28px;display:grid;place-items:center;border-radius:8px;background:var(--turq);color:var(--dark);font:700 14px/1 var(--sans)}
-.hint{font:700 13px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--turq);animation:nudge 1.6s ease-in-out infinite}
-@keyframes nudge{50%{transform:translateY(5px)}}
-.tbl{width:100%;border-collapse:separate;border-spacing:0;margin:0 0 16px;font-size:14px;line-height:1.4;background:var(--card2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.tbl th{text-align:left;padding:9px 8px;background:var(--bg2);color:var(--turq);font:700 11px/1.2 var(--sans);letter-spacing:.08em;text-transform:uppercase}
-.tbl td{padding:9px 8px;border-top:1px solid var(--line);vertical-align:top}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:.8em}.two .ex{margin:0}
+.rv{opacity:.18;transition:opacity .35s}.rv.on{opacity:1}
+.list{list-style:none;margin:0 0 .9em;padding:0;counter-reset:r}
+.list li{counter-increment:r;display:flex;gap:.7em;align-items:center;padding:.5em 0;border-top:1px solid var(--line);font-size:1em;font-weight:600;color:var(--txt)}
+.list li:last-child{border-bottom:1px solid var(--line)}
+.list li:before{content:counter(r);flex:none;width:1.45em;height:1.45em;display:grid;place-items:center;border-radius:.35em;background:var(--turq);color:var(--dark);font-size:.8em;font-weight:800}
+.rules{margin:0 0 .9em;border:1px solid var(--line);border-radius:.6em;overflow:hidden}
+.rules div{display:flex;justify-content:space-between;padding:.55em .9em;border-top:1px solid var(--line);font-size:.92em;color:var(--txt)}
+.rules div:first-child{border-top:0}
+.rules b{color:var(--c)}
+.tbl{width:100%;border-collapse:separate;border-spacing:0;margin:0 0 .9em;font-size:.8em;line-height:1.35;background:var(--card2);border:1px solid var(--line);border-radius:.6em;overflow:hidden}
+.tbl th{text-align:left;padding:.55em .7em;background:var(--bg2);color:var(--turq);font-size:.8em;letter-spacing:.08em;text-transform:uppercase}
+.tbl td{padding:.5em .7em;border-top:1px solid var(--line);vertical-align:top}
 .tbl td:first-child{font-weight:700;white-space:nowrap;color:var(--txt)}
-.tbl i{display:inline-block;width:9px;height:9px;margin-right:7px;border-radius:3px;background:var(--c)}
-.tbl code{font:12px var(--mono);overflow-wrap:anywhere}
-.tl{list-style:none;margin:0 0 16px;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.tl li{display:flex;gap:8px;align-items:center;padding:7px 9px;border:1px solid var(--line);border-radius:8px;font:600 13px/1.2 var(--sans);opacity:.4;transition:.25s}
-.tl li i{flex:none;width:9px;height:9px;border-radius:3px;background:var(--c)}
+.tbl i{display:inline-block;width:.6em;height:.6em;margin-right:.5em;border-radius:.15em;background:var(--c)}
+.tbl code{font:.92em var(--mono)}
+.tl{list-style:none;margin:0 0 .9em;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:.4em}
+.tl li{display:flex;gap:.5em;align-items:center;padding:.45em .7em;border:1px solid var(--line);border-radius:.45em;font-size:.8em;font-weight:600;opacity:.35;transition:.25s}
+.tl li i{flex:none;width:.6em;height:.6em;border-radius:.15em;background:var(--c)}
 .tl li.on{opacity:1;background:var(--card);border-color:var(--c);color:var(--txt)}
-.dec{list-style:none;margin:0 0 16px;padding:0}
-.dec li{display:flex;justify-content:space-between;gap:10px;padding:11px 0;border-top:1px solid var(--line);font:500 16px/1.35 var(--sans);color:var(--txt)}
+.dec{list-style:none;margin:0 0 .9em;padding:0}
+.dec li{display:flex;justify-content:space-between;align-items:center;gap:.6em;padding:.55em 0;border-top:1px solid var(--line);font-size:1em;font-weight:500;color:var(--txt)}
 .dec li:last-child{border-bottom:1px solid var(--line)}
-.dec b{flex:none;font:700 13px/1.5 var(--sans);text-transform:uppercase;letter-spacing:.05em;color:var(--c)}
-.q{margin:0 0 16px;padding:16px;background:var(--card);border:1px solid var(--line);border-radius:12px}
-.q .n{font:700 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--turq)}
-.q p.t{margin:8px 0 14px;font:600 19px/1.35 var(--sans);color:#fff}
-.q .opt{display:flex;width:100%;text-align:left;margin:0 0 8px;background:var(--card2);color:var(--txt);border:1px solid var(--line);font-weight:600}
-.q .opt:after{content:none}
-.q .opt.ok{background:var(--turq);color:var(--dark);border-color:var(--turq)}.q .opt.ko{background:var(--perm);color:#fff;border-color:var(--perm)}
-.q .fb{margin:12px 0 0;font:500 16px/1.45 var(--sans);color:var(--txt)}
-.foot{padding:10px 20px 60px;font:13px/1.5 var(--sans);color:var(--mute)}
+.dec b{flex:none;padding:.25em .6em;border-radius:.4em;background:var(--c);color:var(--dark);font-size:.72em;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.q .n{font-size:.72em;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--turq)}
+.q p.t{margin:.35em 0 .8em;font-size:1.35em;line-height:1.3;font-weight:700;color:#fff}
+.q .opt{display:flex;align-items:center;gap:.7em;margin:0 0 .45em;padding:.6em .9em;background:var(--card2);border:1px solid var(--line);border-radius:.55em;font-size:1em;font-weight:600;color:var(--txt)}
+.q .opt span{flex:none;width:1.5em;height:1.5em;display:grid;place-items:center;border-radius:.35em;background:var(--card);font-size:.75em;font-weight:800}
+.q .opt.ok{background:var(--turq);border-color:var(--turq);color:var(--dark)}.q .opt.ok span{background:rgba(0,0,0,.15)}
+.q .fb{margin:.7em 0 0;font-size:.95em;line-height:1.45;font-weight:500;color:var(--txt)}
 /* escena */
-.st{opacity:0;transition:opacity .55s}
-.st.on{opacity:1}
+.st{opacity:0;transition:opacity .55s}.st.on{opacity:1}
 .pl{animation:pl .45s ease-in-out 2;transform-box:fill-box;transform-origin:center}
 @keyframes pl{50%{transform:scale(1.08)}}
 .ln{fill:none;stroke:var(--lav);stroke-width:1.5;stroke-dasharray:3 4;opacity:.4}
@@ -89,43 +92,29 @@ p{margin:0 0 14px}
 .ring.on{opacity:1;animation:spin 2.2s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .cb{transition:transform .4s cubic-bezier(.3,.8,.3,1)}
-/* ancho: escena a la izquierda */
-@media (min-width:820px),(orientation:landscape) and (min-width:600px){
-  .wrap{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(360px,.75fr)}
-  #stagecol{top:46px;height:calc(100vh - 46px);height:calc(100dvh - 46px);display:flex;flex-direction:column;justify-content:center;padding:14px 20px;border-bottom:0;border-right:1px solid var(--line)}
-  #stage{max-height:calc(100dvh - 160px)}
-  .ch{padding:40px 34px 50px;min-height:80vh;min-height:80dvh}.ch.free{min-height:0}
-  .part{padding:48px 34px 0}
-}
-@media (min-width:820px){h1{font-size:50px}h2{font-size:34px}.ex{font-size:13px}}
-@media (orientation:landscape) and (max-height:520px){
-  #stage{max-height:calc(100dvh - 128px)}#cap{min-height:52px;padding:5px 8px}#capTxt{font-size:14.5px}
-  .ch{padding:22px 20px}h1{font-size:30px}h2{font-size:24px}.lead{font-size:15.5px}
-}
 </style>
 </head>
 <body>
-<header><span><b>SDG</b> · Anatomía de un belt</span><span id="cnt"></span><i id="bar"></i></header>
-<div class="wrap">
-  <div id="stagecol">
-    <svg id="stage" viewBox="0 0 400 346" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagrama animado de un modelo de IA dentro de un harness, con sus herramientas y las piezas de un belt"></svg>
-    <div id="cap"><span id="capWho"></span><span id="capTxt"></span></div>
-  </div>
-  <main id="chs"></main>
+<div id="deck">
+  <div id="top"><span class="brand"><b>SDG</b> · Anatomía de un belt</span><span id="part"></span>
+    <div id="right"><div id="beats"></div><span id="cnt"></span><div id="nav"><button id="bPrev" aria-label="Anterior">‹</button><button id="bNext" aria-label="Siguiente">›</button></div></div></div>
+  <i id="bar"></i>
+  <svg id="stage" viewBox="0 0 400 346" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagrama animado de un modelo de IA dentro de un harness y las piezas de un belt"></svg>
+  <div id="panel"><div id="pin"></div></div>
+  <div id="cap"><span id="capWho"></span><span id="capTxt"></span></div>
 </div>
 
 <script>
-const K={ink:'#E8EBFA',dark:'#1E1B31',paper:'#1E1B31',card:'#2B2846',hz:'#23203A',tray:'#211E37',edge:'#4A4670',mute:'#8C8FB0',model:'#3366FF',
+const K={ink:'#E8EBFA',dark:'#1E1B31',card:'#2B2846',hz:'#23203A',tray:'#211E37',edge:'#4A4670',mute:'#8C8FB0',model:'#3366FF',
  sys:'#8C8FB0',tool:'#D1D8ED',perm:'#FF4D56',instr:'#00E6D9',cmd:'#F7C948',skill:'#8B8DF7',sub:'#FF7AB6',mcp:'#4FA3FF',hook:'#FF9F43'};
 const NS='http://www.w3.org/2000/svg',$=id=>document.getElementById(id);
 
 /* ================= ESCENA ================= */
-const R=(x,y,w,h,o={})=>{const {f=K.card,s=K.edge,sw=1.5,r=8,sh=false,dash='',id=''}=o;
- return (sh?`<rect x="${x+3}" y="${y+3}" width="${w}" height="${h}" rx="${r}" fill="${K.ink}"/>`:'')+
- `<rect${id?` id="${id}"`:''} x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="${f}" stroke="${s}" stroke-width="${sw}"${dash?` stroke-dasharray="${dash}"`:''}/>`};
-const T=(x,y,t,o={})=>{const {fs=11,w=700,c=K.ink,a='middle',f='sans',ls=0,id=''}=o;
- return `<text${id?` id="${id}"`:''} x="${x}" y="${y}" text-anchor="${a}" style="font:${w} ${fs}px var(--${f});fill:${c};letter-spacing:${ls}em">${t}</text>`};
-const chip=(id,t,x,w,c=K.tool)=>`<g id="c-${id}">${R(x,280,w,26,{s:c,r:4,sh:false})}${T(x+w/2,297,t,{fs:10,f:'sans'})}</g>`;
+const R=(x,y,w,h,o={})=>{const {f=K.card,s=K.edge,sw=1.5,r=8,dash='',id=''}=o;
+ return `<rect${id?` id="${id}"`:''} x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="${f}" stroke="${s}" stroke-width="${sw}"${dash?` stroke-dasharray="${dash}"`:''}/>`};
+const T=(x,y,t,o={})=>{const {fs=11,w=700,c=K.ink,a='middle',ls=0,id=''}=o;
+ return `<text${id?` id="${id}"`:''} x="${x}" y="${y}" text-anchor="${a}" style="font:${w} ${fs}px var(--sans);fill:${c};letter-spacing:${ls}em">${t}</text>`};
+const chip=(id,t,x,w,c=K.tool)=>`<g id="c-${id}">${R(x,280,w,26,{s:c,r:6})}${T(x+w/2,297,t,{fs:10.5})}</g>`;
 const SYS=[['snow','Snowflake',150],['dbt','dbt',212],['pbi','Power BI',274],['jira','Jira',336]];
 const SLOTS=[['instr','Instrucciones','siempre activas',K.instr,8],['cmd','Comandos','los lanzas tú',K.cmd,9],['skill','Skills','las elige el modelo',K.skill,10],
  ['sub','Subagentes','delega el modelo',K.sub,11],['mcp','MCP','conecta sistemas',K.mcp,12],['hook','Hooks','saltan solos',K.hook,13]];
@@ -134,58 +123,48 @@ const pill=(id,x,y,t)=>`<g id="${id}"><rect x="${x-33}" y="${y-9}" width="66" he
 
 $('stage').innerHTML=`
 <defs><marker id="ah" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8z" fill="${K.ink}"/></marker></defs>
-
-<g class="st" data-ch="1" id="g-sys">${T(271,12,'SISTEMAS DEL CLIENTE',{fs:8.5,ls:.12,c:K.mute})}
-${SYS.map(([id,n,x])=>`<g id="sy-${id}">${R(x,20,58,32,{s:K.mcp,r:5})}${T(x+29,40,n,{fs:10,f:'sans'})}</g>`).join('')}</g>
-<g class="st" data-r="1-3"><path d="M238 124 L186 56" fill="none" stroke="${K.perm}" stroke-width="2" stroke-dasharray="4 4"/>${T(216,70,'sin acceso',{a:'start',fs:9,c:K.perm})}</g>
-
-<g class="st" data-ch="2">${R(8,76,384,260,{f:K.hz,r:16,dash:'6 5',s:K.edge})}${T(20,95,'HARNESS',{a:'start',fs:11,ls:.14})}${T(382,95,'Claude Code · Copilot · Cursor',{a:'end',fs:8.5,c:K.mute,w:600})}</g>
+<g class="st" data-ch="1">${T(271,12,'SISTEMAS DEL CLIENTE',{fs:8.5,ls:.12,c:K.mute})}
+${SYS.map(([id,n,x])=>`<g id="sy-${id}">${R(x,20,58,32,{s:K.mcp,r:7})}${T(x+29,40,n,{fs:10.5})}</g>`).join('')}</g>
+<g class="st" data-r="1-3"><path d="M238 124 L186 56" fill="none" stroke="${K.perm}" stroke-width="2" stroke-dasharray="4 4"/>${T(216,70,'sin acceso',{a:'start',fs:9.5,c:K.perm})}</g>
+<g class="st" data-ch="2">${R(8,76,384,260,{f:K.hz,r:16,dash:'6 5'})}${T(20,95,'HARNESS',{a:'start',fs:11,ls:.14})}${T(382,95,'Claude Code · Copilot · Cursor',{a:'end',fs:9,c:K.mute,w:600})}</g>
 <g class="st" data-r="1-1"><path d="M56 46 Q170 60 228 132" class="ln"/></g>
-<g class="st" data-ch="2"><path d="M48 55 L118 103" class="ln"/><path id="l-cm" d="M144 150 H224" class="ln"/></g>
+<g class="st" data-ch="2"><path d="M48 55 L118 103" class="ln"/><path d="M144 150 H224" class="ln"/></g>
 <g class="st" data-ch="4"><path d="M262 188 V256" class="ln"/><path id="l-sys" d="M156 293 H150 V53" class="ln"/></g>
-
-<g class="st" data-ch="2">${R(20,104,124,222,{r:8})}${T(30,119,'CONTEXTO',{a:'start',fs:9,ls:.12})}${T(134,119,'0 %',{a:'end',fs:9,id:'ctxpct',c:K.mute})}
-<rect x="28" y="123" width="108" height="3" fill="${K.hz}"/><rect id="ctxmeter" x="28" y="123" width="0" height="3" fill="${K.ink}"/><g id="ctxblocks"></g></g>
-
-<g class="st" data-ch="4">${R(156,256,228,64,{r:8})}${T(166,271,'EJECUTOR DE HERRAMIENTAS',{a:'start',fs:8,ls:.12,c:K.mute})}
+<g class="st" data-ch="2">${R(20,104,124,222,{r:9})}${T(30,119,'CONTEXTO',{a:'start',fs:9.5,ls:.12})}${T(134,119,'0 %',{a:'end',fs:9.5,id:'ctxpct',c:K.mute})}
+<rect x="28" y="123" width="108" height="3" rx="1.5" fill="${K.hz}"/><rect id="ctxmeter" x="28" y="123" width="0" height="3" rx="1.5" fill="${K.ink}"/><g id="ctxblocks"></g></g>
+<g class="st" data-ch="4">${R(156,256,228,64,{r:9})}${T(166,271,'EJECUTOR DE HERRAMIENTAS',{a:'start',fs:8.5,ls:.12,c:K.mute})}
 ${chip('sql','SQL',164,44)}${chip('py','Python',212,56)}${chip('files','Archivos',272,62)}</g>
 <g class="st" data-ch="12">${chip('mcp','MCP',338,40,K.mcp)}</g>
-
 <g class="st" data-r="5-5">
 <path class="la" d="M346 120 Q380 176 356 229"/><path class="la" d="M318 250 Q262 270 216 247"/><path class="la" d="M176 226 Q170 112 282 108"/>
 ${pill('lp0',318,110,'DECIDE')}${pill('lp1',348,240,'EJECUTA')}${pill('lp2',184,236,'OBSERVA')}</g>
-
 <g class="st" data-ch="11">${[124,184].map((cy,i)=>`<circle id="sr${i}" class="ring" cx="344" cy="${cy}" r="20" fill="none" stroke="${K.sub}" stroke-width="2" stroke-dasharray="3 5"/>
 <circle cx="344" cy="${cy}" r="14" fill="${K.sub}"/>${T(344,cy+3.5,'sub',{fs:9.5,c:K.dark})}
-${R(366,cy-18,18,36,{r:3,sh:false})}<rect id="sb${i}" x="368" y="${cy+16}" width="14" height="0" fill="${K.sub}"/>`).join('')}${T(350,219,'contexto propio',{fs:7.5,c:K.mute,w:600})}</g>
-
-<g class="st" data-ch="6" id="g-gate"><rect id="gateR" x="216" y="219" width="92" height="22" rx="11" fill="${K.card}" stroke="${K.perm}" stroke-width="2"/>${T(262,234,'PERMISOS',{fs:9,c:K.perm,ls:.12,id:'gateT'})}</g>
-
+${R(366,cy-18,18,36,{r:4})}<rect id="sb${i}" x="368" y="${cy+16}" width="14" height="0" rx="2" fill="${K.sub}"/>`).join('')}${T(350,219,'contexto propio',{fs:8,c:K.mute,w:600})}</g>
+<g class="st" data-ch="6" id="g-gate"><rect id="gateR" x="216" y="219" width="92" height="22" rx="11" fill="${K.card}" stroke="${K.perm}" stroke-width="2"/>${T(262,234,'PERMISOS',{fs:9.5,c:K.perm,ls:.12,id:'gateT'})}</g>
 <g class="st on">
-<circle id="mring" class="ring" cx="262" cy="150" r="45" fill="none" stroke="${K.ink}" stroke-width="2.5" stroke-dasharray="3 7"/>
+<circle id="mring" class="ring" cx="262" cy="150" r="46" fill="none" stroke="${K.ink}" stroke-width="2.5" stroke-dasharray="3 7"/>
 <circle cx="262" cy="150" r="41" fill="none" stroke="${K.model}" stroke-opacity=".35" stroke-width="4"/><circle id="mcirc" cx="262" cy="150" r="36" fill="${K.model}"/>
-${T(262,156,'LLM',{fs:17,c:'#fff',ls:.06})}${T(262,204,'MODELO',{fs:9,ls:.14})}</g>
+${T(262,156,'LLM',{fs:17,c:'#fff',ls:.06})}${T(262,204,'MODELO',{fs:9.5,ls:.14})}</g>
 <g class="st on"><circle cx="34" cy="38" r="20" fill="${K.card}" stroke="${K.ink}" stroke-width="2"/><circle cx="34" cy="32" r="6.5" fill="${K.ink}"/><path d="M23 50 Q34 36 45 50Z" fill="${K.ink}"/>
-${T(62,36,'TÚ',{a:'start',fs:11,ls:.12})}${T(62,49,'consultor/a',{a:'start',fs:8.5,c:K.mute,w:600})}</g>
-
+${T(62,36,'TÚ',{a:'start',fs:11,ls:.12})}${T(62,50,'consultor/a',{a:'start',fs:9,c:K.mute,w:600})}</g>
 <g class="st" data-ch="7">${R(8,344,384,98,{f:K.tray,r:16})}${T(20,360,'BELT',{a:'start',fs:11,ls:.14,c:K.instr})}${T(382,360,'kpi-analysis-belt',{a:'end',fs:9.5,c:K.mute,w:600})}
-${SLOTS.map((s,i)=>{const p=sXY(i);return `<g id="ph${i}">${R(p.x,p.y,120,32,{f:'none',s:K.mute,dash:'4 3',sh:false,r:5,sw:1.5})}${T(p.x+60,p.y+20,s[1],{fs:10,c:K.mute,f:'sans',w:600})}</g>`}).join('')}</g>
-${SLOTS.map((s,i)=>{const p=sXY(i);return `<g class="st" data-ch="${s[4]}" id="s-${s[0]}">${R(p.x,p.y,120,32,{r:5})}<rect x="${p.x}" y="${p.y}" width="6" height="32" rx="3" fill="${s[3]}"/>
-${T(p.x+16,p.y+14,s[1],{a:'start',fs:10.5,f:'sans'})}${T(p.x+16,p.y+26,s[2],{a:'start',fs:8,c:K.mute,w:600})}</g>`}).join('')}
-
-<g id="deny" style="display:none"><circle r="13" fill="${K.perm}" stroke="${K.ink}" stroke-width="2"/><path d="M-5 -5l10 10M5 -5l-10 10" stroke="#fff" stroke-width="3" stroke-linecap="round"/></g>
-<g id="okm" style="display:none"><circle r="13" fill="${K.instr}" stroke="${K.ink}" stroke-width="2"/><path d="M-6 0l4 4 8-8" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/></g>
+${SLOTS.map((s,i)=>{const p=sXY(i);return `<g id="ph${i}">${R(p.x,p.y,120,32,{f:'none',s:K.mute,dash:'4 3',r:7})}${T(p.x+60,p.y+20,s[1],{fs:10.5,c:K.mute,w:600})}</g>`}).join('')}</g>
+${SLOTS.map((s,i)=>{const p=sXY(i);return `<g class="st" data-ch="${s[4]}" id="s-${s[0]}">${R(p.x,p.y,120,32,{r:7})}<rect x="${p.x}" y="${p.y}" width="6" height="32" rx="3" fill="${s[3]}"/>
+${T(p.x+15,p.y+14,s[1],{a:'start',fs:11})}${T(p.x+15,p.y+26,s[2],{a:'start',fs:8.5,c:K.mute,w:600})}</g>`}).join('')}
+<g id="deny" style="display:none"><circle r="13" fill="${K.perm}" stroke="${K.dark}" stroke-width="2"/><path d="M-5 -5l10 10M5 -5l-10 10" stroke="#fff" stroke-width="3" stroke-linecap="round"/></g>
 <g id="packets"></g>`;
 
 /* ================= ANIMACIÓN ================= */
-const P={u:{x:34,y:38},m:{x:262,y:150},ctx:{x:82,y:215},ex:{x:270,y:288},gate:{x:262,y:230},
+const P={u:{x:34,y:38},m:{x:262,y:150},ctx:{x:82,y:215},gate:{x:262,y:230},
  snow:{x:179,y:36},dbt:{x:241,y:36},pbi:{x:303,y:36},jira:{x:365,y:36},
  sql:{x:186,y:293},py:{x:240,y:293},files:{x:303,y:293},mcpc:{x:358,y:293},s1:{x:344,y:124},s2:{x:344,y:184}};
 SLOTS.forEach((s,i)=>{const p=sXY(i);P[s[0]]={x:p.x+60,y:p.y+16}});
-let tok=0;
-const sleep=ms=>{const t=tok;return new Promise((r,j)=>setTimeout(()=>t===tok?r():j('x'),ms))};
+let tok=0,FAST=false;
+const sleep=ms=>{const t=tok;if(FAST)return t===tok?Promise.resolve():Promise.reject('x');return new Promise((r,j)=>setTimeout(()=>t===tok?r():j('x'),ms))};
 const ease=p=>p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
 function fly(a,b,label,col,ms=900){
+  if(FAST)return sleep(0);
   a=P[a]||a;b=P[b]||b;
   const my=tok,g=document.createElementNS(NS,'g'),w=label.length*6+24,h=20,lt=col===K.card;
   g.innerHTML=`<rect x="${-w/2}" y="${-h/2}" width="${w}" height="${h}" rx="7" fill="${col}"${lt?` stroke="${K.ink}" stroke-width="1.2"`:''}/>`+
@@ -198,328 +177,268 @@ function fly(a,b,label,col,ms=900){
     if(p<1)requestAnimationFrame(f);else{g.remove();res()}})(t0)});
 }
 const both=(...ps)=>Promise.all(ps);
-function pulse(id){const e=$(id);if(!e)return;e.classList.remove('pl');void e.getBBox();e.classList.add('pl');setTimeout(()=>e.classList.remove('pl'),1000)}
-async function think(ms=900,id='mring'){$(id).classList.add('on');await sleep(ms);$(id).classList.remove('on')}
-async function mark(id,p,ms=1200){const e=$(id),q=P[p]||p;e.setAttribute('transform',`translate(${q.x},${q.y})`);e.style.display='';await sleep(ms);e.style.display='none'}
-async function gate(col,ms=700){$('gateR').setAttribute('fill',col);$('gateT').style.fill=K.dark;pulse('g-gate');await sleep(ms);$('gateR').setAttribute('fill',K.card);$('gateT').style.fill=K.perm}
-const WHO={tu:['Tú','#D1D8ED',K.dark],harness:['Harness','#54546A','#fff'],modelo:['Modelo',K.model,'#fff'],sub:['Subagente',K.sub,K.dark],hook:['Hook',K.hook,K.dark],perm:['Permisos',K.perm,'#fff'],plugin:['Belt',K.instr,K.dark]};
+function pulse(id){if(FAST)return;const e=$(id);if(!e)return;e.classList.remove('pl');void e.getBBox();e.classList.add('pl');setTimeout(()=>e.classList.remove('pl'),1000)}
+async function think(ms=900,id='mring'){if(FAST)return sleep(0);$(id).classList.add('on');await sleep(ms);$(id).classList.remove('on')}
+async function mark(p,ms=1200){if(FAST)return sleep(0);const e=$('deny'),q=P[p]||p;e.setAttribute('transform',`translate(${q.x},${q.y})`);e.style.display='';await sleep(ms);e.style.display='none'}
+async function gate(col,ms=700){if(FAST)return sleep(0);$('gateR').setAttribute('fill',col);$('gateT').style.fill=K.dark;pulse('g-gate');await sleep(ms);$('gateR').setAttribute('fill',K.card);$('gateT').style.fill=K.perm}
+const WHO={tu:['Tú','#D1D8ED',K.dark],harness:['Harness','#54546A','#fff'],modelo:['Modelo',K.model,'#fff'],sub:['Subagente',K.sub,K.dark],hook:['Hook',K.hook,K.dark],perm:['Permisos',K.perm,'#fff'],belt:['Belt',K.instr,K.dark]};
 function say(w,t){const c=WHO[w];$('capWho').textContent=c[0];$('capWho').style.background=c[1];$('capWho').style.color=c[2];$('capTxt').textContent=t}
 const loopHi=i=>[0,1,2].forEach(j=>{const g=$('lp'+j);g.firstElementChild.setAttribute('fill',j===i?K.instr:K.card);g.lastElementChild.style.fill=j===i?K.dark:K.ink});
-const tl=n=>document.querySelectorAll('.tl li').forEach((li,i)=>li.classList.toggle('on',n>=0&&i<=n));
+const tl=n=>document.querySelectorAll('#pin .tl li').forEach((li,i)=>li.classList.toggle('on',n>=0&&i<=n));
+const rv=n=>document.querySelectorAll('#pin .rv').forEach((e,i)=>e.classList.toggle('on',i<n));
 const live=on=>$('l-sys').classList.toggle('live',on);
-function subFill(i,to,ms=1400){const r=$('sb'+i),cy=i?184:124,my=tok,from=+r.getAttribute('height'),t0=performance.now();
-  return new Promise(res=>{(function f(t){if(my!==tok)return res();const p=Math.min(1,(t-t0)/ms),h=from+(to*32-from)*ease(p);
-  r.setAttribute('height',h);r.setAttribute('y',cy+16-h);p<1?requestAnimationFrame(f):res()})(t0)})}
+function subFill(i,to,ms=1400){const r=$('sb'+i),cy=i?184:124,set=h=>{r.setAttribute('height',h);r.setAttribute('y',cy+16-h)};
+  if(FAST){set(to*32);return sleep(0)}
+  const my=tok,from=+r.getAttribute('height'),t0=performance.now();
+  return new Promise(res=>{(function f(t){if(my!==tok)return res();const p=Math.min(1,(t-t0)/ms);set(from+(to*32-from)*ease(p));p<1?requestAnimationFrame(f):res()})(t0)})}
+async function subsWork(a,b,ms){$('sr0').classList.add('on');$('sr1').classList.add('on');await both(subFill(0,a,ms),subFill(1,b,ms),sleep(ms));$('sr0').classList.remove('on');$('sr1').classList.remove('on')}
 
 /* ventana de contexto */
 const CTX={list:[],top:130,bot:318,x:28,w:108};
-function ctxPush(k,label,c,h=16,soft=false,anim=false){
+function ctxPush(k,label,c,h=16,soft=false){
   const g=document.createElementNS(NS,'g');g.setAttribute('class','cb');
-  const txt=soft?K.ink:K.dark;
-  g.innerHTML=`<rect width="${CTX.w}" height="${h}" rx="3" fill="${c}" fill-opacity="${soft?.2:1}" stroke="${c}" stroke-width="1.5"/><text x="${CTX.w/2}" y="${h/2+3.2}" text-anchor="middle" style="font:700 9px var(--sans);fill:${txt}">${label}</text>`;
-  $('ctxblocks').appendChild(g);const b={k,h,el:g,rect:g.firstChild,txt:g.lastChild};CTX.list.push(b);
-  ctxRender();if(anim)g.animate([{opacity:0},{opacity:1}],{duration:380});return b;
+  g.innerHTML=`<rect width="${CTX.w}" height="${h}" rx="3.5" fill="${c}" fill-opacity="${soft?.2:1}" stroke="${c}" stroke-width="1.5"/><text x="${CTX.w/2}" y="${h/2+3.2}" text-anchor="middle" style="font:700 9.5px var(--sans);fill:${soft?K.ink:K.dark}">${label}</text>`;
+  $('ctxblocks').appendChild(g);CTX.list.push({k,h,el:g,rect:g.firstChild,txt:g.lastChild});
+  ctxRender();if(!FAST)g.animate([{opacity:0},{opacity:1}],{duration:380});
 }
 function ctxRender(){
   const gap=3,tot=CTX.list.reduce((s,b)=>s+b.h+gap,0),avail=CTX.bot-CTX.top,k=Math.min(1,avail/(tot||1));
   let y=CTX.top;CTX.list.forEach(b=>{const h=Math.max(5,b.h*k);b.el.style.transform=`translate(${CTX.x}px,${y}px)`;
-    b.rect.setAttribute('height',h);b.txt.setAttribute('y',h/2+3.2);b.txt.style.opacity=h<11?0:1;y+=h+gap*k});
+    b.rect.setAttribute('height',h);b.txt.setAttribute('y',h/2+3.3);b.txt.style.opacity=h<11?0:1;y+=h+gap*k});
   const pct=Math.min(100,Math.round(tot/avail*100));$('ctxpct').textContent=pct+' %';$('ctxmeter').setAttribute('width',108*pct/100);
 }
 function ctxClear(){CTX.list=[];$('ctxblocks').innerHTML='';ctxRender()}
 function ctxDel(k){CTX.list=CTX.list.filter(b=>{if(b.k===k){b.el.remove();return false}return true});ctxRender()}
-const ctxPulse=k=>{const b=CTX.list.find(b=>b.k===k);if(b)b.el.firstChild.animate([{strokeWidth:1.5},{strokeWidth:5},{strokeWidth:1.5}],{duration:700})};
+const ctxPulse=k=>{if(FAST)return;const b=CTX.list.find(b=>b.k===k);if(b)b.el.firstChild.animate([{strokeWidth:1.5},{strokeWidth:5},{strokeWidth:1.5}],{duration:700})};
 const BASE={sys:['Sistema',K.sys,16],tools:['Herramientas',K.tool,12,1],instr:['Instrucciones',K.instr,22],skidx:['Índice de skills',K.skill,11,1],mcpt:['Herram. MCP',K.mcp,12,1]};
 function base(...ks){ctxClear();ks.forEach(k=>{const [l,c,h,s]=BASE[k];ctxPush(k,l,c,h,!!s)})}
-async function add(k,l,c,h=16,soft=false){ctxPush(k,l,c,h,soft,true);await sleep(380)}
+async function add(k,l,c,h=16,soft=false){ctxPush(k,l,c,h,soft);await sleep(380)}
 async function send(ms=900){await fly('ctx','m','contexto',K.card,650);await think(ms)}
 
-/* ================= CAPÍTULOS ================= */
-const ex=(l,t)=>`<div class="ex"><span class="l">${l}</span>${t}</div>`;
+/* ================= DIAPOSITIVAS ================= */
+const ex=(l,t,c='')=>`<div class="ex ${c}"><span class="l">${l}</span>${t}</div>`;
 const who=(a,b)=>`<p class="who"><span>La activa: <b>${a}</b></span><span>Se carga: <b>${b}</b></span></p>`;
-const CH=[
-/* 0 */{hero:true,col:K.cmd,html:`<p class="kick"><i></i>SDG · Guía para managers · 12 min</p>
+const P1='Parte 1 · El motor',P2='Parte 2 · Las piezas de un belt',P3='Parte 3 · Un caso real',P4='Parte 4 · Para llevarte';
+const QZ=[
+ {t:'Todos los análisis deben usar la definición de «cliente activo» del cliente.',o:['Instrucciones','Skill','Hook','Comando'],a:0,st:'s-instr',w:'Lo que hay que saber siempre va en las instrucciones.'},
+ {t:'Cada lunes el equipo prepara el mismo informe de KPIs.',o:['Subagente','Comando','MCP','Instrucciones'],a:1,st:'s-cmd',w:'Un encargo repetido que lanza una persona: un comando.'},
+ {t:'Pase lo que pase, nunca debe salir el email de un cliente en un resultado.',o:['Instrucciones','Hook','Skill','Subagente'],a:1,st:'s-hook',w:'Una instrucción se puede saltar; un hook se ejecuta siempre. Para garantías, hooks.'},
+ {t:'Tenemos un método de calidad de datos, con scripts, que solo aplica en algunas tareas.',o:['Instrucciones','Skill','Hook','MCP'],a:1,st:'s-skill',w:'Un saber hacer que se carga solo cuando toca: una skill.'}];
+function qShow(i,rev){const q=QZ[i];$('quiz').innerHTML=`<div class="q"><span class="n">Pregunta ${i+1} de ${QZ.length}</span><p class="t">${q.t}</p>${q.o.map((o,k)=>`<div class="opt${rev&&k===q.a?' ok':''}"><span>${'ABCD'[k]}</span>${o}</div>`).join('')}<p class="fb" style="visibility:${rev?'visible':'hidden'}">${q.w}</p></div>`;
+  if(rev){pulse(q.st);say('belt',`Respuesta: ${q.o[q.a]}.`)}else say('belt','¿Qué pieza usarías? Pensadlo antes de ver la respuesta.')}
+
+const S=[
+/* 0 portada */
+{part:'',col:K.instr,cover:true,html:`<p class="kick" style="--c:${K.instr}"><i></i>SDG · Guía para managers</p>
  <h1>Anatomía de un <em>belt</em></h1>
- <p class="lead">Cómo funciona por dentro un agente de IA como Claude Code o GitHub Copilot, y qué piezas componen un belt: el paquete con el que le enseñamos a trabajar con el método de SDG. Con un caso de lo nuestro: datos y analítica.</p>
- <ol class="road"><li>El motor: modelo + harness</li><li>Las piezas de un belt</li><li>Un caso real, de principio a fin</li><li>Chuleta y test</li></ol>
- <p class="hint">Desliza hacia abajo ↓</p>`,
- async demo(){say('modelo','Este es el modelo. Por ahora solo sabe leer texto y escribir texto.');pulse('mcirc')}},
+ <p class="lead">Cómo funciona por dentro un agente de IA como Claude Code o GitHub Copilot, y qué piezas componen un belt: el paquete con el que le enseñamos a trabajar con el método de SDG.</p>
+ <ol class="list"><li>El motor: modelo + harness</li><li>Las piezas de un belt</li><li>Un caso real de data &amp; analytics</li><li>Chuleta y test</li></ol>`,
+ beats:[async()=>{say('modelo','Este es el modelo. Por ahora solo sabe leer texto y escribir texto.');pulse('mcirc')}]},
 
-/* 1 */{part:['Parte 1','El motor: modelo + harness'],n:'1.1',col:K.ink,t:'El modelo: entra texto, sale texto',
- lead:'Un modelo de lenguaje (Claude, GPT, Gemini…) hace una sola cosa: recibe un texto y escribe la continuación más probable. Sabe muchísimo en general, pero no recuerda conversaciones anteriores, no ve vuestro Snowflake y no puede ejecutar nada.',
- body:ex('Le preguntas','¿Por qué ha caído la conversión online de Retail Norte en septiembre?')+ex('Responde','<span class="bad">«Puede deberse a la estacionalidad, a cambios de precio o a problemas de experiencia de usuario…»</span>')+
- `<p class="note">No se equivoca: es que no tiene de dónde sacar la causa real. Los datos están ahí arriba, pero no llega a ellos.</p>`,
- async demo(){
-  say('tu','«¿Por qué ha caído la conversión online de Retail Norte en septiembre?»');await fly('u','m','¿Por qué cae la conversión?',K.card,1000);
-  await think(1300);say('modelo','«Puede deberse a la estacionalidad, a los precios…». Una respuesta genérica: no ve vuestros datos.');
-  await fly('m','u','respuesta genérica',K.sys,1000);
- }},
+/* 1 */{part:P1,n:'1.1 · LLM',col:K.model,t:'El modelo: entra texto, sale texto',
+ lead:'Un modelo de lenguaje (Claude, GPT, Gemini…) recibe un texto y escribe la continuación más probable. Sabe muchísimo en general, pero no recuerda, no ve vuestros datos y no ejecuta nada.',
+ body:ex('Le preguntas','¿Por qué ha caído la conversión online de Retail Norte en septiembre?')+ex('Responde','<span class="bad">«Puede deberse a la estacionalidad, a cambios de precio o a la experiencia de usuario…»</span>')+
+ `<p class="note">No se equivoca: es que no tiene de dónde sacar la causa real. Los datos están ahí, pero no llega a ellos.</p>`,
+ beats:[
+  async()=>{say('tu','«¿Por qué ha caído la conversión online de Retail Norte en septiembre?»');await fly('u','m','¿Por qué cae la conversión?',K.card,1000)},
+  async()=>{await think(1100);say('modelo','«Puede deberse a la estacionalidad, a los precios…». Genérico: no ve vuestros datos.');await fly('m','u','respuesta genérica',K.sys,1000)}]},
 
-/* 2 */{n:'1.2',col:K.sys,t:'El harness: el programa que lo envuelve',
- lead:'Claude Code, GitHub Copilot o Cursor no son «el modelo»: son programas que lo envuelven. Se llaman harness (arnés). El modelo es el motor; el harness es el resto del coche.',
- body:ex('Lo que hace el harness','1. Monta el contexto que se envía al modelo.\n2. Llama al modelo.\n3. Ejecuta lo que el modelo pide.\n4. Aplica las reglas: qué se puede y qué no.')+
- `<p class="note">Por eso dos herramientas con el mismo modelo pueden rendir muy distinto: lo que cambia es el harness.</p>`,
- async demo(){
-  ctxClear();say('harness','Tu mensaje ya no va directo al modelo: lo recibe el harness.');
-  await fly('u','ctx','tu pregunta',K.card,900);await add('sys','Sistema',K.sys,16);await add('q','Tu pregunta',K.ink,16);
-  say('harness','Con eso monta el contexto y se lo envía al modelo.');await send(1100);
-  say('modelo','Responde. De momento igual de genérico: todavía no tiene herramientas.');await fly('m','u','respuesta',K.sys,1000);
- }},
+/* 2 */{part:P1,n:'1.2 · Harness',col:K.sys,t:'El harness: el programa que lo envuelve',
+ lead:'Claude Code, GitHub Copilot o Cursor no son «el modelo»: son el programa que lo envuelve, el harness. El modelo es el motor; el harness, el resto del coche.',
+ body:`<ol class="list"><li class="rv">Monta el contexto que recibe el modelo</li><li class="rv">Llama al modelo</li><li class="rv">Ejecuta lo que el modelo pide</li><li class="rv">Aplica las reglas: qué se puede y qué no</li></ol>
+ <p class="note">Por eso dos herramientas con el mismo modelo rinden distinto: lo que cambia es el harness.</p>`,
+ beats:[
+  async()=>{rv(1);say('harness','Tu mensaje ya no va directo al modelo: lo recibe el harness y monta el contexto.');await fly('u','ctx','tu pregunta',K.card,900);await add('sys','Sistema',K.sys,16);await add('q','Tu pregunta',K.ink,16)},
+  async()=>{rv(2);say('harness','Le envía todo el contexto al modelo.');await send(1100)},
+  async()=>{rv(4);say('modelo','Responde, aún genérico: le faltan herramientas y reglas. Es lo siguiente.');await fly('m','u','respuesta',K.sys,1000)}]},
 
-/* 3 */{n:'1.3',col:K.ink,t:'La ventana de contexto',
- lead:'El modelo no ve tu pantalla ni tus archivos: solo ve lo que el harness le pone en la ventana de contexto en cada llamada. Es un único texto, apilado por partes.',
- jarg:'context window · tokens',
- body:ex('Lo que recibe el modelo, en realidad',`<span class="k" style="--c:${K.sys}">[sistema]</span>   Eres un asistente de datos…
-<span class="k" style="--c:${K.ink}">[historial]</span> …mensajes anteriores…
-<span class="k" style="--c:${K.ink}">[tú]</span>        ¿Por qué cae la conversión?`)+
- `<p class="note">Si no está en la ventana, para el modelo no existe. Y tiene un límite: cuanto más se llena, más caro, más lento y peor atiende a lo importante.</p>`,
- async demo(){
-  ctxClear();say('harness','Antes de cada llamada, el harness apila en la ventana todo lo que el modelo debe saber.');await sleep(900);
-  await add('sys','Sistema',K.sys,18);say('harness','Las instrucciones base del propio harness.');await sleep(900);
-  await add('hist','Historial',K.ink,40);say('harness','La conversación hasta ahora.');await sleep(800);
-  await add('q','Tu pregunta',K.ink,16);say('harness','Tu pregunta. Esa pila es TODO lo que el modelo verá.');await send(1000);
-  say('harness','Si alguien pega un documento enorme, la ventana se llena…');await add('doc','Documento de 80 págs.',K.sys,120);await sleep(1600);
-  say('harness','…y lo importante queda enterrado. Menos, pero relevante, funciona mejor.');await sleep(1400);ctxDel('doc');
- }},
+/* 3 */{part:P1,n:'1.3 · Context window',col:K.ink,t:'La ventana de contexto',
+ lead:'El modelo no ve tu pantalla ni tus archivos: solo lo que el harness le pone en la ventana de contexto en cada llamada. Es un único texto, apilado por partes.',
+ body:ex('Lo que recibe el modelo, en realidad',`[sistema]    Eres un asistente de datos…
+[historial]  …mensajes anteriores…
+[tú]         ¿Por qué cae la conversión?`)+
+ `<p class="note">Si no está en la ventana, para el modelo no existe. Y tiene límite: cuanto más se llena, más caro, más lento y peor atiende a lo importante.</p>`,
+ beats:[
+  async()=>{say('harness','Primero, las instrucciones base del propio harness.');await add('sys','Sistema',K.sys,18)},
+  async()=>{say('harness','Después, la conversación hasta ahora.');await add('hist','Historial',K.ink,40)},
+  async()=>{say('harness','Y tu pregunta. Esa pila es TODO lo que el modelo verá.');await add('q','Tu pregunta',K.ink,16);await send(900)},
+  async()=>{say('harness','Si alguien pega un documento enorme, la ventana se llena…');await add('doc','Documento de 80 págs.',K.sys,120)},
+  async()=>{say('harness','…y lo importante queda enterrado. Menos, pero relevante, funciona mejor.');ctxDel('doc')}]},
 
-/* 4 */{n:'1.4',col:K.tool,t:'Las herramientas',
- lead:'Para que actúe, el harness le ofrece herramientas: ejecutar SQL, correr Python, leer archivos. El modelo no ejecuta nada: escribe una petición, el harness la ejecuta de verdad y pega el resultado en el contexto.',
- jarg:'tools · tool calling',
- body:ex('El modelo escribe',`{ "herramienta": "run_sql",
-  "sql": "select semana,
-     pedidos/sesiones as conv
-     from mart_web_sesiones
-     group by 1" }`)+ex('El harness ejecuta y añade al contexto','semana 36 → 3,1 %\nsemana 37 → 2,5 %\nsemana 38 → 2,5 %')+
- `<p class="note">El modelo decide; el harness hace.</p>`,
- async demo(){
-  base('sys','tools');await add('q','Tu pregunta',K.ink,16);
-  say('harness','Ahora el contexto incluye la lista de herramientas disponibles.');ctxPulse('tools');await send(1000);
-  say('modelo','«Necesito datos: pido run_sql con la conversión por semana». Solo escribe la petición.');await fly('m','sql','run_sql(…)',K.tool,900);pulse('c-sql');
-  say('harness','El harness la ejecuta de verdad contra Snowflake…');await fly('sql','snow','SELECT …',K.tool,900);pulse('sy-snow');
-  await fly('snow','ctx','3 filas',K.tool,1000);await add('r1','Resultado SQL',K.tool,22);
-  say('harness','…pega el resultado en el contexto y vuelve a llamar al modelo.');await send(900);
-  say('modelo','«La conversión baja de 3,1 % a 2,5 % desde la semana 37». Ahora con datos reales.');await fly('m','u','cae desde la sem. 37',K.card,1000);
- }},
+/* 4 */{part:P1,n:'1.4 · Tools',col:K.tool,t:'Las herramientas',
+ lead:'El harness le ofrece herramientas: ejecutar SQL, correr Python, leer archivos. El modelo no ejecuta nada: escribe una petición, el harness la ejecuta de verdad y pega el resultado en el contexto.',
+ body:`<div class="two">${ex('El modelo escribe',`run_sql(
+  "select semana,
+     pedidos/sesiones conv
+   from mart_web
+   group by 1")`)}${ex('El harness devuelve',`semana 36 → 3,1 %
+semana 37 → 2,5 %
+semana 38 → 2,5 %`)}</div><p class="note" style="margin-top:.9em">El modelo decide; el harness hace.</p>`,
+ beats:[
+  async()=>{base('sys','tools');await add('q','Tu pregunta',K.ink,16);say('harness','Ahora el contexto incluye la lista de herramientas disponibles.');ctxPulse('tools');await send(900)},
+  async()=>{say('modelo','«Necesito datos: run_sql con la conversión por semana». Solo escribe la petición.');await fly('m','sql','run_sql(…)',K.tool,900);pulse('c-sql')},
+  async()=>{say('harness','El harness la ejecuta de verdad en Snowflake y pega el resultado en el contexto.');await fly('sql','snow','SELECT …',K.tool,900);pulse('sy-snow');await fly('snow','ctx','3 filas',K.tool,1000);await add('r1','Resultado SQL',K.tool,22)},
+  async()=>{await send(900);say('modelo','«La conversión baja de 3,1 % a 2,5 % desde la semana 37». Ahora con datos reales.');await fly('m','u','cae desde la sem. 37',K.card,1000)}]},
 
-/* 5 */{n:'1.5',col:K.cmd,t:'El bucle: eso es un agente',
- lead:'Un agente es el modelo trabajando en bucle: decide el siguiente paso, el harness lo ejecuta, el resultado entra en el contexto, y vuelta a empezar hasta tener la respuesta. Nadie le dicta los pasos.',
- jarg:'agente · agentic loop',
- body:ex('Vuelta 1','Decide: ¿cuándo empieza la caída?\nEjecuta: conversión diaria\nObserva: empieza el 9 de septiembre')+ex('Vuelta 2','Decide: ¿afecta a todos los dispositivos?\nEjecuta: conversión por dispositivo\nObserva: solo cae en la app de iOS')+ex('Vuelta 3','Decide: ¿qué cambió en la app?\nEjecuta: leer el changelog\nObserva: release 4.2 el 8-sep, checkout nuevo → responde')+
- `<p class="note">Fíjate en la ventana: crece en cada vuelta. Un SELECT * de un millón de filas la atasca; por eso un buen agente pide solo lo que necesita.</p>`,
- async demo(){
-  base('sys','tools');await add('q','Tu pregunta',K.ink,16);
-  const round=async(t1,chipK,lab,res,resH,t2)=>{
-    loopHi(0);say('modelo',t1);await send(700);
-    loopHi(1);await fly('m',chipK,lab,K.tool,800);pulse('c-'+chipK);
+/* 5 */{part:P1,n:'1.5 · Agentic loop',col:K.instr,t:'El bucle: eso es un agente',
+ lead:'Un agente es el modelo trabajando en bucle: decide el siguiente paso, el harness lo ejecuta, el resultado entra en el contexto y vuelta a empezar. Nadie le dicta los pasos.',
+ body:`<div class="rules">
+ <div class="rv"><span>1 · ¿Cuándo empieza la caída?</span><b style="--c:${K.instr}">el 9-sep</b></div>
+ <div class="rv"><span>2 · ¿Afecta a todos los dispositivos?</span><b style="--c:${K.instr}">solo iOS</b></div>
+ <div class="rv"><span>3 · ¿Qué cambió en la app?</span><b style="--c:${K.instr}">release 4.2</b></div></div>
+ <p class="note">Fíjate en la ventana: crece en cada vuelta. Un buen agente pide solo lo que necesita.</p>`,
+ beats:(()=>{const round=async(n,t1,chipK,lab,res,resH,t2)=>{
+    loopHi(0);say('modelo',t1);await send(700);loopHi(1);await fly('m',chipK,lab,K.tool,800);pulse('c-'+chipK);
     if(chipK==='sql'){await fly('sql','snow','SELECT…',K.tool,700);await fly('snow','ctx',res,K.tool,850)}else await fly(chipK,'ctx',res,K.tool,850);
-    loopHi(2);await add(res,res,K.tool,resH);say('harness',t2);await sleep(1300);
-  };
-  await round('Vuelta 1 · Decide: primero, ¿cuándo empieza la caída?','sql','conv. diaria','Serie diaria',20,'Observa: la caída arranca el 9 de septiembre.');
-  await round('Vuelta 2 · Decide: ¿cae igual en todos los dispositivos?','sql','por dispositivo','Por dispositivo',20,'Observa: solo cae en la app de iOS.');
-  await round('Vuelta 3 · Decide: ¿qué pasó el 9 en la app?','files','leer changelog','Changelog',28,'Observa: el 8-sep salió la release 4.2, con un checkout nuevo.');
-  loopHi(0);say('modelo','Ya tengo la causa. Respondo y termino el bucle.');await send(700);loopHi(-1);
-  await fly('m','u','causa: release 4.2',K.card,1000);
- }},
+    loopHi(2);await add(res,res,K.tool,resH);rv(n);say('harness',t2)};
+  return [
+   async()=>{base('sys','tools');await add('q','Tu pregunta',K.ink,16);await round(1,'Vuelta 1 · Decide: ¿cuándo empieza la caída?','sql','conv. diaria','Serie diaria',20,'Observa: la caída arranca el 9 de septiembre.')},
+   async()=>round(2,'Vuelta 2 · Decide: ¿cae igual en todos los dispositivos?','sql','por dispositivo','Por dispositivo',20,'Observa: solo cae en la app de iOS.'),
+   async()=>round(3,'Vuelta 3 · Decide: ¿qué pasó el 9 en la app?','files','leer changelog','Changelog',28,'Observa: el 8-sep salió la release 4.2, con un checkout nuevo.'),
+   async()=>{loopHi(0);say('modelo','Ya tengo la causa. Respondo y termino el bucle.');await send(700);loopHi(-1);await fly('m','u','causa: release 4.2',K.card,1000)}]})()},
 
-/* 6 */{n:'1.6',col:K.perm,t:'Los permisos',
- lead:'El harness también pone los límites. Antes de ejecutar nada, comprueba las reglas: qué puede hacer solo, qué necesita tu confirmación y qué está prohibido.',
- body:ex('Reglas de ejemplo',`Consultar (SELECT)      → libre
-Escribir en producción  → te pregunta
-Borrar tablas (DROP)    → prohibido`)+
- `<p class="note">Autonomía con barandillas. Lo sensato: empezar estricto y aflojar con la experiencia.</p>`,
- async demo(){
-  base('sys','tools');
-  say('modelo','Quiero consultar la tabla de pedidos.');await fly('m','gate','SELECT',K.tool,700);await gate(K.instr);
-  say('perm','Leer: permitido, sin preguntar.');await fly('gate','sql','SELECT',K.tool,700);await sleep(400);
-  say('modelo','Quiero guardar el resultado en una tabla de producción.');await fly('m','gate','CREATE TABLE',K.tool,700);await gate(K.cmd,500);
-  say('perm','Escribir en producción: el harness te pide confirmación.');await fly('gate','u','¿Lo permites?',K.perm,900);await sleep(500);
-  say('tu','Lo revisas y aceptas.');await fly('u','gate','Sí',K.card,800);await gate(K.instr,400);await fly('gate','sql','CREATE TABLE',K.tool,700);
-  say('modelo','Y ahora borro la tabla antigua.');await fly('m','gate','DROP TABLE',K.tool,700);await gate(K.perm,300);
-  say('perm','Borrar: prohibido. Ni pregunta. El modelo recibe un «no» y busca otra vía.');await mark('deny','gate',1400);await add('deny','Denegado',K.perm,14);
- }},
+/* 6 */{part:P1,n:'1.6 · Permissions',col:K.perm,t:'Los permisos',
+ lead:'El harness también pone los límites. Antes de ejecutar nada comprueba las reglas: qué puede hacer solo, qué necesita tu confirmación y qué está prohibido.',
+ body:`<div class="rules">
+ <div class="rv"><span>Consultar (SELECT)</span><b style="--c:${K.instr}">libre</b></div>
+ <div class="rv"><span>Escribir en producción</span><b style="--c:${K.cmd}">te pregunta</b></div>
+ <div class="rv"><span>Borrar tablas (DROP)</span><b style="--c:${K.perm}">prohibido</b></div></div>
+ <p class="note">Autonomía con barandillas: empezar estricto y aflojar con la experiencia.</p>`,
+ beats:[
+  async()=>{base('sys','tools');rv(1);say('modelo','Quiero consultar la tabla de pedidos.');await fly('m','gate','SELECT',K.tool,700);await gate(K.instr);say('perm','Leer: permitido, sin preguntar.');await fly('gate','sql','SELECT',K.tool,700)},
+  async()=>{rv(2);say('modelo','Quiero guardar el resultado en una tabla de producción.');await fly('m','gate','CREATE TABLE',K.tool,700);await gate(K.cmd,500);say('perm','Escribir en producción: el harness te pide confirmación.');await fly('gate','u','¿Lo permites?',K.perm,900)},
+  async()=>{say('tu','Lo revisas y aceptas.');await fly('u','gate','Sí',K.card,800);await gate(K.instr,400);await fly('gate','sql','CREATE TABLE',K.tool,700)},
+  async()=>{rv(3);say('modelo','Y ahora borro la tabla antigua.');await fly('m','gate','DROP TABLE',K.tool,700);await gate(K.perm,300);say('perm','Borrar: prohibido. Ni pregunta. El modelo recibe un «no» y busca otra vía.');await mark('gate',1400);await add('deny','Denegado',K.perm,14)}]},
 
-/* 7 */{part:['Parte 2','Las piezas de un belt'],n:'2.0',col:K.instr,t:'¿Qué es un belt?',
- lead:'Un harness recién instalado es genérico: no sabe cómo trabaja SDG. Un belt es un paquete —técnicamente, un plugin— que le añade las piezas de un dominio concreto: cómo construimos un modelo semántico, cómo analizamos un KPI… Se instala una vez y todo el equipo trabaja con el mismo método.',
+/* 7 */{part:P2,n:'2.0 · Plugin',col:K.instr,t:'¿Qué es un belt?',
+ lead:'Un harness recién instalado es genérico: no sabe cómo trabaja SDG. Un belt —técnicamente, un plugin— le añade las piezas de un dominio concreto. Se instala una vez y todo el equipo trabaja con el mismo método.',
  body:`<table class="tbl"><tr><th>Pieza</th><th>Claude Code</th><th>GitHub Copilot</th></tr>
-<tr><td><i style="--c:${K.instr}"></i>Instrucciones</td><td><code>CLAUDE.md</code></td><td><code>copilot-instructions.md</code>, <code>AGENTS.md</code></td></tr>
+<tr><td><i style="--c:${K.instr}"></i>Instrucciones</td><td><code>CLAUDE.md</code></td><td><code>copilot-instructions.md</code> · <code>AGENTS.md</code></td></tr>
 <tr><td><i style="--c:${K.cmd}"></i>Comandos</td><td>slash commands</td><td>prompt files</td></tr>
 <tr><td><i style="--c:${K.skill}"></i>Skills</td><td>skills</td><td>agent skills</td></tr>
 <tr><td><i style="--c:${K.sub}"></i>Subagentes</td><td>subagents</td><td>custom agents</td></tr>
 <tr><td><i style="--c:${K.mcp}"></i>MCP</td><td>servidores MCP</td><td>servidores MCP</td></tr>
 <tr><td><i style="--c:${K.hook}"></i>Hooks</td><td>hooks</td><td>hooks</td></tr></table>
-<p class="note">Los nombres cambian de una herramienta a otra, pero las piezas son las mismas. Para distinguirlas, pregúntate quién activa cada una.</p>`,
- async demo(){
-  base('sys','tools');say('plugin','El harness ya funciona. Ahora le añadimos un belt con el saber hacer de SDG.');await sleep(1200);
-  const D=['lo que debe saber siempre','encargos guardados que lanzas tú','recetas expertas que el modelo abre si las necesita','especialistas con su propio contexto','enchufes a los sistemas del cliente','controles automáticos que no se saltan'];
-  for(let i=0;i<6;i++){pulse('ph'+i);say('plugin',`${SLOTS[i][1]}: ${D[i]}.`);await sleep(1500)}
- }},
+<p class="note">Los nombres cambian según la herramienta; las piezas son las mismas. La clave para distinguirlas: quién activa cada una.</p>`,
+ beats:[
+  async()=>{base('sys','tools');say('belt','El harness ya funciona. Ahora le añadimos un belt con el saber hacer de SDG.')},
+  async()=>{const D=['lo que debe saber siempre','encargos guardados que lanzas tú','recetas expertas que el modelo abre si las necesita','especialistas con su propio contexto','enchufes a los sistemas del cliente','controles automáticos que no se saltan'];
+   for(let i=0;i<6;i++){pulse('ph'+i);say('belt',`${SLOTS[i][1]}: ${D[i]}.`);await sleep(1400)}
+   say('belt','Seis piezas. Vamos una a una.')}]},
 
-/* 8 */{n:'2.1',col:K.instr,t:'Instrucciones: lo que debe saber siempre',
- lead:'Un archivo de texto con el contexto fijo del proyecto: el cliente, sus definiciones, sus convenciones. El harness lo carga al principio de cada conversación.',
- who:who('nadie, están siempre','al empezar'),jarg:'CLAUDE.md · AGENTS.md',
- body:ex('CLAUDE.md del proyecto Retail Norte',`# Retail Norte
-- Warehouse: Snowflake (RN_PROD), modelado con dbt.
+/* 8 */{part:P2,n:'2.1 · CLAUDE.md · AGENTS.md',col:K.instr,t:'Instrucciones: lo que debe saber siempre',
+ lead:'Un archivo de texto con el contexto fijo: el cliente, sus definiciones, sus convenciones. El harness lo carga al empezar cada conversación.',
+ who:who('nadie, están siempre','al empezar'),
+ body:ex('CLAUDE.md · proyecto Retail Norte',`- Warehouse: Snowflake (RN_PROD), modelado con dbt.
 - Capas: stg_ → int_ → mart_. En informes, solo mart_.
 - Conversión = pedidos / sesiones (definición del cliente).
 - Nunca muestres datos personales (email, teléfono).`)+
- `<p class="note">Se paga en cada conversación, así que tiene que ser corto. Lo que solo aplica a veces va mejor en una skill. Pueden venir en el belt (las reglas del método) o en el repositorio del cliente (sus definiciones).</p>`,
- async demo(){
-  base('sys','tools');say('harness','Al empezar, el harness lee las instrucciones del proyecto y las pone en el contexto.');
-  await fly('instr','ctx','CLAUDE.md',K.instr,1000);await add('instr','Instrucciones',K.instr,26);
-  say('tu','«¿Cómo va la conversión este mes?»');await fly('u','ctx','¿conversión?',K.card,800);await add('q','Tu pregunta',K.ink,16);await send(900);
-  say('modelo','«Uso la definición del cliente (pedidos / sesiones) y consulto mart_, no stg_». Sin que se lo digas.');
-  await fly('m','sql','… from mart_web',K.tool,900);pulse('c-sql');
- }},
+ `<p class="note">Se paga en cada conversación: tiene que ser corto. Lo que solo aplica a veces va mejor en una skill.</p>`,
+ beats:[
+  async()=>{base('sys','tools');say('harness','Al empezar, el harness lee las instrucciones y las pone en el contexto.');await fly('instr','ctx','CLAUDE.md',K.instr,1000);await add('instr','Instrucciones',K.instr,26)},
+  async()=>{say('tu','«¿Cómo va la conversión este mes?»');await fly('u','ctx','¿conversión?',K.card,800);await add('q','Tu pregunta',K.ink,16);await send(900)},
+  async()=>{say('modelo','«Uso la definición del cliente y consulto mart_, no stg_». Sin que se lo digas.');await fly('m','sql','… from mart_web',K.tool,900);pulse('c-sql')}]},
 
-/* 9 */{n:'2.2',col:K.cmd,t:'Comandos: encargos guardados',
- lead:'Prompts bien escritos que se guardan con un nombre y se lanzan con una barra: /informe-kpi. Admiten parámetros. Así todo el equipo pide lo mismo, igual de bien.',
- who:who('tú, con /nombre','cuando lo lanzas'),jarg:'slash commands · prompt files',
- body:ex('commands/informe-kpi.md',`---
-description: Informe de variación de un KPI
----
-Analiza la variación del KPI $1 en $2.
+/* 9 */{part:P2,n:'2.2 · Slash commands · Prompt files',col:K.cmd,t:'Comandos: encargos guardados',
+ lead:'Prompts bien escritos que se guardan con nombre y se lanzan con una barra: /informe-kpi. Admiten parámetros. Así todo el equipo pide lo mismo, igual de bien.',
+ who:who('tú, con /nombre','cuando lo lanzas'),
+ body:ex('commands/informe-kpi.md',`Analiza la variación del KPI $1 en $2.
 1. Usa la definición de las instrucciones.
 2. Aplica la skill causa-raiz.
-3. Entrega: 5 puntos, 3 gráficos
-   y una recomendación.`)+ex('Tú escribes','/informe-kpi conversión septiembre'),
- async demo(){
-  base('sys','tools','instr');say('tu','Escribes: /informe-kpi conversión septiembre');await fly('u','cmd','/informe-kpi',K.cmd,1000);pulse('s-cmd');
-  say('harness','El harness sustituye el comando por el prompt completo guardado en el belt.');await fly('cmd','ctx','prompt completo',K.cmd,1000);
-  await add('cmd','Prompt /informe-kpi',K.cmd,36);await send(1000);
-  say('modelo','Encargo claro: KPI, periodo, método y formato de entrega. Sin tener que redactarlo cada vez.');
- }},
+3. Entrega: 5 puntos, 3 gráficos y una recomendación.`)+ex('Tú escribes','/informe-kpi conversión septiembre'),
+ beats:[
+  async()=>{base('sys','tools','instr');say('tu','Escribes: /informe-kpi conversión septiembre');await fly('u','cmd','/informe-kpi',K.cmd,1000);pulse('s-cmd')},
+  async()=>{say('harness','El harness sustituye el comando por el prompt completo guardado en el belt.');await fly('cmd','ctx','prompt completo',K.cmd,1000);await add('cmd','Prompt /informe-kpi',K.cmd,36)},
+  async()=>{await send(1000);say('modelo','Encargo claro: KPI, periodo, método y formato. Sin redactarlo cada vez.')}]},
 
-/* 10 */{n:'2.3',col:K.skill,t:'Skills: saber hacer bajo demanda',
- lead:'Una skill es una carpeta con instrucciones expertas, plantillas y scripts para un tipo de tarea. El modelo solo ve su nombre y una línea; si la tarea encaja, la abre entera.',
- who:who('el modelo, si encaja','solo al usarla'),jarg:'skills · agent skills',
- body:ex('skills/causa-raiz/SKILL.md',`---
-name: causa-raiz
-description: Investigar por qué ha
-  cambiado un KPI.
----
+/* 10 */{part:P2,n:'2.3 · Skills',col:K.skill,t:'Skills: saber hacer bajo demanda',
+ lead:'Una carpeta con instrucciones expertas, plantillas y scripts para un tipo de tarea. El modelo solo ve su nombre y una línea; si la tarea encaja, la abre entera.',
+ who:who('el modelo, si encaja','solo al usarla'),
+ body:ex('skills/causa-raiz/SKILL.md',`description: Investigar por qué ha cambiado un KPI.
 1. Localiza cuándo empieza (serie diaria).
 2. Descompón: dispositivo, canal, región.
 3. Cruza con eventos: releases, campañas.
 4. Valida con scripts/significancia.py`)+
- `<p class="note">La diferencia con las instrucciones: aquellas se cargan siempre; una skill, solo cuando hace falta. Puedes tener cincuenta sin llenar el contexto.</p>`,
- async demo(){
-  base('sys','tools','instr');say('harness','Del belt, el harness solo mete el índice de skills: el nombre y una línea de cada una.');
-  await fly('skill','ctx','índice',K.skill,900);await add('skidx','Índice de skills',K.skill,11,true);
-  await add('q','Tu pregunta',K.ink,16);await send(900);
-  say('modelo','«Me piden por qué cambia un KPI: encaja con causa-raiz. La abro».');await fly('m','skill','abrir causa-raiz',K.skill,900);pulse('s-skill');
-  await fly('skill','ctx','SKILL.md',K.skill,900);await add('skill','Skill causa-raíz',K.skill,44);
-  say('harness','Solo ahora entra la receta completa, con sus pasos y sus scripts.');await send(900);
-  say('modelo','Sigo el método, y para validar ejecuto el script que trae la skill.');await fly('m','py','significancia.py',K.tool,900);pulse('c-py');
- }},
+ `<p class="note">Las instrucciones se cargan siempre; una skill, solo cuando hace falta. Puedes tener cincuenta sin llenar el contexto.</p>`,
+ beats:[
+  async()=>{base('sys','tools','instr');say('harness','Del belt, el harness solo mete el índice de skills: nombre y una línea de cada una.');await fly('skill','ctx','índice',K.skill,900);await add('skidx','Índice de skills',K.skill,11,true)},
+  async()=>{await add('q','Tu pregunta',K.ink,16);await send(800);say('modelo','«Me piden por qué cambia un KPI: encaja con causa-raiz. La abro».');await fly('m','skill','abrir causa-raiz',K.skill,900);pulse('s-skill')},
+  async()=>{say('harness','Solo ahora entra la receta completa, con sus pasos y sus scripts.');await fly('skill','ctx','SKILL.md',K.skill,900);await add('skill','Skill causa-raíz',K.skill,44)},
+  async()=>{await send(700);say('modelo','Sigo el método, y para validar ejecuto el script que trae la skill.');await fly('m','py','significancia.py',K.tool,900);pulse('c-py')}]},
 
-/* 11 */{n:'2.4',col:K.sub,t:'Subagentes: especialistas con su propia mesa',
- lead:'Agentes especializados, con su propia ventana de contexto, sus instrucciones y sus herramientas. El agente principal les delega una tarea y recibe solo el resumen.',
- who:who('el modelo (o tú)','en su propio contexto'),jarg:'subagents · custom agents',
- body:ex('agents/revisor-sql.md',`---
-name: revisor-sql
-description: Revisa SQL: rendimiento
-  y convenciones dbt.
+/* 11 */{part:P2,n:'2.4 · Subagents · Custom agents',col:K.sub,t:'Subagentes: especialistas con su propia mesa',
+ lead:'Agentes especializados con su propia ventana de contexto, instrucciones y herramientas. El principal les delega una tarea y recibe solo el resumen.',
+ who:who('el modelo (o tú)','en su propio contexto'),
+ body:ex('agents/revisor-sql.md',`description: Revisa SQL: rendimiento y convenciones dbt.
 tools: solo lectura
----
 Eres un revisor de SQL senior…`)+
- `<p class="note">Dos ventajas: trabajan en paralelo y no ensucian el contexto principal. Y un revisor que solo puede leer no puede romper nada.</p>`,
- async demo(){
-  base('sys','tools','instr','skidx');await add('hist','Historial',K.ink,40);
-  say('modelo','Hay que revisar 40 modelos dbt. Si lo hago yo, me lleno el contexto. Delego en dos revisor-sql.');await sleep(900);pulse('s-sub');
-  await both(fly('m','s1','modelos 1-20',K.sub,900),fly('m','s2','modelos 21-40',K.sub,1000));
-  say('sub','Cada subagente trabaja con su propia ventana, limpia, a la vez que el otro.');
-  $('sr0').classList.add('on');$('sr1').classList.add('on');await both(subFill(0,.9,2000),subFill(1,.8,2000),sleep(2000));
-  $('sr0').classList.remove('on');$('sr1').classList.remove('on');
-  await both(fly('s1','ctx','3 problemas',K.sub,1000),fly('s2','ctx','1 problema',K.sub,1100));
-  await add('r1','Resumen 1',K.sub,11);await add('r2','Resumen 2',K.sub,11);
-  say('harness','Al principal solo le llegan dos resúmenes: su contexto apenas crece.');
- }},
+ `<p class="note">Trabajan en paralelo y no ensucian el contexto principal. Y un revisor que solo puede leer no puede romper nada.</p>`,
+ beats:[
+  async()=>{base('sys','tools','instr','skidx');await add('hist','Historial',K.ink,40);pulse('s-sub');say('modelo','Hay que revisar 40 modelos dbt. Si lo hago yo, me lleno el contexto: delego.')},
+  async()=>{await both(fly('m','s1','modelos 1-20',K.sub,900),fly('m','s2','modelos 21-40',K.sub,1000));say('sub','Cada subagente trabaja con su propia ventana, limpia, a la vez que el otro.');await subsWork(.9,.8,2000)},
+  async()=>{await both(fly('s1','ctx','3 problemas',K.sub,1000),fly('s2','ctx','1 problema',K.sub,1100));await add('r1','Resumen 1',K.sub,11);await add('r2','Resumen 2',K.sub,11);say('harness','Al principal solo le llegan dos resúmenes: su contexto apenas crece.')}]},
 
-/* 12 */{n:'2.5',col:K.mcp,t:'MCP: enchufes a vuestros sistemas',
- lead:'MCP (Model Context Protocol) es un estándar para conectar sistemas. Cada servidor MCP ofrece herramientas —consultar Snowflake, leer un informe de Power BI, buscar en Jira— y el harness las añade a la lista del modelo.',
- who:who('el modelo las pide','su lista, siempre'),jarg:'MCP servers',
+/* 12 */{part:P2,n:'2.5 · Model Context Protocol',col:K.mcp,t:'MCP: enchufes a vuestros sistemas',
+ lead:'Un estándar para conectar sistemas. Cada servidor MCP ofrece herramientas —consultar Snowflake, leer Power BI, buscar en Jira— y el harness las añade a la lista del modelo.',
+ who:who('el modelo las pide','su lista, siempre'),
  body:ex('.mcp.json',`{ "snowflake": { … },
   "powerbi":   { … },
   "jira":      { … } }`)+
- `<p class="note">Es el USB-C de los agentes: el mismo conector sirve para Claude, Copilot o Cursor. Y los permisos siguen aplicando a todo lo que pase por él.</p>`,
- async demo(){
-  base('sys','tools','instr','skidx');say('harness','Al arrancar, el harness se conecta a los servidores MCP del belt…');pulse('s-mcp');live(true);
-  await fly('mcp','ctx','herramientas MCP',K.mcp,1000);await add('mcpt','Herram. MCP',K.mcp,14,true);
-  say('harness','…y sus herramientas pasan a la lista: snowflake.query, powerbi.leer, jira.buscar…');await sleep(900);await send(800);
-  say('modelo','«Llamo a jira.buscar: releases de septiembre».');await fly('m','mcpc','jira.buscar',K.mcp,900);pulse('c-mcp');
-  await fly('mcpc','jira','consulta',K.mcp,800);pulse('sy-jira');await fly('jira','ctx','RN-482 checkout v2',K.mcp,1000);await add('rj','Resultado Jira',K.mcp,18);
-  say('harness','Mismo mecanismo para Snowflake, Power BI o cualquier sistema con servidor MCP. Sin integraciones a medida.');
-  await fly('m','mcpc','powerbi.leer',K.mcp,800);await fly('mcpc','pbi','informe',K.mcp,800);pulse('sy-pbi');
- }},
+ `<p class="note">El USB-C de los agentes: el mismo conector sirve para Claude, Copilot o Cursor. Y los permisos siguen aplicando.</p>`,
+ beats:[
+  async()=>{base('sys','tools','instr','skidx');say('harness','Al arrancar, el harness se conecta a los servidores MCP del belt y añade sus herramientas.');pulse('s-mcp');live(true);await fly('mcp','ctx','herramientas MCP',K.mcp,1000);await add('mcpt','Herram. MCP',K.mcp,14,true)},
+  async()=>{await send(700);say('modelo','«Llamo a jira.buscar: releases de septiembre».');await fly('m','mcpc','jira.buscar',K.mcp,900);pulse('c-mcp');await fly('mcpc','jira','consulta',K.mcp,800);pulse('sy-jira');await fly('jira','ctx','RN-482 checkout v2',K.mcp,1000);await add('rj','Resultado Jira',K.mcp,18)},
+  async()=>{say('harness','Mismo mecanismo para Power BI o cualquier sistema con servidor MCP. Sin integraciones a medida.');await fly('m','mcpc','powerbi.leer',K.mcp,800);await fly('mcpc','pbi','informe',K.mcp,800);pulse('sy-pbi')}]},
 
-/* 13 */{n:'2.6',col:K.hook,t:'Hooks: garantías automáticas',
- lead:'Scripts que el harness ejecuta cuando pasa algo —antes de una consulta, al editar un archivo, al terminar—, sin preguntar al modelo. Pueden revisar, corregir o bloquear.',
- who:who('un evento','automático'),jarg:'hooks',
- body:ex('hooks/hooks.json (resumido)',`Al editar *.sql   → sqlfluff lint
-Antes de una SQL  → bloquear columnas
-                    con datos personales
-Al terminar       → dbt test`)+
- `<p class="note">Una instrucción es una petición: «no saques emails». Un hook es una garantía: no puede salir un email.</p>`,
- async demo(){
-  base('sys','tools','instr','skidx','mcpt');
-  say('modelo','Escribo un modelo dbt nuevo: mart_conversion.sql');await fly('m','files','escribir .sql',K.tool,900);pulse('c-files');
-  say('hook','Evento «archivo editado» → el hook lanza sqlfluff. El modelo no lo decide: pasa siempre.');await fly('hook','files','sqlfluff lint',K.hook,1000);
-  await fly('files','ctx','2 errores de estilo',K.hook,900);await add('h1','Hook: 2 errores',K.hook,14);await send(700);
-  say('modelo','Corrijo los dos errores.');await fly('m','files','corregir',K.tool,800);await sleep(300);
-  say('modelo','Saco los clientes con su email para segmentar.');await fly('m','sql','SELECT email…',K.tool,900);
-  await fly('hook','sql','control PII',K.hook,900);say('hook','Antes de ejecutar, otro hook detecta una columna personal y bloquea la consulta.');
-  await mark('deny','sql',1300);await add('h2','Hook: PII bloqueada',K.hook,14);
- }},
+/* 13 */{part:P2,n:'2.6 · Hooks',col:K.hook,t:'Hooks: garantías automáticas',
+ lead:'Scripts que el harness ejecuta cuando pasa algo —antes de una consulta, al editar un archivo, al terminar— sin preguntar al modelo. Pueden revisar, corregir o bloquear.',
+ who:who('un evento','automático'),
+ body:`<div class="rules">
+ <div><span>Al editar un .sql</span><b style="--c:${K.hook}">sqlfluff lint</b></div>
+ <div><span>Antes de ejecutar una SQL</span><b style="--c:${K.hook}">bloquear datos personales</b></div>
+ <div><span>Al terminar</span><b style="--c:${K.hook}">dbt test</b></div></div>
+ <p class="note">Una instrucción es una petición: «no saques emails». Un hook es una garantía: no puede salir un email.</p>`,
+ beats:[
+  async()=>{base('sys','tools','instr','skidx','mcpt');say('modelo','Escribo un modelo dbt nuevo: mart_conversion.sql');await fly('m','files','escribir .sql',K.tool,900);pulse('c-files');
+   say('hook','Evento «archivo editado»: el hook lanza sqlfluff. Pasa siempre, lo decida o no el modelo.');await fly('hook','files','sqlfluff lint',K.hook,1000);await fly('files','ctx','2 errores de estilo',K.hook,900);await add('h1','Hook: 2 errores',K.hook,14)},
+  async()=>{await send(700);say('modelo','Corrijo los dos errores.');await fly('m','files','corregir',K.tool,800)},
+  async()=>{say('modelo','Saco los clientes con su email para segmentar.');await fly('m','sql','SELECT email…',K.tool,900);await fly('hook','sql','control PII',K.hook,900);
+   say('hook','Otro hook detecta una columna personal y bloquea la consulta antes de ejecutarla.');await mark('sql',1300);await add('h2','Hook: PII bloqueada',K.hook,14)}]},
 
-/* 14 */{n:'2.7',col:K.instr,t:'El belt completo',
- lead:'Todo lo anterior viaja en una carpeta versionada. Se publica en un catálogo interno, se instala con un comando y se actualiza para todo el equipo a la vez.',
- body:ex('kpi-analysis-belt/',`├─ plugin.json   nombre y versión
-├─ commands/     /informe-kpi
-│                /nuevo-modelo-dbt
-├─ skills/       causa-raiz
-│                calidad-datos
-├─ agents/       revisor-sql
-├─ hooks/        lint SQL, bloqueo PII
-└─ .mcp.json     Snowflake, Power BI,
-                 Jira`)+ex('Instalación','/plugin install kpi-analysis-belt')+ex('Un belt real de SDG: powerbi-semantic-model-belt',`├─ CLAUDE.md    contexto y reglas
-├─ commands/    pbi-semantic-model-orchestrator
-│               utils-reset-environment
-├─ skills/      pbi-semantic-model-builder
-├─ agents/      pbi-model-creator
-└─ .mcp.json    belt-console`)+
- `<p class="note">Ese belt convierte un requisito de negocio en un modelo semántico de Power BI validado: diseño en estrella, aprobación, implementación vía MCP y exportación TMDL. Así, lo que sabe hacer SDG deja de estar en la cabeza de tres personas y pasa a ser una herramienta de todo el equipo.</p>`,
- async demo(){
-  base('sys','tools','instr','skidx','mcpt');say('tu','/plugin install kpi-analysis-belt');await sleep(800);
-  for(const s of SLOTS){pulse('s-'+s[0]);await sleep(350)}
-  say('plugin','Seis piezas, un belt. El mismo método para todo el equipo y todos los clientes.');
- }},
+/* 14 */{part:P2,n:'2.7 · Plugin',col:K.instr,t:'Un belt real de SDG',
+ lead:'Todo viaja en una carpeta versionada. Se instala con un comando y se actualiza para todo el equipo a la vez.',
+ body:ex('powerbi-semantic-model-belt/',`├─ CLAUDE.md     contexto y reglas del método
+├─ commands/     pbi-semantic-model-orchestrator
+│                utils-reset-environment
+├─ skills/       pbi-semantic-model-builder
+├─ agents/       pbi-model-creator
+└─ .mcp.json     belt-console`)+ex('Instalación','/plugin install powerbi-semantic-model-belt')+
+ `<p class="note">Convierte un requisito de negocio en un modelo semántico de Power BI validado. Lo que sabe hacer SDG deja de estar en la cabeza de tres personas y pasa a ser una herramienta de todo el equipo.</p>`,
+ beats:[async()=>{base('sys','tools','instr','skidx','mcpt');say('tu','/plugin install kpi-analysis-belt');await sleep(600);for(const s of SLOTS){pulse('s-'+s[0]);await sleep(300)}
+  say('belt','Seis piezas, un belt. El mismo método para todo el equipo y todos los clientes.')}]},
 
-/* 15 */{part:['Parte 3','Un caso real'],n:'Caso práctico',col:K.cmd,t:'Retail Norte: ¿por qué cae la conversión?',
- lead:'Lunes, 9:00. El cliente pregunta por qué ha caído la conversión online en septiembre y quiere un informe el viernes. Una consultora del equipo lanza un comando. Mira qué pieza entra en cada momento.',
+/* 15 */{part:P3,n:'Caso práctico',col:K.cmd,t:'Retail Norte: ¿por qué cae la conversión?',
+ lead:'El cliente quiere saber por qué ha caído la conversión online en septiembre. Una consultora lanza un comando. Mira qué pieza entra en cada momento.',
  body:`<ol class="tl">${[['Comando',K.cmd],['Instrucciones',K.instr],['Skill',K.skill],['MCP · Snowflake',K.mcp],['Hook · PII',K.hook],['Subagentes',K.sub],['MCP · Jira',K.mcp],['Python',K.tool],['Permiso',K.perm],['Entrega',K.ink]].map(([t,c])=>`<li style="--c:${c}"><i></i>${t}</li>`).join('')}</ol>`+
- ex('Resultado','La conversión cae un 18 % desde el 9-sep, solo en la app de iOS. Coincide con el checkout nuevo de la release 4.2. Recomendación: revertir el paso 3 del checkout.')+
- `<p class="note">Tú lanzas un comando y das un OK. El belt pone el método; el harness, las manos y los límites; el modelo, el razonamiento.</p>`,
- async demo(){
-  base('sys','tools','skidx','mcpt');
-  tl(0);say('tu','/informe-kpi conversión septiembre');await fly('u','cmd','/informe-kpi',K.cmd,800);await fly('cmd','ctx','prompt',K.cmd,800);await add('cmd','Prompt /informe-kpi',K.cmd,26);
-  tl(1);say('harness','Carga las instrucciones de Retail Norte: la definición de conversión y las capas de dbt.');await fly('instr','ctx','CLAUDE.md',K.instr,800);await add('instr','Instrucciones',K.instr,18);await send(700);
-  tl(2);say('modelo','Es un análisis de causa raíz: abro la skill.');await fly('m','skill','causa-raiz',K.skill,800);await fly('skill','ctx','SKILL.md',K.skill,800);await add('skill','Skill causa-raíz',K.skill,30);
-  tl(3);say('modelo','Pido la serie diaria de conversión a Snowflake.');live(true);await fly('m','mcpc','snowflake.query',K.mcp,800);await fly('mcpc','snow','consulta',K.mcp,700);await fly('snow','ctx','serie diaria',K.mcp,800);await add('r1','Serie diaria',K.mcp,14);
-  tl(4);say('modelo','Pido el detalle con el email de cada cliente…');await fly('m','mcpc','… email …',K.mcp,800);await fly('hook','mcpc','control PII',K.hook,800);
-  say('hook','Bloqueado: datos personales. El modelo lo rehace agregado, sin emails.');await mark('deny','mcpc',1100);await add('h','Hook: PII',K.hook,11);
-  tl(5);say('modelo','Reparto: un subagente analiza por dispositivo y otro por canal.');await both(fly('m','s1','dispositivo',K.sub,800),fly('m','s2','canal',K.sub,900));
-  $('sr0').classList.add('on');$('sr1').classList.add('on');await both(subFill(0,.85,1500),subFill(1,.7,1500),sleep(1500));$('sr0').classList.remove('on');$('sr1').classList.remove('on');
-  await both(fly('s1','ctx','iOS −31 %',K.sub,900),fly('s2','ctx','canal: igual',K.sub,1000));await add('s1','Resumen 1',K.sub,10);await add('s2','Resumen 2',K.sub,10);
-  tl(6);say('modelo','¿Qué se publicó en la app el 8 de septiembre? Busco en Jira.');await fly('m','mcpc','jira.buscar',K.mcp,800);await fly('mcpc','jira','consulta',K.mcp,700);await fly('jira','ctx','release 4.2',K.mcp,800);await add('rj','Release 4.2',K.mcp,12);
-  tl(7);say('modelo','Genero los tres gráficos del informe con Python.');await fly('m','py','graficos.py',K.tool,800);pulse('c-py');await add('g','Gráficos',K.tool,10);
-  tl(8);say('modelo','Publico el informe en el Power BI del cliente.');await fly('m','gate','publicar',K.mcp,700);await gate(K.cmd,400);
-  say('perm','Publicar para el cliente requiere tu OK.');await fly('gate','u','¿Publico?',K.perm,800);await sleep(400);await fly('u','gate','OK',K.card,700);await gate(K.instr,300);
-  await fly('gate','mcpc','publicar',K.mcp,600);await fly('mcpc','pbi','informe',K.mcp,700);pulse('sy-pbi');live(false);
-  tl(9);say('modelo','Hecho: −18 % desde el 9-sep, solo en iOS, por el checkout de la release 4.2. Recomiendo revertir el paso 3.');await fly('m','u','informe publicado',K.card,1000);
- }},
+ `<div class="rv">${ex('Resultado','Conversión −18 % desde el 9-sep, solo en la app de iOS.\nCausa: checkout nuevo de la release 4.2.\nRecomendación: revertir el paso 3 del checkout.')}</div>
+ <p class="note">Tú lanzas un comando y das un OK. El belt pone el método; el harness, las manos y los límites; el modelo, el razonamiento.</p>`,
+ beats:[
+  async()=>{base('sys','tools','skidx','mcpt');tl(0);say('tu','/informe-kpi conversión septiembre');await fly('u','cmd','/informe-kpi',K.cmd,800);await fly('cmd','ctx','prompt',K.cmd,800);await add('cmd','Prompt /informe-kpi',K.cmd,26)},
+  async()=>{tl(1);say('harness','Carga las instrucciones de Retail Norte: definición de conversión y capas de dbt.');await fly('instr','ctx','CLAUDE.md',K.instr,800);await add('instr','Instrucciones',K.instr,18);await send(700)},
+  async()=>{tl(2);say('modelo','Es un análisis de causa raíz: abro la skill.');await fly('m','skill','causa-raiz',K.skill,800);await fly('skill','ctx','SKILL.md',K.skill,800);await add('skill','Skill causa-raíz',K.skill,30)},
+  async()=>{tl(3);live(true);say('modelo','Pido la serie diaria de conversión a Snowflake.');await fly('m','mcpc','snowflake.query',K.mcp,800);await fly('mcpc','snow','consulta',K.mcp,700);await fly('snow','ctx','serie diaria',K.mcp,800);await add('r1','Serie diaria',K.mcp,14)},
+  async()=>{tl(4);say('modelo','Pido el detalle con el email de cada cliente…');await fly('m','mcpc','… email …',K.mcp,800);await fly('hook','mcpc','control PII',K.hook,800);
+   say('hook','Bloqueado: datos personales. El modelo lo rehace agregado, sin emails.');await mark('mcpc',1100);await add('h','Hook: PII',K.hook,11)},
+  async()=>{tl(5);say('modelo','Reparto: un subagente analiza por dispositivo y otro por canal.');await both(fly('m','s1','dispositivo',K.sub,800),fly('m','s2','canal',K.sub,900));await subsWork(.85,.7,1500);
+   await both(fly('s1','ctx','iOS −31 %',K.sub,900),fly('s2','ctx','canal: igual',K.sub,1000));await add('s1','Resumen 1',K.sub,10);await add('s2','Resumen 2',K.sub,10)},
+  async()=>{tl(6);say('modelo','¿Qué se publicó en la app el 8 de septiembre? Busco en Jira.');await fly('m','mcpc','jira.buscar',K.mcp,800);await fly('mcpc','jira','consulta',K.mcp,700);await fly('jira','ctx','release 4.2',K.mcp,800);await add('rj','Release 4.2',K.mcp,12)},
+  async()=>{tl(7);say('modelo','Genero los tres gráficos del informe con Python.');await fly('m','py','graficos.py',K.tool,800);pulse('c-py');await add('g','Gráficos',K.tool,10)},
+  async()=>{tl(8);say('perm','Publicar en el Power BI del cliente requiere tu OK.');await fly('m','gate','publicar',K.mcp,700);await gate(K.cmd,400);await fly('gate','u','¿Publico?',K.perm,800);await sleep(300);await fly('u','gate','OK',K.card,700);await gate(K.instr,300);
+   await fly('gate','mcpc','publicar',K.mcp,600);await fly('mcpc','pbi','informe',K.mcp,700);pulse('sy-pbi');live(false)},
+  async()=>{tl(9);rv(1);say('modelo','Hecho: −18 % desde el 9-sep, solo en iOS, por el checkout de la release 4.2.');await fly('m','u','informe publicado',K.card,1000)}]},
 
-/* 16 */{part:['Parte 4','Para llevarte'],n:'Resumen',col:K.instr,free:true,t:'La chuleta',
- lead:'La pregunta que ordena todo: ¿quién activa cada pieza y cuándo entra en el contexto?',
+/* 16 */{part:P4,n:'Resumen',col:K.instr,t:'La chuleta',
+ lead:'La pregunta que ordena todo: ¿quién activa cada pieza?',
  body:`<table class="tbl"><tr><th>Pieza</th><th>La activa</th><th>Ejemplo</th></tr>
 <tr><td><i style="--c:${K.instr}"></i>Instrucciones</td><td>Nadie: siempre están</td><td>Definición de KPIs del cliente</td></tr>
 <tr><td><i style="--c:${K.cmd}"></i>Comando</td><td>Tú, con /nombre</td><td>/informe-kpi</td></tr>
@@ -527,80 +446,73 @@ Al terminar       → dbt test`)+
 <tr><td><i style="--c:${K.sub}"></i>Subagente</td><td>El modelo delega</td><td>revisor-sql</td></tr>
 <tr><td><i style="--c:${K.mcp}"></i>MCP</td><td>El modelo lo pide</td><td>Snowflake, Power BI, Jira</td></tr>
 <tr><td><i style="--c:${K.hook}"></i>Hook</td><td>Un evento</td><td>Bloquear datos personales</td></tr>
-<tr><td><i style="--c:${K.perm}"></i>Permisos</td><td>El harness</td><td>Publicar pide tu OK</td></tr></table>
-<ul class="dec">
-<li>¿Tiene que saberlo siempre? <b style="--c:${K.instr}">Instrucciones</b></li>
-<li>¿Es un encargo que lanzáis a menudo? <b style="--c:${K.cmd}">Comando</b></li>
-<li>¿Es un método que solo aplica a veces? <b style="--c:${K.skill}">Skill</b></li>
-<li>¿Es mucho trabajo o pide foco? <b style="--c:${K.sub}">Subagente</b></li>
-<li>¿Necesita datos de un sistema? <b style="--c:${K.mcp}">MCP</b></li>
-<li>¿Tiene que cumplirse sí o sí? <b style="--c:${K.hook}">Hook</b></li></ul>
-<p class="note">Para empezar: buenas instrucciones, un par de comandos y un conector. Convertid en skill lo que repitáis, y aflojad los permisos con la experiencia, no al revés.</p>`,
- async demo(){base('sys','tools','instr','skidx','mcpt');say('harness','Todas las piezas acaban en la ventana de contexto o alrededor de ella.');for(const s of SLOTS){pulse('s-'+s[0]);await sleep(300)}}},
+<tr><td><i style="--c:${K.perm}"></i>Permisos</td><td>El harness</td><td>Publicar pide tu OK</td></tr></table>`,
+ beats:[async()=>{base('sys','tools','instr','skidx','mcpt');say('harness','Todas las piezas acaban en la ventana de contexto o alrededor de ella.');for(const s of SLOTS){pulse('s-'+s[0]);await sleep(250)}}]},
 
-/* 17 */{n:'Test',col:K.tool,free:true,t:'¿Qué pieza usarías?',lead:'Seis situaciones reales. Elige la pieza que las resuelve.',body:`<div id="quiz"></div>`,
- async demo(){base('sys','tools','instr','skidx','mcpt');say('harness','Cada respuesta ilumina en el diagrama la pieza correcta.')}}
+/* 17 */{part:P4,n:'Resumen',col:K.instr,t:'¿Qué pieza necesito?',
+ lead:'Antes de pedir «un agente», hazte estas seis preguntas.',
+ body:`<ul class="dec">${[['¿Tiene que saberlo siempre?','Instrucciones',K.instr],['¿Es un encargo que lanzáis a menudo?','Comando',K.cmd],['¿Es un método que solo aplica a veces?','Skill',K.skill],['¿Es mucho trabajo o pide foco?','Subagente',K.sub],['¿Necesita datos de un sistema?','MCP',K.mcp],['¿Tiene que cumplirse sí o sí?','Hook',K.hook]].map(([q,a,c])=>`<li class="rv">${q}<b style="--c:${c}">${a}</b></li>`).join('')}</ul>
+ <p class="note rv">Para empezar: buenas instrucciones, un par de comandos y un conector. Convertid en skill lo que repitáis y aflojad los permisos con la experiencia.</p>`,
+ beats:(()=>{const Q=['¿Tiene que saberlo siempre? Instrucciones.','¿Lo lanzáis a menudo? Un comando.','¿Solo aplica a veces? Una skill.','¿Mucho trabajo o pide foco? Un subagente.','¿Necesita datos de un sistema? MCP.','¿Tiene que cumplirse sí o sí? Un hook.'];
+  return Q.map((q,i)=>async()=>{if(i===0)base('sys','tools','instr','skidx','mcpt');rv(i===5?7:i+1);pulse('s-'+SLOTS[i][0]);say('belt',q)})})()},
+
+/* 18 */{part:P4,n:'Test',col:K.tool,t:'¿Qué pieza usarías?',lead:'',body:`<div id="quiz"></div>`,
+ beats:QZ.flatMap((q,i)=>[async()=>{if(i===0)base('sys','tools','instr','skidx','mcpt');qShow(i,false);fit()},async()=>{qShow(i,true)}])}
 ];
 
-/* ---------- página ---------- */
-$('chs').innerHTML=CH.map((c,i)=>(c.part?`<div class="part"><span>${c.part[0]}</span><b>${c.part[1]}</b></div>`:'')+
- `<section class="ch${c.free?' free':''}" style="--c:${c.col}">${c.hero?c.html:
- `<p class="kick"><i></i>${c.n}${c.jarg?` · ${c.jarg}`:''}</p><h2>${c.t}</h2><p class="lead">${c.lead}</p>${c.who||''}${c.body||''}${c.free?'':`<button class="btn" data-act="replay">Ver otra vez</button>`}`}</section>`).join('')+
- `<div class="foot">Ejemplo didáctico: el cliente y los datos son inventados. Los nombres y el soporte de cada pieza varían entre herramientas (Claude Code, GitHub Copilot, Cursor…) y cambian a menudo; consulta la documentación de la tuya.</div>`;
-
-/* test */
-const QZ=[
- {t:'Todos los análisis deben usar la definición de «cliente activo» del cliente.',o:['Instrucciones','Skill','Hook','Comando'],a:0,st:'s-instr',w:'Lo que hay que saber siempre va en las instrucciones.'},
- {t:'Cada lunes el equipo prepara el mismo informe de KPIs.',o:['Subagente','Comando','MCP','Instrucciones'],a:1,st:'s-cmd',w:'Un encargo repetido que lanza una persona: un comando.'},
- {t:'Pase lo que pase, nunca debe salir el email de un cliente en un resultado.',o:['Instrucciones','Hook','Skill','Subagente'],a:1,st:'s-hook',w:'Una instrucción se puede saltar; un hook se ejecuta siempre. Para garantías, hooks.'},
- {t:'Queremos que el agente consulte el backlog del proyecto en Jira.',o:['Skill','Comando','MCP','Hook'],a:2,st:'s-mcp',w:'Conectar un sistema externo es trabajo de un servidor MCP.'},
- {t:'Tenemos un método de calidad de datos, con scripts, que solo aplica en algunas tareas.',o:['Instrucciones','Skill','Hook','MCP'],a:1,st:'s-skill',w:'Un saber hacer que se carga solo cuando toca: una skill.'},
- {t:'Hay que revisar 40 modelos dbt sin saturar la conversación principal.',o:['Subagente','Comando','Instrucciones','MCP'],a:0,st:'s-sub',w:'Delegar con contexto propio y recibir solo el resumen: subagentes.'}];
-let qi=0,score=0;
-function quiz(){const q=QZ[qi],el=$('quiz');
-  if(!q){el.innerHTML=`<div class="q"><span class="n">Resultado</span><p class="t">${score} de ${QZ.length}</p><p class="fb">${score>=5?'Ya piensas en piezas. Buena señal para la próxima reunión con el equipo técnico.':'Repasa la chuleta: la clave es quién activa cada pieza.'}</p><button class="btn" data-act="qreset">Repetir el test</button></div>`;return}
-  el.innerHTML=`<div class="q"><span class="n">Pregunta ${qi+1} de ${QZ.length}</span><p class="t">${q.t}</p>${q.o.map((o,i)=>`<button class="btn opt" data-act="ans" data-i="${i}">${o}</button>`).join('')}<div id="fb"></div></div>`}
-quiz();
-document.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(!b)return;const a=b.dataset.act;
-  if(a==='replay')enter(cur,true);
-  if(a==='qreset'){qi=0;score=0;quiz()}
-  if(a==='next'){qi++;quiz()}
-  if(a==='ans'){const q=QZ[qi],i=+b.dataset.i,box=b.parentElement;if(box.dataset.done)return;box.dataset.done=1;
-    box.querySelectorAll('.opt').forEach((o,k)=>{if(k===q.a)o.classList.add('ok');else if(k===i)o.classList.add('ko')});
-    if(i===q.a)score++;pulse(q.st);
-    $('fb').innerHTML=`<p class="fb">${i===q.a?'Correcto. ':'No exactamente. '}${q.w}</p><button class="btn" style="margin-top:10px" data-act="next">${qi<QZ.length-1?'Siguiente':'Ver resultado'}</button>`}
-});
-
-/* ---------- control por scroll ---------- */
-let cur=-1,vh=346,vtok=0;
-const secs=[...document.querySelectorAll('.ch')];
-function setView(h){if(h===vh)return;const my=++vtok,from=vh,t0=performance.now();(function f(t){if(my!==vtok)return;const p=Math.min(1,(t-t0)/650);vh=from+(h-from)*ease(p);$('stage').setAttribute('viewBox',`0 0 400 ${vh.toFixed(1)}`);if(p<1)requestAnimationFrame(f)})(t0)}
-function resetScene(){
-  tok++;$('packets').innerHTML='';ctxClear();['mring','sr0','sr1'].forEach(id=>$(id).classList.remove('on'));
-  [0,1].forEach(i=>{$('sb'+i).setAttribute('height',0);$('sb'+i).setAttribute('y',(i?184:124)+16)});
-  $('deny').style.display='none';$('okm').style.display='none';$('gateR').setAttribute('fill',K.card);$('gateT').style.fill=K.perm;
-  live(false);loopHi(-1);tl(-1);
-}
-function enter(i,force){
-  if(i===cur&&!force)return;cur=i;resetScene();
+/* ================= NAVEGACIÓN ================= */
+let si=-1,bi=0,vh=346,vtok=0;
+function setView(h,now){if(Math.abs(h-vh)<.1)return;const my=++vtok;if(now){vh=h;$('stage').setAttribute('viewBox',`0 0 400 ${h}`);return}
+  const from=vh,t0=performance.now();(function f(t){if(my!==vtok)return;const p=Math.min(1,(t-t0)/650);vh=from+(h-from)*ease(p);$('stage').setAttribute('viewBox',`0 0 400 ${vh.toFixed(1)}`);if(p<1)requestAnimationFrame(f)})(t0)}
+function fit(){const p=$('panel'),i=$('pin');let z=1;i.style.setProperty('--fz',z);while(i.scrollHeight>p.clientHeight+1&&z>.6){z-=.03;i.style.setProperty('--fz',z)}}
+function renderSlide(s){
+  const c=S[s];
+  $('pin').innerHTML=c.cover?c.html:`<p class="kick" style="--c:${c.col}"><i></i>${c.n}</p><h2>${c.t}</h2>${c.lead?`<p class="lead">${c.lead}</p>`:''}${c.who?c.who.replace('class="who"',`class="who" style="--c:${c.col}"`):''}<div style="--c:${c.col}">${c.body||''}</div>`;
+  $('part').textContent=c.part;$('cnt').textContent=String(s+1).padStart(2,'0')+' / '+S.length;
+  $('bar').style.width=((s+1)/S.length*100)+'%';
   document.querySelectorAll('#stage .st').forEach(e=>{let on=true;
-    if(e.dataset.r){const [a,b]=e.dataset.r.split('-').map(Number);on=i>=a&&i<=b}else if(e.dataset.ch)on=i>=+e.dataset.ch;
+    if(e.dataset.r){const [a,b]=e.dataset.r.split('-').map(Number);on=s>=a&&s<=b}else if(e.dataset.ch)on=s>=+e.dataset.ch;
     e.classList.toggle('on',on)});
-  setView(i>=7?448:346);
-  secs.forEach((s,k)=>s.classList.toggle('act',k===i));
-  $('cnt').textContent=String(i+1).padStart(2,'0')+' / '+CH.length;
-  (async()=>{try{await sleep(450);await CH[i].demo()}catch(e){if(e!=='x')console.error(e)}})();
+  fit();
 }
-const wideMQ=matchMedia('(min-width:820px),(orientation:landscape) and (min-width:600px)');
-function onScroll(){
-  const line=wideMQ.matches?innerHeight*.45:$('stagecol').getBoundingClientRect().bottom+30;
-  let a=0;secs.forEach((s,k)=>{if(s.getBoundingClientRect().top<=line)a=k});
-  $('bar').style.width=(scrollY/Math.max(1,document.documentElement.scrollHeight-innerHeight)*100)+'%';
-  enter(a);
+function resetScene(){
+  $('packets').innerHTML='';ctxClear();['mring','sr0','sr1'].forEach(id=>$(id).classList.remove('on'));
+  [0,1].forEach(i=>{$('sb'+i).setAttribute('height',0);$('sb'+i).setAttribute('y',(i?184:124)+16)});
+  $('deny').style.display='none';$('gateR').setAttribute('fill',K.card);$('gateT').style.fill=K.perm;live(false);loopHi(-1);
 }
-let tick=false;addEventListener('scroll',()=>{if(!tick){tick=true;requestAnimationFrame(()=>{tick=false;onScroll()})}},{passive:true});
-addEventListener('resize',onScroll);
-enter(0,true);setTimeout(onScroll,60);
+async function goTo(s,b,animate=true){
+  s=Math.max(0,Math.min(S.length-1,s));b=Math.max(0,Math.min(S[s].beats.length-1,b));
+  tok++;const my=tok;
+  if(s!==si)renderSlide(s);
+  si=s;bi=b;
+  resetScene();tl(-1);rv(0);
+  setView(s>=7?448:346,!animate);
+  $('beats').innerHTML=S[s].beats.length>1?S[s].beats.map((_,k)=>`<i class="${k<=b?'on':''}"></i>`).join(''):'';
+  history.replaceState(null,'',`#${s+1}.${b+1}`);
+  try{
+    FAST=true;for(let k=0;k<b;k++)await S[s].beats[k]();
+    if(!animate){await S[s].beats[b]();return}
+    FAST=false;await sleep(250);await S[s].beats[b]();
+  }catch(e){if(e!=='x')console.error(e)}finally{if(my===tok)FAST=false}
+}
+const next=()=>{if(bi<S[si].beats.length-1)goTo(si,bi+1);else if(si<S.length-1)goTo(si+1,0)};
+const prev=()=>{if(bi>0)goTo(si,bi-1,false);else if(si>0)goTo(si-1,S[si-1].beats.length-1,false)};
+addEventListener('keydown',e=>{
+  const k=e.key;
+  if(['ArrowRight','ArrowDown','PageDown',' ','Enter','n','N'].includes(k)){e.preventDefault();next()}
+  else if(['ArrowLeft','ArrowUp','PageUp','Backspace','p','P'].includes(k)){e.preventDefault();prev()}
+  else if(k==='Home')goTo(0,0);else if(k==='End')goTo(S.length-1,0);
+  else if(k==='r'||k==='R')goTo(si,bi);
+  else if(k==='f'||k==='F'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen?.()}
+});
+$('deck').addEventListener('click',e=>{if(e.target.closest('#nav'))return;next()});
+$('bPrev').onclick=e=>{e.stopPropagation();prev()};$('bNext').onclick=e=>{e.stopPropagation();next()};
+function scale(){document.documentElement.style.setProperty('--k',Math.min(innerWidth/1600,innerHeight/900));
+}
+addEventListener('resize',scale);scale();
+const m=location.hash.match(/^#(\d+)(?:\.(\d+))?/);
+document.fonts.ready.then(()=>fit());
+goTo(m?+m[1]-1:0,m&&m[2]?+m[2]-1:0,!m);
 </script>
 </body>
 </html>
