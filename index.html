@@ -18,7 +18,7 @@ html,body{margin:0;height:100%;overflow:hidden;background:#000;display:grid;plac
 #top .brand b{color:var(--turq);font-weight:800}
 #part{position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:10px}
 #part span{padding:7px 14px;border-radius:99px;font:700 13px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:#5E5B7E;border:1px solid #2A2745}
-#part span.on{color:var(--dark);background:var(--turq);border-color:var(--turq)}
+#part span.on{color:var(--dark);background:var(--mc,var(--turq));border-color:var(--mc,var(--turq))}
 #part span.done{color:var(--lav);border-color:#4A4670}
 #right{margin-left:auto;display:flex;align-items:center;gap:18px}
 #beats{display:flex;gap:6px}
@@ -28,7 +28,7 @@ html,body{margin:0;height:100%;overflow:hidden;background:#000;display:grid;plac
 #nav{display:flex;gap:6px}
 #nav button{width:34px;height:34px;border-radius:9px;border:1px solid #3A3658;background:#141226;color:var(--lav);font:700 18px/1 var(--sans);cursor:pointer}
 #nav button:hover{background:var(--card)}
-#bar{position:absolute;left:0;top:60px;height:3px;background:var(--turq);transition:width .4s}
+#bar{position:absolute;left:0;top:60px;height:3px;background:var(--mc,var(--turq));transition:width .4s}
 #task{position:absolute;left:730px;top:76px;display:flex;align-items:center;gap:10px;font:600 14px/1 var(--sans);color:var(--lav)}
 #task b{padding:4px 8px;border-radius:6px;background:rgba(0,230,217,.12);color:var(--turq);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
 #stage{position:absolute;left:40px;top:78px;width:640px;height:706px}
@@ -84,6 +84,21 @@ p{margin:0 0 .7em}
 .close p:nth-child(2){animation-delay:.5s}.close p:nth-child(3){animation-delay:1s}
 .close span{color:var(--c)}
 @keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+#chap{position:absolute;left:0;top:63px;width:1600px;height:837px;background:radial-gradient(900px 600px at 20% 40%,color-mix(in srgb,var(--mc) 14%,transparent),transparent 70%),var(--bg);display:none;z-index:5}
+#chap.on{display:block}
+#chap .num{position:absolute;left:110px;top:120px;font:800 380px/1 var(--sans);letter-spacing:-.05em;color:transparent;-webkit-text-stroke:3px var(--mc);opacity:.9;animation:up .7s both}
+#chap .txt{position:absolute;left:560px;top:190px;width:900px;animation:up .7s .15s both}
+#chap .of{font:700 18px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--mc)}
+#chap h1{margin:.35em 0 .3em;font-size:92px;line-height:1;color:#fff;letter-spacing:-.03em}
+#chap .sub{font:500 30px/1.35 var(--sans);color:var(--lav);margin:0 0 1.2em}
+#chap .items{display:flex;flex-wrap:wrap;gap:12px}
+#chap .items span{padding:10px 18px;border:1px solid color-mix(in srgb,var(--mc) 55%,transparent);border-radius:10px;font:600 20px/1 var(--sans);color:var(--txt)}
+#chap .enc{margin-top:28px;font:500 20px/1.4 var(--sans);color:var(--mute)}#chap .enc b{color:#fff}
+#chap .road{position:absolute;left:110px;right:110px;bottom:70px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+#chap .road div{padding-top:16px;border-top:6px solid #2E2A4A;font:700 18px/1.3 var(--sans);color:#5E5B7E}
+#chap .road div b{display:block;font-size:14px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px}
+#chap .road div.done{border-color:#4A4670;color:var(--lav)}
+#chap .road div.on{border-color:var(--mc);color:#fff}#chap .road div.on b{color:var(--mc)}
 /* escena */
 .st{opacity:0;transition:opacity .55s}.st.on{opacity:1}
 .pl{animation:pl .45s ease-in-out 2;transform-box:fill-box;transform-origin:center}
@@ -106,6 +121,7 @@ p{margin:0 0 .7em}
   <svg id="stage" viewBox="0 0 400 346" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagrama animado de un modelo de IA dentro de un harness y las piezas de un belt"></svg>
   <div id="task"><b>El encargo de toda la guía</b>Modelo semántico de Ventas de Retail Norte en Power BI</div>
   <div id="panel"><div id="pin"></div></div>
+  <div id="chap"></div>
   <div id="cap"><span id="capWho"></span><span id="capTxt"></span></div>
 </div>
 
@@ -115,7 +131,7 @@ const K={ink:'#E8EBFA',dark:'#1E1B31',card:'#2B2846',hz:'#23203A',tray:'#211E37'
 const NS='http://www.w3.org/2000/svg',$=id=>document.getElementById(id);
 
 /* Índices de diapositiva, para decidir qué se ve en el diagrama */
-const IX={model:1,harness:2,tools:3,belt:4,instr:5,cmd:6,skill:7,mcp:8,hook:9,caso:10,sub:99};
+const IX={model:2,harness:3,tools:4,belt:6,instr:7,cmd:8,skill:9,mcp:10,hook:11,caso:13,sub:99};
 
 /* ================= ESCENA ================= */
 const R=(x,y,w,h,o={})=>{const {f=K.card,s=K.edge,sw=1.5,r=8,dash='',id=''}=o;
@@ -245,6 +261,9 @@ const S=[
  <ol class="list"><li><span>Cómo funciona un LLM con su harness de serie</span></li><li><span>Las piezas que creamos en nuestros belts</span></li><li><span>Una tarea real, paso a paso</span></li></ol>`,
  beats:[async()=>{say('modelo','Este es el modelo. Empecemos por él.');pulse('mcirc')}]},
 
+/* momento 1 */
+{mom:1,divider:{n:'1',t:'El motor',sub:'Cómo funciona un LLM con el harness que trae de serie.',items:['El modelo', 'El harness', 'Herramientas y bucle'],enc:false},beats:[async()=>{}]},
+
 /* 1 · el modelo */
 {mom:1,n:'El modelo',col:K.model,t:'Un LLM: entra texto, sale texto',
  lead:'Un modelo de lenguaje (Claude, GPT, Gemini…) sabe muchísimo en general. Pero por sí solo no ve vuestros datos, no recuerda conversaciones y no puede ejecutar nada.',
@@ -272,6 +291,9 @@ const S=[
   async()=>{rv(3);loopHi(2);say('modelo','Observa, decide el siguiente paso… y así en bucle hasta terminar. Eso es un agente.');await send(900);loopHi(-1)},
   async()=>{rv(4);say('perm','Quiere instalar algo en la terminal: el harness te pide permiso antes.');await fly('m','gate','terminal',K.tool,900);await gate(K.cmd,400);await fly('gate','u','¿Lo permites?',K.perm,1000)},
   async()=>{say('modelo','Resultado: un modelo genérico. No conoce el método de SDG ni llega a Snowflake ni a Power BI.');await fly('m','u','modelo genérico',K.sys,1200)}]},
+
+/* momento 2 */
+{mom:2,divider:{n:'2',t:'Las piezas',sub:'Qué piezas creamos en nuestros belts, una a una, y cómo se instalan en el harness.',items:['Instrucciones', 'Comandos', 'Skills', 'MCP', 'Hooks'],enc:false},beats:[async()=>{}]},
 
 /* 4 · el belt */
 {mom:2,n:'El belt',col:K.instr,t:'Un belt: el harness con el método de SDG',
@@ -385,6 +407,9 @@ Al terminar
   async()=>{base('sys','tools','instr','skidx','mcpt');tab(0);say('modelo','Intenta crear tablas en Power BI sin dev-spec aprobado…');await fly('m','mcpc','crear_tabla',K.mcp,1000);await fly('hook','mcpc','¿dev-spec?',K.hook,900);say('hook','…y el hook lo bloquea antes de ejecutarse. El modelo no puede saltárselo.');await mark('mcpc');await add('h','Hook: bloqueado',K.hook,14)},
   async()=>{tab(1);say('belt','En llano: controles de calidad que no dependen de la memoria de nadie.')}]}),
 
+/* momento 3 */
+{mom:3,divider:{n:'3',t:'La tarea real',sub:'El mismo encargo, de principio a fin, con el belt instalado. Paso a paso.',items:['Comando', 'Instrucciones', 'Skill', 'MCP', 'Permisos', 'Hooks'],enc:true},beats:[async()=>{}]},
+
 /* 11 · caso real */
 {mom:3,n:'Una tarea real',col:K.cmd,t:'El modelo de Ventas de Retail Norte, paso a paso',
  lead:'El mismo encargo del principio, ahora con el belt instalado. La consultora lanza un comando: mira qué pieza interviene en cada paso.',
@@ -416,8 +441,11 @@ let si=-1,bi=0,vh=346,vtok=0;
 function setView(h,now){if(Math.abs(h-vh)<.1)return;const my=++vtok;if(now){vh=h;$('stage').setAttribute('viewBox',`0 0 400 ${h}`);return}
   const from=vh,t0=performance.now();(function f(t){if(my!==vtok)return;const p=Math.min(1,(t-t0)/650);vh=from+(h-from)*ease(p);$('stage').setAttribute('viewBox',`0 0 400 ${vh.toFixed(1)}`);if(p<1)requestAnimationFrame(f)})(t0)}
 function fit(){const p=$('panel'),i=$('pin');let z=1;i.style.setProperty('--fz',z);while(i.scrollHeight>p.clientHeight+1&&z>.6){z-=.03;i.style.setProperty('--fz',z)}}
+const MC=['#00E6D9','#3366FF','#00E6D9','#F7C948'],MN=['Motor','Piezas','Tarea real'];
 function renderSlide(s){
-  const c=S[s];$('task').style.visibility=c.cover?'hidden':'visible';
+  const c=S[s];document.documentElement.style.setProperty('--mc',MC[c.mom]||MC[0]);
+  const d=c.divider;$('chap').classList.toggle('on',!!d);$('cap').style.visibility=d?'hidden':'visible';
+  if(d)$('chap').innerHTML=`<div class="num">0${d.n}</div><div class="txt"><div class="of">Momento ${d.n} de 3</div><h1>${d.t}</h1><p class="sub">${d.sub}</p><div class="items">${d.items.map(x=>`<span>${x}</span>`).join('')}</div>${d.enc?'<p class="enc">El encargo: <b>modelo semántico de Ventas de Retail Norte en Power BI</b></p>':''}</div><div class="road">${MN.map((x,i)=>`<div class="${+d.n===i+1?'on':+d.n>i+1?'done':''}"><b>Momento ${i+1}</b>${x}</div>`).join('')}</div>`;$('task').style.visibility=c.cover||d?'hidden':'visible';
   $('pin').innerHTML=c.cover?c.html:`<p class="kick" style="--c:${c.col}"><i></i>${c.n}</p>${c.t?`<h2>${c.t}</h2>`:''}${c.lead?`<p class="lead">${c.lead}</p>`:''}<div style="--c:${c.col}">${c.body||''}</div>`;
   $('part').innerHTML=['Motor','Piezas','Tarea real'].map((t,i)=>`<span class="${c.mom===i+1?'on':c.mom>i+1?'done':''}">${i+1} · ${t}</span>`).join('');
   $('cnt').textContent=String(s+1).padStart(2,'0')+' / '+S.length;
