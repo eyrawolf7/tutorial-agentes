@@ -99,8 +99,31 @@ p{margin:0 0 .7em}
 #chap .road div b{display:block;font-size:14px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px}
 #chap .road div.done{border-color:#4A4670;color:var(--lav)}
 #chap .road div.on{border-color:var(--mc);color:#fff}#chap .road div.on b{color:var(--mc)}
+.steps{display:flex;flex-direction:column;gap:.3em;margin-top:.2em}
+.step{display:flex;gap:.8em;align-items:flex-start;padding:.5em .8em;border-radius:.6em;opacity:.35;transition:opacity .3s,background .3s}
+.step .dot{flex:none;width:1.5em;height:1.5em;border-radius:50%;display:grid;place-items:center;border:2px solid var(--line);font-size:.8em;font-weight:800;color:var(--mute)}
+.step .tt{font-size:1em;font-weight:700;color:var(--txt);line-height:1.5em}
+.step .dd{display:none;margin:.2em 0 .45em;font-size:.92em;line-height:1.4;color:var(--lav)}
+.step .bd{display:none;padding:.2em .6em;border-radius:.35em;background:var(--c);color:var(--dark);font-size:.62em;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.step.done{opacity:.75}.step.done .dot{border-color:var(--c);background:var(--c);color:var(--dark)}
+.step.now{opacity:1;background:var(--card2);box-shadow:inset 4px 0 0 var(--c)}
+.step.now .dot{border-color:var(--c);color:var(--c)}.step.now .tt{font-size:1.2em;color:#fff}
+.step.now .dd{display:block}.step.now .bd{display:inline-block}
+.res{margin-top:.7em;padding:.7em 1em;border-radius:.6em;background:color-mix(in srgb,var(--turq) 12%,transparent);border:1px solid var(--turq);font-size:.95em;font-weight:600;color:#fff}
+#case .trk{display:flex;gap:.5em;margin:.2em 0 1.4em}
+#case .trk i{width:2em;height:2em;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:.75em;border:2px solid var(--line);color:var(--mute)}
+#case .trk i.done{background:var(--c);border-color:var(--c);color:var(--dark)}
+#case .trk i.now{border-color:var(--c);color:var(--c);box-shadow:0 0 0 4px color-mix(in srgb,var(--c) 25%,transparent)}
+#case .ck{font-weight:800;font-size:.8em;letter-spacing:.16em;text-transform:uppercase;color:var(--c)}
+#case .ct{margin:.2em 0 .45em;font-size:2.6em;line-height:1.05;font-weight:800;letter-spacing:-.025em;color:#fff}
+#case .ct.q{font-size:2em;line-height:1.15;color:var(--turq)}
+#case .cd{font-size:1.35em;line-height:1.45;font-weight:500;color:var(--txt);margin:0 0 .9em}
+#case .cp{display:inline-block;padding:.45em .8em;border-radius:.5em;background:color-mix(in srgb,var(--c) 15%,transparent);border:1px solid var(--c);font-size:.95em;color:var(--txt)}
+#case .cp b{color:var(--c)}
+#case .res{margin-top:1em;padding:.8em 1em;border-radius:.6em;background:color-mix(in srgb,var(--turq) 12%,transparent);border:1px solid var(--turq);font-size:1.05em;font-weight:600;color:#fff}
 /* escena */
 .st{opacity:0;transition:opacity .55s}.st.on{opacity:1}
+#stage.focus .st.on{opacity:.16}#stage.focus .st.on.fx{opacity:1}
 .pl{animation:pl .45s ease-in-out 2;transform-box:fill-box;transform-origin:center}
 @keyframes pl{50%{transform:scale(1.08)}}
 .ln{fill:none;stroke:var(--lav);stroke-width:1.5;stroke-dasharray:3 4;opacity:.4}
@@ -142,26 +165,26 @@ const chip=(id,t,x,w,c=K.tool)=>`<g id="c-${id}">${R(x,280,w,26,{s:c,r:6})}${T(x
 const SYS=[['snow','Snowflake',150],['pbi','Power BI',212],['git','Git',274],['teams','Teams',336]];
 const SLOTS=[['instr','Instrucciones','siempre activas',K.instr],['cmd','Comandos','los lanzas tú',K.cmd],['skill','Skills','las elige el modelo',K.skill],
 ['mcp','MCP','conecta sistemas',K.mcp],['hook','Hooks','saltan solos',K.hook]];
-const sXY=i=>({x:16+(i%3)*124,y:368+Math.floor(i/3)*36});
+const sXY=i=>({x:28+(i%3)*118,y:366+Math.floor(i/3)*36});
 const pill=(id,x,y,t)=>`<g id="${id}"><rect x="${x-33}" y="${y-9}" width="66" height="18" rx="9" fill="${K.card}" stroke="${K.edge}" stroke-width="1.5"/>${T(x,y+3.5,t,{fs:9,ls:.1})}</g>`;
 
 $('stage').innerHTML=`
 <defs><marker id="ah" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8z" fill="${K.ink}"/></marker></defs>
-<g class="st" data-ch="${IX.model}">${T(271,12,'SISTEMAS DEL CLIENTE',{fs:8.5,ls:.12,c:K.mute})}
+<g class="st" id="g-sys" data-ch="${IX.model}">${T(271,12,'SISTEMAS DEL CLIENTE',{fs:8.5,ls:.12,c:K.mute})}
 ${SYS.map(([id,n,x])=>`<g id="sy-${id}">${R(x,20,58,32,{s:K.mcp,r:7})}${T(x+29,40,n,{fs:10.5})}</g>`).join('')}</g>
 <g class="st" data-r="${IX.model}-${IX.mcp-1}"><path d="M238 124 L186 56" fill="none" stroke="${K.perm}" stroke-width="2" stroke-dasharray="4 4"/>${T(216,70,'sin acceso',{a:'start',fs:9.5,c:K.perm})}</g>
-<g class="st" data-ch="${IX.harness}">${R(8,76,384,260,{f:K.hz,r:16,dash:'6 5'})}${T(382,95,'Claude Code · Copilot · Cursor',{a:'end',fs:9,c:K.mute,w:600})}</g>
+<g class="st" id="g-hbox" data-r="${IX.harness}-${IX.belt-1}">${R(8,76,384,260,{f:K.hz,r:16,dash:'6 5'})}</g><g class="st" id="g-hbox2" data-ch="${IX.belt}">${R(8,76,384,374,{f:K.hz,r:16,dash:'6 5'})}</g><g class="st" data-ch="${IX.harness}">${T(382,95,'Claude Code · Copilot · Cursor',{a:'end',fs:9,c:K.mute,w:600})}</g>
 <g class="st" data-r="${IX.harness}-${IX.belt-1}">${T(20,95,'HARNESS DE SERIE',{a:'start',fs:11,ls:.14})}</g>
 <g class="st" data-ch="${IX.belt}">${T(20,95,'HARNESS + BELT',{a:'start',fs:11,ls:.14,c:K.instr})}</g>
 <g class="st" data-r="${IX.model}-${IX.model}"><path d="M56 46 Q170 60 228 132" class="ln"/></g>
 <g class="st" data-ch="${IX.harness}"><path d="M48 55 L118 103" class="ln"/><path d="M144 150 H224" class="ln"/></g>
 <g class="st" data-ch="${IX.tools}"><path d="M262 188 V256" class="ln"/></g>
 <g class="st" data-ch="${IX.mcp}"><path id="l-sys" d="M156 293 H150 V53" class="ln"/></g>
-<g class="st" data-ch="${IX.harness}">${R(20,104,124,222,{r:9})}${T(30,119,'CONTEXTO',{a:'start',fs:9.5,ls:.12})}${T(134,119,'0 %',{a:'end',fs:9.5,id:'ctxpct',c:K.mute})}
+<g class="st" id="g-ctx" data-ch="${IX.harness}">${R(20,104,124,222,{r:9})}${T(30,119,'CONTEXTO',{a:'start',fs:9.5,ls:.12})}${T(134,119,'0 %',{a:'end',fs:9.5,id:'ctxpct',c:K.mute})}
 <rect x="28" y="123" width="108" height="3" rx="1.5" fill="${K.hz}"/><rect id="ctxmeter" x="28" y="123" width="0" height="3" rx="1.5" fill="${K.ink}"/><g id="ctxblocks"></g></g>
-<g class="st" data-ch="${IX.tools}">${R(156,256,228,64,{r:9})}${T(166,271,'HERRAMIENTAS',{a:'start',fs:8.5,ls:.12,c:K.mute})}
+<g class="st" id="g-exec" data-ch="${IX.tools}">${R(156,256,228,64,{r:9})}${T(166,271,'HERRAMIENTAS',{a:'start',fs:8.5,ls:.12,c:K.mute})}
 ${chip('files','Archivos',164,60)}${chip('term','Terminal',228,58)}${chip('web','Web',290,42)}</g>
-<g class="st" data-ch="${IX.mcp}">${chip('mcp','MCP',338,40,K.mcp)}</g>
+<g class="st" id="g-mcpchip" data-ch="${IX.mcp}">${chip('mcp','MCP',338,40,K.mcp)}</g>
 <g class="st" data-r="${IX.tools}-${IX.tools}">
 <path class="la" d="M346 120 Q380 176 356 229"/><path class="la" d="M318 250 Q262 270 216 247"/><path class="la" d="M176 226 Q170 112 282 108"/>
 ${pill('lp0',318,110,'DECIDE')}${pill('lp1',348,240,'EJECUTA')}${pill('lp2',184,236,'OBSERVA')}</g>
@@ -169,15 +192,15 @@ ${pill('lp0',318,110,'DECIDE')}${pill('lp1',348,240,'EJECUTA')}${pill('lp2',184,
 <circle cx="344" cy="${cy}" r="14" fill="${K.sub}"/>${T(344,cy+3.5,'sub',{fs:9.5,c:K.dark})}
 ${R(366,cy-18,18,36,{r:4})}<rect id="sb${i}" x="368" y="${cy+16}" width="14" height="0" rx="2" fill="${K.sub}"/>`).join('')}${T(350,219,'contexto propio',{fs:8,c:K.mute,w:600})}</g>
 <g class="st" data-ch="${IX.tools}" data-b="3" id="g-gate"><rect id="gateR" x="216" y="219" width="92" height="22" rx="11" fill="${K.card}" stroke="${K.perm}" stroke-width="2"/>${T(262,234,'PERMISOS',{fs:9.5,c:K.perm,ls:.12,id:'gateT'})}</g>
-<g class="st on">
+<g class="st on" id="g-model">
 <circle id="mring" class="ring" cx="262" cy="150" r="46" fill="none" stroke="${K.ink}" stroke-width="2.5" stroke-dasharray="3 7"/>
 <circle cx="262" cy="150" r="41" fill="none" stroke="${K.model}" stroke-opacity=".35" stroke-width="4"/><circle id="mcirc" cx="262" cy="150" r="36" fill="${K.model}"/>
 ${T(262,156,'LLM',{fs:17,c:'#fff',ls:.06})}${T(262,204,'MODELO',{fs:9.5,ls:.14})}</g>
-<g class="st on"><circle cx="34" cy="38" r="20" fill="${K.card}" stroke="${K.ink}" stroke-width="2"/><circle cx="34" cy="32" r="6.5" fill="${K.ink}"/><path d="M23 50 Q34 36 45 50Z" fill="${K.ink}"/>
+<g class="st on" id="g-user"><circle cx="34" cy="38" r="20" fill="${K.card}" stroke="${K.ink}" stroke-width="2"/><circle cx="34" cy="32" r="6.5" fill="${K.ink}"/><path d="M23 50 Q34 36 45 50Z" fill="${K.ink}"/>
 ${T(62,36,'TÚ',{a:'start',fs:11,ls:.12})}${T(62,50,'consultor/a',{a:'start',fs:9,c:K.mute,w:600})}</g>
-<g class="st" data-ch="${IX.belt}">${R(8,344,384,98,{f:K.tray,r:16})}${T(20,360,'BELT',{a:'start',fs:11,ls:.14,c:K.instr})}${T(382,360,'modelo-semantico-pbi',{a:'end',fs:9.5,c:K.mute,w:600})}
-${SLOTS.map((s,i)=>{const p=sXY(i);return `<g id="ph${i}">${R(p.x,p.y,120,32,{f:'none',s:K.mute,dash:'4 3',r:7})}${T(p.x+60,p.y+20,s[1],{fs:10.5,c:K.mute,w:600})}</g>`}).join('')}</g>
-${SLOTS.map((s,i)=>{const p=sXY(i);return `<g class="st" data-ch="${IX.instr+i}" id="s-${s[0]}">${R(p.x,p.y,120,32,{r:7})}<rect x="${p.x}" y="${p.y}" width="6" height="32" rx="3" fill="${s[3]}"/>
+<g class="st" data-ch="${IX.belt}">${R(18,342,364,100,{f:K.tray,s:K.instr,r:12})}${T(30,358,'BELT · NUESTRAS PIEZAS',{a:'start',fs:10,ls:.12,c:K.instr})}${T(372,358,'modelo-semantico-pbi',{a:'end',fs:9,c:K.mute,w:600})}
+${SLOTS.map((s,i)=>{const p=sXY(i);return `<g id="ph${i}">${R(p.x,p.y,108,32,{f:'none',s:K.mute,dash:'4 3',r:7})}${T(p.x+54,p.y+20,s[1],{fs:10.5,c:K.mute,w:600})}</g>`}).join('')}</g>
+${SLOTS.map((s,i)=>{const p=sXY(i);return `<g class="st" data-ch="${IX.instr+i}" id="s-${s[0]}">${R(p.x,p.y,108,32,{r:7})}<rect x="${p.x}" y="${p.y}" width="6" height="32" rx="3" fill="${s[3]}"/>
 ${T(p.x+15,p.y+14,s[1],{a:'start',fs:11})}${T(p.x+15,p.y+26,s[2],{a:'start',fs:8.5,c:K.mute,w:600})}</g>`}).join('')}
 <g id="deny" style="display:none"><circle r="13" fill="${K.perm}" stroke="${K.dark}" stroke-width="2"/><path d="M-5 -5l10 10M5 -5l-10 10" stroke="#fff" stroke-width="3" stroke-linecap="round"/></g>
 <g id="okm" style="display:none"><circle r="13" fill="${K.instr}" stroke="${K.dark}" stroke-width="2"/><path d="M-6 0l4 4 8-8" fill="none" stroke="${K.dark}" stroke-width="3" stroke-linecap="round"/></g>
@@ -187,7 +210,7 @@ ${T(p.x+15,p.y+14,s[1],{a:'start',fs:11})}${T(p.x+15,p.y+26,s[2],{a:'start',fs:8
 const P={u:{x:34,y:38},m:{x:262,y:150},ctx:{x:82,y:215},gate:{x:262,y:230},
  snow:{x:179,y:36},pbi:{x:241,y:36},git:{x:303,y:36},teams:{x:365,y:36},
  files:{x:194,y:293},term:{x:257,y:293},web:{x:311,y:293},mcpc:{x:358,y:293},s1:{x:344,y:124},s2:{x:344,y:184}};
-SLOTS.forEach((s,i)=>{const p=sXY(i);P[s[0]]={x:p.x+60,y:p.y+16}});
+SLOTS.forEach((s,i)=>{const p=sXY(i);P[s[0]]={x:p.x+54,y:p.y+16}});
 let tok=0,FAST=false;
 const sleep=ms=>{const t=tok;if(FAST)return t===tok?Promise.resolve():Promise.reject('x');return new Promise((r,j)=>setTimeout(()=>t===tok?r():j('x'),ms))};
 const ease=p=>p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
@@ -252,6 +275,38 @@ const M1='Momento 1',M2='Momento 2',M3='Momento 3';
 
 const PIECE=(o)=>({mom:2,n:`Pieza ${o.i} de 5`,col:o.col,t:o.t,lead:o.lead,body:who(o.who,o.load)+files(o.files)+(o.note?`<p class="note" style="margin-top:.8em">${o.note}</p>`:''),beats:o.beats});
 
+const STEPS=[
+ {k:'El encargo',t:'«Crea el modelo semántico de Ventas de Retail Norte en Power BI»',d:'Un modelo semántico es como un mapa ordenado de los datos de ventas, para que Power BI pueda hacer informes con ellos. Vamos a ver cómo lo hace el agente, paso a paso.',w:'tu',say:'Este es el encargo. Cuando quieras, empezamos.',f:null,run:async()=>{}},
+ {k:'Paso 1 de 7',t:'Recibe el encargo',d:'Tú escribes una sola línea. Es un atajo que ya lleva dentro todas las explicaciones, como una plantilla.',p:'Comando',c:K.cmd,w:'tu',
+  say:'Tú escribes una sola línea: /crear-modelo-semantico',f:['s-cmd','g-user','g-ctx'],
+  run:async()=>{await fly('u','cmd','/crear-modelo',K.cmd,1000);await fly('cmd','ctx','encargo',K.cmd,1000);await add('cmd','Encargo',K.cmd,22)}},
+ {k:'Paso 2 de 7',t:'Lee las normas del cliente',d:'Como un empleado nuevo que lee el manual de la casa: dónde están los datos de Retail Norte y qué no debe hacer nunca.',p:'Instrucciones',c:K.instr,w:'harness',
+  say:'Lee las normas de Retail Norte antes de empezar.',f:['s-instr','g-ctx'],
+  run:async()=>{await fly('instr','ctx','normas del cliente',K.instr,1200);await add('instr','Normas del cliente',K.instr,22)}},
+ {k:'Paso 3 de 7',t:'Saca la receta de SDG',d:'Abre nuestra forma de hacer este trabajo, con los pasos y los trucos aprendidos en otros proyectos.',p:'Skill',c:K.skill,w:'modelo',
+  say:'Abre la receta de SDG para hacer modelos semánticos.',f:['s-skill','g-ctx'],
+  run:async()=>{await fly('skill','ctx','receta SDG',K.skill,1200);await add('skill','Receta SDG',K.skill,28)}},
+ {k:'Paso 4 de 7',t:'Mira los datos de verdad',d:'Se conecta al almacén de datos del cliente, Snowflake, para ver qué información hay realmente.',p:'MCP',c:K.mcp,w:'mcp',
+  say:'Se conecta a Snowflake y mira qué datos hay.',f:['s-mcp','g-mcpchip','g-sys','g-ctx'],
+  run:async()=>{live(true);await fly('mcpc','snow','¿qué datos hay?',K.mcp,1100);pulse('sy-snow');await fly('snow','ctx','datos de ventas',K.mcp,1100);await add('esq','Datos de Snowflake',K.mcp,18)}},
+ {k:'Paso 5 de 7',t:'Te pide permiso',d:'Antes de construir nada, te enseña cómo lo va a hacer. Sin tu OK, no sigue.',p:'Permisos',c:K.perm,w:'perm',
+  say:'Te enseña el diseño y espera tu OK.',f:['g-gate','g-user'],
+  run:async()=>{await gate(K.cmd,400);await fly('gate','u','¿Te parece bien?',K.perm,1100);await sleep(300);await fly('u','gate','OK',K.card,900);await gate(K.instr,500)}},
+ {k:'Paso 6 de 7',t:'Lo construye',d:'Monta el modelo directamente en Power BI, la herramienta de informes del cliente.',p:'MCP',c:K.mcp,w:'mcp',
+  say:'Construye el modelo en Power BI.',f:['s-mcp','g-mcpchip','g-sys'],
+  run:async()=>{live(true);await fly('mcpc','pbi','construye el modelo',K.mcp,1200);pulse('sy-pbi');await add('pb','Modelo creado',K.mcp,14)}},
+ {k:'Paso 7 de 7',t:'Lo revisa y te lo entrega',d:'Un control automático comprueba que todo está bien. Si lo está, te lo entrega terminado.',p:'Hook',c:K.hook,w:'hook',
+  say:'Un control automático lo revisa… y te lo entrega terminado.',f:['s-hook','g-mcpchip','g-user'],
+  run:async()=>{await fly('hook','mcpc','revisión',K.hook,1000);await mark('mcpc',true,900);await fly('mcpc','u','modelo listo',K.instr,1200)}}];
+const PDESC={Comando:'el atajo con el encargo',Instrucciones:'el manual del cliente',Skill:'la receta de SDG',MCP:'el enchufe a los sistemas',Permisos:'tu visto bueno',Hook:'el control automático'};
+function caseShow(n){const p=STEPS[n],last=n===STEPS.length-1;
+  $('case').innerHTML=`<div class="trk">${STEPS.slice(1).map((q,i)=>`<i class="${i+1<n?'done':i+1===n?'now':''}" style="--c:${q.c}">${i+1}</i>`).join('')}</div>
+  <div class="ck" style="--c:${p.c||K.instr}">${p.k}</div><h3 class="ct${n===0?' q':''}">${p.t}</h3><p class="cd">${p.d}</p>
+  ${p.p?`<p class="cp" style="--c:${p.c}">Aquí trabaja: <b>${p.p}</b> · ${PDESC[p.p]}</p>`:''}
+  ${last?`<div class="res">Listo: el modelo de Ventas de Retail Norte, en Power BI y revisado. Tú solo escribiste una línea y diste un OK.</div>`:''}`}
+function stepAt(n){document.querySelectorAll('#pin .step').forEach((e,i)=>{e.classList.toggle('done',i<n);e.classList.toggle('now',i===n)});}
+function focus(ids){const st=$('stage');st.classList.toggle('focus',!!ids);document.querySelectorAll('#stage .fx').forEach(e=>e.classList.remove('fx'));
+  if(ids)['g-hbox','g-hbox2','g-model',...ids].forEach(id=>$(id)&&$(id).classList.add('fx'))}
 const S=[
 /* 0 · portada */
 {mom:0,cover:true,html:`<p class="kick" style="--c:${K.instr}"><i></i>SDG · Guía para managers</p>
@@ -408,25 +463,11 @@ Al terminar
   async()=>{tab(1);say('belt','En llano: controles de calidad que no dependen de la memoria de nadie.')}]}),
 
 /* momento 3 */
-{mom:3,divider:{n:'3',t:'La tarea real',sub:'El mismo encargo, de principio a fin, con el belt instalado. Paso a paso.',items:['Comando', 'Instrucciones', 'Skill', 'MCP', 'Permisos', 'Hooks'],enc:true},beats:[async()=>{}]},
+{mom:3,divider:{n:'3',t:'La tarea real',sub:'El mismo encargo, de principio a fin, con el belt instalado. Paso a paso.',items:['Un encargo','7 pasos','Tú solo pides y das un OK'],enc:true},beats:[async()=>{}]},
 
 /* 11 · caso real */
-{mom:3,n:'Una tarea real',col:K.cmd,t:'El modelo de Ventas de Retail Norte, paso a paso',
- lead:'El mismo encargo del principio, ahora con el belt instalado. La consultora lanza un comando: mira qué pieza interviene en cada paso.',
- body:`<ol class="tl">${[['Comando',K.cmd],['Instrucciones',K.instr],['Skill',K.skill],['Leer el requisito',K.tool],['MCP · Snowflake',K.mcp],['Dev-spec y tu OK',K.perm],['Hook',K.hook],['Construye en Power BI',K.mcp],['Validación y entrega',K.instr]].map(([t,c],i)=>`<li style="--c:${c}"><i></i><b>${i+1}</b> ${t}</li>`).join('')}</ol>
- <div class="rv"><div class="ex"><span class="l">Entregado</span>Modelo Ventas de Retail Norte · 1 tabla de hechos, 5 dimensiones, 18 medidas.
-Validado automáticamente. PBIP + dev-spec listos en Git.</div></div>
- <p class="note" style="--c:${K.instr}">Tú lanzas un comando y das un OK. El belt pone el método; el harness, las manos y los límites; el modelo, el razonamiento.</p>`,
- beats:[
-  async()=>{base('sys','tools','skidx','mcpt');tl(0);say('tu','/crear-modelo-semantico input/br-ventas.md');await fly('u','cmd','/crear-modelo',K.cmd,900);await fly('cmd','ctx','encargo',K.cmd,900);await add('cmd','Encargo /crear-modelo',K.cmd,22)},
-  async()=>{tl(1);say('harness','Carga las instrucciones: el método del belt y las reglas de Retail Norte.');await fly('instr','ctx','CLAUDE.md',K.instr,1000);await add('instr','Instrucciones',K.instr,20)},
-  async()=>{tl(2);say('modelo','Es un modelo semántico: abro la skill con el método de SDG.');await send(600);await fly('skill','ctx','SKILL.md',K.skill,1000);await add('skill','Skill modelo-semántico',K.skill,26)},
-  async()=>{tl(3);say('modelo','Leo el requisito de negocio con la herramienta de archivos.');await fly('m','files','leer br-ventas.md',K.tool,900);await fly('files','ctx','requisito',K.tool,900);await add('br','Requisito (BR)',K.tool,16)},
-  async()=>{tl(4);live(true);say('modelo','Consulto las tablas reales de Snowflake por MCP.');await fly('m','mcpc','consultar_esquema',K.mcp,900);await fly('mcpc','snow','consulta',K.mcp,800);await fly('snow','ctx','tablas de MART',K.mcp,900);await add('esq','Esquema Snowflake',K.mcp,14)},
-  async()=>{tl(5);say('perm','Diseña la estrella, escribe un dev-spec en borrador y para: te pide que lo apruebes.');await fly('m','files','dev-spec.md',K.tool,900);await gate(K.cmd,400);await fly('gate','u','¿Apruebas el diseño?',K.perm,1000);await fly('u','gate','Aprobado',K.card,900);await gate(K.instr,400)},
-  async()=>{tl(6);say('hook','Antes de tocar Power BI, el hook comprueba que hay dev-spec aprobado: vía libre.');await fly('hook','mcpc','¿dev-spec?',K.hook,900);await mark('mcpc',true)},
-  async()=>{tl(7);say('modelo','Siguiendo el dev-spec aprobado, crea tablas, relaciones y 18 medidas en Power BI por MCP.');await fly('m','mcpc','crear_tabla…',K.mcp,900);await fly('mcpc','pbi','18 medidas',K.mcp,1000);pulse('sy-pbi');await add('pb','Modelo en Power BI',K.mcp,14)},
-  async()=>{tl(8);rv(1);say('hook','Al exportar, otro hook valida el modelo. Todo correcto: se entrega el PBIP y el dev-spec.');await fly('m','mcpc','exportar_tmdl',K.mcp,800);await fly('hook','mcpc','validar',K.hook,800);await mark('mcpc',true,900);await fly('m','u','modelo validado',K.instr,1100)}]},
+{mom:3,n:'Una tarea real',col:K.cmd,t:'',lead:'',body:`<div id="case"></div>`,
+ beats:STEPS.map((p,i)=>async()=>{if(i===0)base('sys','tools','skidx','mcpt');caseShow(i);focus(p.f);say(p.w,p.say);await p.run()})},
 
 /* 12 · chuleta */
 {mom:3,n:'Chuleta',col:K.instr,t:'Las cinco piezas de un belt',lead:'',
@@ -458,11 +499,12 @@ function visScene(s,b){
     if(e.dataset.r){const [a,z]=e.dataset.r.split('-').map(Number);on=s>=a&&s<=z}
     else if(e.dataset.ch){const ch=+e.dataset.ch;on=s>ch||(s===ch&&b>=(+e.dataset.b||0))}
     e.classList.toggle('on',on)});
+  SLOTS.forEach((x,i)=>$('ph'+i).style.opacity=$('s-'+x[0]).classList.contains('on')?0:1);
 }
 function resetScene(){
   $('packets').innerHTML='';ctxClear();['mring','sr0','sr1'].forEach(id=>$(id).classList.remove('on'));
   [0,1].forEach(i=>{$('sb'+i).setAttribute('height',0);$('sb'+i).setAttribute('y',(i?184:124)+16)});
-  $('deny').style.display='none';$('okm').style.display='none';$('gateR').setAttribute('fill',K.card);$('gateT').style.fill=K.perm;live(false);loopHi(-1);
+  $('deny').style.display='none';$('okm').style.display='none';$('gateR').setAttribute('fill',K.card);$('gateT').style.fill=K.perm;live(false);loopHi(-1);focus(null);
 }
 async function goTo(s,b,animate=true){
   s=Math.max(0,Math.min(S.length-1,s));b=Math.max(0,Math.min(S[s].beats.length-1,b));
@@ -470,7 +512,7 @@ async function goTo(s,b,animate=true){
   if(s!==si)renderSlide(s);
   si=s;bi=b;
   resetScene();tl(-1);rv(0);visScene(s,b);
-  setView(s>=IX.belt?448:346,!animate);
+  setView(s>=IX.belt?458:346,!animate);
   $('beats').innerHTML=S[s].beats.length>1?S[s].beats.map((_,k)=>`<i class="${k<=b?'on':''}"></i>`).join(''):'';
   history.replaceState(null,'',`#${s+1}.${b+1}`);
   try{
