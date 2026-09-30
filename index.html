@@ -29,8 +29,10 @@ html,body{margin:0;height:100%;overflow:hidden;background:#000;display:grid;plac
 #nav button{width:34px;height:34px;border-radius:9px;border:1px solid #3A3658;background:#141226;color:var(--lav);font:700 18px/1 var(--sans);cursor:pointer}
 #nav button:hover{background:var(--card)}
 #bar{position:absolute;left:0;top:60px;height:3px;background:var(--turq);transition:width .4s}
+#task{position:absolute;left:730px;top:76px;display:flex;align-items:center;gap:10px;font:600 14px/1 var(--sans);color:var(--lav)}
+#task b{padding:4px 8px;border-radius:6px;background:rgba(0,230,217,.12);color:var(--turq);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
 #stage{position:absolute;left:40px;top:78px;width:640px;height:706px}
-#panel{position:absolute;left:730px;top:96px;width:830px;height:684px;overflow:hidden}
+#panel{position:absolute;left:730px;top:110px;width:830px;height:670px;overflow:hidden}
 #pin{--fz:1;font-size:calc(24px*var(--fz))}
 #cap{position:absolute;left:40px;top:800px;width:1520px;height:74px;display:flex;align-items:center;gap:18px;padding:0 22px;background:var(--card);border:1px solid var(--line);border-radius:14px}
 #capWho{flex:none;padding:6px 12px;border-radius:8px;font:800 15px/1.2 var(--sans);letter-spacing:.08em;text-transform:uppercase}
@@ -102,6 +104,7 @@ p{margin:0 0 .7em}
     <div id="right"><div id="beats"></div><span id="cnt"></span><div id="nav"><button id="bPrev" aria-label="Anterior">‹</button><button id="bNext" aria-label="Siguiente">›</button></div></div></div>
   <i id="bar"></i>
   <svg id="stage" viewBox="0 0 400 346" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagrama animado de un modelo de IA dentro de un harness y las piezas de un belt"></svg>
+  <div id="task"><b>El encargo de toda la guía</b>Modelo semántico de Ventas de Retail Norte en Power BI</div>
   <div id="panel"><div id="pin"></div></div>
   <div id="cap"><span id="capWho"></span><span id="capTxt"></span></div>
 </div>
@@ -112,7 +115,7 @@ const K={ink:'#E8EBFA',dark:'#1E1B31',card:'#2B2846',hz:'#23203A',tray:'#211E37'
 const NS='http://www.w3.org/2000/svg',$=id=>document.getElementById(id);
 
 /* Índices de diapositiva, para decidir qué se ve en el diagrama */
-const IX={model:1,harness:2,tools:3,belt:4,instr:5,cmd:6,skill:7,sub:8,mcp:9,hook:10,caso:11};
+const IX={model:1,harness:2,tools:3,belt:4,instr:5,cmd:6,skill:7,mcp:8,hook:9,caso:10,sub:99};
 
 /* ================= ESCENA ================= */
 const R=(x,y,w,h,o={})=>{const {f=K.card,s=K.edge,sw=1.5,r=8,dash='',id=''}=o;
@@ -122,7 +125,7 @@ const T=(x,y,t,o={})=>{const {fs=11,w=700,c=K.ink,a='middle',ls=0,id=''}=o;
 const chip=(id,t,x,w,c=K.tool)=>`<g id="c-${id}">${R(x,280,w,26,{s:c,r:6})}${T(x+w/2,297,t,{fs:10.5})}</g>`;
 const SYS=[['snow','Snowflake',150],['pbi','Power BI',212],['git','Git',274],['teams','Teams',336]];
 const SLOTS=[['instr','Instrucciones','siempre activas',K.instr],['cmd','Comandos','los lanzas tú',K.cmd],['skill','Skills','las elige el modelo',K.skill],
- ['sub','Subagentes','delega el modelo',K.sub],['mcp','MCP','conecta sistemas',K.mcp],['hook','Hooks','saltan solos',K.hook]];
+['mcp','MCP','conecta sistemas',K.mcp],['hook','Hooks','saltan solos',K.hook]];
 const sXY=i=>({x:16+(i%3)*124,y:368+Math.floor(i/3)*36});
 const pill=(id,x,y,t)=>`<g id="${id}"><rect x="${x-33}" y="${y-9}" width="66" height="18" rx="9" fill="${K.card}" stroke="${K.edge}" stroke-width="1.5"/>${T(x,y+3.5,t,{fs:9,ls:.1})}</g>`;
 
@@ -231,22 +234,23 @@ const files=(list)=>`<div class="files"><div class="tabs">${list.map(f=>`<span>$
 const who=(a,b)=>`<p class="who"><span>La activa: <b>${a}</b></span><span>Se carga: <b>${b}</b></span></p>`;
 const M1='Momento 1',M2='Momento 2',M3='Momento 3';
 
-const PIECE=(o)=>({mom:2,n:`Pieza ${o.i} de 6`,col:o.col,t:o.t,lead:o.lead,body:who(o.who,o.load)+files(o.files)+(o.note?`<p class="note" style="margin-top:.8em">${o.note}</p>`:''),beats:o.beats});
+const PIECE=(o)=>({mom:2,n:`Pieza ${o.i} de 5`,col:o.col,t:o.t,lead:o.lead,body:who(o.who,o.load)+files(o.files)+(o.note?`<p class="note" style="margin-top:.8em">${o.note}</p>`:''),beats:o.beats});
 
 const S=[
 /* 0 · portada */
 {mom:0,cover:true,html:`<p class="kick" style="--c:${K.instr}"><i></i>SDG · Guía para managers</p>
  <h1>Anatomía de un <em>belt</em></h1>
  <p class="lead">Qué hay dentro de un agente de IA como Claude Code o GitHub Copilot, y cómo un belt le enseña a trabajar con el método de SDG.</p>
+ <p class="note" style="--c:${K.instr}">Un único ejemplo de principio a fin: <b>crear el modelo semántico de Ventas de Retail Norte en Power BI</b> a partir de su requisito de negocio.</p>
  <ol class="list"><li><span>Cómo funciona un LLM con su harness de serie</span></li><li><span>Las piezas que creamos en nuestros belts</span></li><li><span>Una tarea real, paso a paso</span></li></ol>`,
  beats:[async()=>{say('modelo','Este es el modelo. Empecemos por él.');pulse('mcirc')}]},
 
 /* 1 · el modelo */
 {mom:1,n:'El modelo',col:K.model,t:'Un LLM: entra texto, sale texto',
  lead:'Un modelo de lenguaje (Claude, GPT, Gemini…) sabe muchísimo en general. Pero por sí solo no ve vuestros datos, no recuerda conversaciones y no puede ejecutar nada.',
- body:`<div class="ex"><span class="l">Le pides</span>Créame el modelo semántico de ventas de Retail Norte en Power BI.</div><div class="ex"><span class="l">Responde</span><span class="bad">«Un modelo en estrella suele tener una tabla de hechos y varias dimensiones…»</span></div><p class="note" style="--c:${K.model}">Solo puede explicar. No llega a Snowflake ni a Power BI.</p>`,
+ body:`<div class="ex"><span class="l">Le pides</span>Crea el modelo semántico de Ventas de Retail Norte en Power BI.</div><div class="ex"><span class="l">Responde</span><span class="bad">«Un modelo en estrella suele tener una tabla de hechos y varias dimensiones…»</span></div><p class="note" style="--c:${K.model}">Solo puede explicar. No llega a Snowflake ni a Power BI.</p>`,
  beats:[
-  async()=>{say('tu','«Créame el modelo semántico de ventas de Retail Norte en Power BI.»');await fly('u','m','crea el modelo de ventas',K.card,1200)},
+  async()=>{say('tu','«Crea el modelo semántico de Ventas de Retail Norte en Power BI.»');await fly('u','m','modelo de Ventas en Power BI',K.card,1200)},
   async()=>{await think(1000);say('modelo','Solo puede explicar la teoría: no tiene acceso a nada.');await fly('m','u','teoría genérica',K.sys,1200)}]},
 
 /* 2 · el harness */
@@ -271,10 +275,10 @@ const S=[
 
 /* 4 · el belt */
 {mom:2,n:'El belt',col:K.instr,t:'Un belt: el harness con el método de SDG',
- lead:'Un belt (técnicamente, un plugin) es una carpeta que se instala en el harness y le añade seis tipos de pieza. Todo el equipo trabaja igual.',
+ lead:'Un belt (técnicamente, un plugin) es una carpeta que se instala en el harness y le añade cinco tipos de pieza. Todo el equipo trabaja igual.',
  body:`<p class="big">Vamos a construir uno: <b>modelo-semantico-pbi</b>, que convierte un requisito de negocio en un modelo semántico de Power BI.</p>
  <div class="ex"><span class="l">Se instala con</span>/plugin install modelo-semantico-pbi</div>`,
- beats:[async()=>{base('sys','tools');say('belt','El belt se enchufa al harness. Vamos a llenarlo pieza a pieza.');for(let i=0;i<6;i++)pulse('ph'+i)}]},
+ beats:[async()=>{base('sys','tools');say('belt','El belt se enchufa al harness. Vamos a llenarlo pieza a pieza.');for(let i=0;i<SLOTS.length;i++)pulse('ph'+i)}]},
 
 /* 5 · instrucciones */
 PIECE({i:1,col:K.instr,t:'Instrucciones',lead:'Lo que el agente debe saber siempre: cómo trabajamos, las reglas del cliente, lo que nunca debe hacer.',who:'nadie, están siempre',load:'al empezar',
@@ -339,31 +343,8 @@ description: Crea modelos en estrella en Power BI
   async()=>{base('sys','tools','instr');tab(0);say('modelo','Del belt, el modelo solo ve el título de cada skill. Si la tarea encaja, la abre entera.');await fly('skill','ctx','SKILL.md',K.skill,1200);await add('skill','Skill modelo-semántico',K.skill,32)},
   async()=>{tab(1);say('modelo','Y dentro de la skill, lee más material solo cuando lo necesita: las lecciones de proyectos anteriores.');await fly('skill','ctx','errores-comunes.md',K.skill,1100);await add('ref','Errores comunes',K.skill,16)}]}),
 
-/* 8 · subagentes */
-PIECE({i:4,col:K.sub,t:'Subagentes',lead:'Especialistas con su propia ventana de contexto y sus propias herramientas. El agente principal les delega un trabajo y recibe solo el resumen.',who:'el modelo delega',load:'en su propio contexto',
- files:[['agents/creador-modelo.md',`---
-name: creador-modelo
-description: Modelador senior de Power BI. Úsalo
-  para crear tablas, relaciones y medidas.
-tools: Power BI (MCP), archivos
----
-Eres un modelador senior de Power BI.
-Sigues el dev-spec aprobado al pie de la letra.`],
- ['agents/revisor-dax.md',`---
-name: revisor-dax
-description: Revisa medidas DAX: rendimiento
-  y nombres.
-tools: solo lectura
----
-Revisa cada medida y devuelve solo la lista de
-problemas, ordenada por gravedad.`]],
- note:'Trabajan en paralelo y no llenan el contexto principal. Y un revisor de solo lectura no puede romper nada.',
- beats:[
-  async()=>{base('sys','tools','instr','skill');tab(0);say('sub','El principal delega: el creador-modelo trabaja en su propia ventana de contexto.');await fly('m','s1','construye el modelo',K.sub,1000);await subWork([0],[.85],1400);await fly('s1','ctx','resumen',K.sub,900);await add('r1','Resumen creador',K.sub,12)},
-  async()=>{tab(1);say('sub','Y el revisor-dax, de solo lectura, revisa las medidas y devuelve únicamente los problemas.');await fly('m','s2','revisa las medidas',K.sub,1000);await subWork([1],[.7],1200);await fly('s2','ctx','2 problemas',K.sub,900);await add('r2','Resumen revisor',K.sub,12)}]}),
-
 /* 9 · MCP */
-PIECE({i:5,col:K.mcp,t:'MCP',lead:'Enchufes estándar a los sistemas del cliente. Cada servidor MCP añade herramientas nuevas: leer el esquema de Snowflake, crear tablas en Power BI… Sin integraciones a medida.',who:'el modelo las pide',load:'su lista, siempre',
+PIECE({i:4,col:K.mcp,t:'MCP',lead:'Enchufes estándar a los sistemas del cliente. Cada servidor MCP añade herramientas nuevas: leer el esquema de Snowflake, crear tablas en Power BI… Sin integraciones a medida.',who:'el modelo las pide',load:'su lista, siempre',
  files:[['.mcp.json',`{ "mcpServers": {
     "powerbi-modeling": {
       "command": "npx",
@@ -384,7 +365,7 @@ powerbi.exportar_tmdl()`]],
   async()=>{tab(1);say('modelo','Ya puede pedir, por ejemplo, el esquema de Snowflake.');await fly('m','mcpc','consultar_esquema',K.mcp,1000);await fly('mcpc','snow','consulta',K.mcp,900);pulse('sy-snow');await fly('snow','ctx','tablas de MART',K.mcp,1000);await add('esq','Esquema Snowflake',K.mcp,18)}]}),
 
 /* 10 · hooks */
-PIECE({i:6,col:K.hook,t:'Hooks',lead:'Controles automáticos que el harness ejecuta cuando pasa algo. No dependen de que el modelo se acuerde: se cumplen siempre.',who:'un evento',load:'automático',
+PIECE({i:5,col:K.hook,t:'Hooks',lead:'Controles automáticos que el harness ejecuta cuando pasa algo. No dependen de que el modelo se acuerde: se cumplen siempre.',who:'un evento',load:'automático',
  files:[['hooks/hooks.json',`{ "PreToolUse": [{
     "matcher": "powerbi.*",
     "command": "scripts/exige-devspec-aprobado.sh" }],
@@ -405,10 +386,10 @@ Al terminar
   async()=>{tab(1);say('belt','En llano: controles de calidad que no dependen de la memoria de nadie.')}]}),
 
 /* 11 · caso real */
-{mom:3,n:'Una tarea real',col:K.cmd,t:'Del requisito al modelo en Power BI',
- lead:'Retail Norte quiere su modelo semántico de ventas. Una consultora lanza un comando. Mira qué pieza interviene en cada paso.',
- body:`<ol class="tl">${[['Comando',K.cmd],['Instrucciones',K.instr],['Skill',K.skill],['Leer el requisito',K.tool],['MCP · Snowflake',K.mcp],['Dev-spec y tu OK',K.perm],['Hook',K.hook],['Subagente creador',K.sub],['Subagente revisor',K.sub],['Validación y entrega',K.instr]].map(([t,c],i)=>`<li style="--c:${c}"><i></i><b>${i+1}</b> ${t}</li>`).join('')}</ol>
- <div class="rv"><div class="ex"><span class="l">Entregado</span>Modelo Ventas · 1 tabla de hechos, 5 dimensiones, 18 medidas.
+{mom:3,n:'Una tarea real',col:K.cmd,t:'El modelo de Ventas de Retail Norte, paso a paso',
+ lead:'El mismo encargo del principio, ahora con el belt instalado. La consultora lanza un comando: mira qué pieza interviene en cada paso.',
+ body:`<ol class="tl">${[['Comando',K.cmd],['Instrucciones',K.instr],['Skill',K.skill],['Leer el requisito',K.tool],['MCP · Snowflake',K.mcp],['Dev-spec y tu OK',K.perm],['Hook',K.hook],['Construye en Power BI',K.mcp],['Validación y entrega',K.instr]].map(([t,c],i)=>`<li style="--c:${c}"><i></i><b>${i+1}</b> ${t}</li>`).join('')}</ol>
+ <div class="rv"><div class="ex"><span class="l">Entregado</span>Modelo Ventas de Retail Norte · 1 tabla de hechos, 5 dimensiones, 18 medidas.
 Validado automáticamente. PBIP + dev-spec listos en Git.</div></div>
  <p class="note" style="--c:${K.instr}">Tú lanzas un comando y das un OK. El belt pone el método; el harness, las manos y los límites; el modelo, el razonamiento.</p>`,
  beats:[
@@ -419,16 +400,15 @@ Validado automáticamente. PBIP + dev-spec listos en Git.</div></div>
   async()=>{tl(4);live(true);say('modelo','Consulto las tablas reales de Snowflake por MCP.');await fly('m','mcpc','consultar_esquema',K.mcp,900);await fly('mcpc','snow','consulta',K.mcp,800);await fly('snow','ctx','tablas de MART',K.mcp,900);await add('esq','Esquema Snowflake',K.mcp,14)},
   async()=>{tl(5);say('perm','Diseña la estrella, escribe un dev-spec en borrador y para: te pide que lo apruebes.');await fly('m','files','dev-spec.md',K.tool,900);await gate(K.cmd,400);await fly('gate','u','¿Apruebas el diseño?',K.perm,1000);await fly('u','gate','Aprobado',K.card,900);await gate(K.instr,400)},
   async()=>{tl(6);say('hook','Antes de tocar Power BI, el hook comprueba que hay dev-spec aprobado: vía libre.');await fly('hook','mcpc','¿dev-spec?',K.hook,900);await mark('mcpc',true)},
-  async()=>{tl(7);say('sub','El subagente creador-modelo construye tablas, relaciones y medidas en Power BI.');await fly('m','s1','construye',K.sub,800);$('sr0').classList.add('on');await fly('s1','mcpc','crear_tabla…',K.mcp,900);await fly('mcpc','pbi','18 medidas',K.mcp,900);pulse('sy-pbi');$('sr0').classList.remove('on');await subFill(0,.8,600);await fly('s1','ctx','resumen',K.sub,800);await add('r1','Resumen creador',K.sub,11)},
-  async()=>{tl(8);say('sub','El revisor-dax revisa las medidas: 2 problemas. El creador los corrige.');await fly('m','s2','revisa',K.sub,800);await subWork([1],[.6],1000);await fly('s2','ctx','2 problemas',K.sub,800);await add('r2','Resumen revisor',K.sub,11)},
-  async()=>{tl(9);rv(1);say('hook','Al exportar, otro hook valida el modelo. Todo correcto: se entrega el PBIP y el dev-spec.');await fly('m','mcpc','exportar_tmdl',K.mcp,800);await fly('hook','mcpc','validar',K.hook,800);await mark('mcpc',true,900);await fly('m','u','modelo validado',K.instr,1100)}]},
+  async()=>{tl(7);say('modelo','Siguiendo el dev-spec aprobado, crea tablas, relaciones y 18 medidas en Power BI por MCP.');await fly('m','mcpc','crear_tabla…',K.mcp,900);await fly('mcpc','pbi','18 medidas',K.mcp,1000);pulse('sy-pbi');await add('pb','Modelo en Power BI',K.mcp,14)},
+  async()=>{tl(8);rv(1);say('hook','Al exportar, otro hook valida el modelo. Todo correcto: se entrega el PBIP y el dev-spec.');await fly('m','mcpc','exportar_tmdl',K.mcp,800);await fly('hook','mcpc','validar',K.hook,800);await mark('mcpc',true,900);await fly('m','u','modelo validado',K.instr,1100)}]},
 
 /* 12 · chuleta */
-{mom:3,n:'Chuleta',col:K.instr,t:'Las seis piezas de un belt',lead:'',
+{mom:3,n:'Chuleta',col:K.instr,t:'Las cinco piezas de un belt',lead:'',
  body:`<table class="tbl"><tr><th>Pieza</th><th>Qué es</th><th>La activa</th><th>En el ejemplo</th></tr>
-${[['Instrucciones',K.instr,'Lo que debe saber siempre','Siempre están','<code>CLAUDE.md</code> del cliente'],['Comandos',K.cmd,'Encargos guardados','Tú, con /','<code>/crear-modelo-semantico</code>'],['Skills',K.skill,'El saber hacer, bajo demanda','El modelo','<code>modelo-semantico</code>'],['Subagentes',K.sub,'Especialistas con su propia mesa','El modelo delega','<code>revisor-dax</code>'],['MCP',K.mcp,'Enchufes a los sistemas','El modelo los pide','Snowflake, Power BI'],['Hooks',K.hook,'Controles que no se saltan','Un evento','Exigir dev-spec aprobado']].map(([a,c,b,d,e])=>`<tr><td><i style="--c:${c}"></i>${a}</td><td>${b}</td><td>${d}</td><td>${e}</td></tr>`).join('')}</table>
+${[['Instrucciones',K.instr,'Lo que debe saber siempre','Siempre están','<code>CLAUDE.md</code> del cliente'],['Comandos',K.cmd,'Encargos guardados','Tú, con /','<code>/crear-modelo-semantico</code>'],['Skills',K.skill,'El saber hacer, bajo demanda','El modelo','<code>modelo-semantico</code>'],['MCP',K.mcp,'Enchufes a los sistemas','El modelo los pide','Snowflake, Power BI'],['Hooks',K.hook,'Controles que no se saltan','Un evento','Exigir dev-spec aprobado']].map(([a,c,b,d,e])=>`<tr><td><i style="--c:${c}"></i>${a}</td><td>${b}</td><td>${d}</td><td>${e}</td></tr>`).join('')}</table>
  <div class="close" style="margin-top:.9em"><p style="font-size:1.35em"><span style="--c:${K.model}">El modelo</span> piensa. <span style="--c:${K.ink}">El harness</span> actúa y pone los límites. <span style="--c:${K.instr}">El belt</span> aporta el método de SDG.</p></div>`,
- beats:[async()=>{base('sys','tools','instr','skidx','mcpt');say('belt','Seis piezas, una carpeta, el mismo método para todo el equipo.');for(const s of SLOTS)pulse('s-'+s[0])}]}
+ beats:[async()=>{base('sys','tools','instr','skidx','mcpt');say('belt','Cinco piezas, una carpeta, el mismo método para todo el equipo.');for(const s of SLOTS)pulse('s-'+s[0])}]}
 ];
 
 /* ================= NAVEGACIÓN ================= */
@@ -437,7 +417,7 @@ function setView(h,now){if(Math.abs(h-vh)<.1)return;const my=++vtok;if(now){vh=h
   const from=vh,t0=performance.now();(function f(t){if(my!==vtok)return;const p=Math.min(1,(t-t0)/650);vh=from+(h-from)*ease(p);$('stage').setAttribute('viewBox',`0 0 400 ${vh.toFixed(1)}`);if(p<1)requestAnimationFrame(f)})(t0)}
 function fit(){const p=$('panel'),i=$('pin');let z=1;i.style.setProperty('--fz',z);while(i.scrollHeight>p.clientHeight+1&&z>.6){z-=.03;i.style.setProperty('--fz',z)}}
 function renderSlide(s){
-  const c=S[s];
+  const c=S[s];$('task').style.visibility=c.cover?'hidden':'visible';
   $('pin').innerHTML=c.cover?c.html:`<p class="kick" style="--c:${c.col}"><i></i>${c.n}</p>${c.t?`<h2>${c.t}</h2>`:''}${c.lead?`<p class="lead">${c.lead}</p>`:''}<div style="--c:${c.col}">${c.body||''}</div>`;
   $('part').innerHTML=['Motor','Piezas','Tarea real'].map((t,i)=>`<span class="${c.mom===i+1?'on':c.mom>i+1?'done':''}">${i+1} · ${t}</span>`).join('');
   $('cnt').textContent=String(s+1).padStart(2,'0')+' / '+S.length;
